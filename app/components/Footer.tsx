@@ -1,388 +1,239 @@
 import Link from "next/link";
 import {
+  ArrowRight,
 //   Facebook,
 //   Instagram,
-//   Twitter,
-//   Youtube,
+//   Linkedin,
+  Mail,
   MapPin,
   Phone,
-  Mail,
-  Clock,
-  ArrowRight,
 } from "lucide-react";
 
-const Footer = () => {
+const quickLinks = [
+  { name: "Home", href: "/" },
+  { name: "How It Works", href: "/how-it-works" },
+  { name: "Why PizzaLoot", href: "/why-pizzaloot" },
+  { name: "What We Provide", href: "/what-we-provide" },
+];
+
+const businessLinks = [
+  { name: "Partnership Plans", href: "/partnership-plans" },
+  { name: "Success Stories", href: "/success-stories" },
+  { name: "FAQ", href: "/faq" },
+  { name: "Contact Us", href: "/contact" },
+];
+
+export default function Footer() {
   return (
-    <footer className="bg-gray-950 text-white">
-
-      {/* ================= NEWSLETTER / CTA ================= */}
-      <section className="border-b border-gray-800">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-8 rounded-3xl bg-red-500 px-6 py-10 sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:px-14">
-
-            {/* Content */}
-            <div className="max-w-xl">
-              <span className="mb-3 inline-block rounded-full bg-white/15 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white">
-                🍕 Stay in the loop
-              </span>
-
-              <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl lg:text-4xl">
-                Get delicious deals delivered to your inbox.
-              </h2>
-
-              <p className="mt-3 text-sm leading-6 text-red-100 sm:text-base">
-                Subscribe for exclusive offers, new menu updates and
-                special discounts.
-              </p>
-            </div>
-
-            {/* Newsletter */}
-            <form className="w-full max-w-md">
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="h-12 w-full rounded-xl border-0 bg-white px-4 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-white"
-                />
-
-                <button
-                  type="submit"
-                  className="flex h-12 items-center justify-center gap-2 rounded-xl bg-gray-950 px-6 text-sm font-bold text-white transition hover:bg-gray-800"
-                >
-                  Subscribe
-                  <ArrowRight size={17} />
-                </button>
+    <footer className="bg-slate-950 text-white">
+      {/* Main Footer */}
+      <div className="mx-auto max-w-7xl px-6 pb-10 pt-16 sm:px-8 lg:px-12 lg:pt-20">
+        <div className="grid gap-12 lg:grid-cols-[1.4fr_0.8fr_0.8fr_1.2fr]">
+          {/* Brand */}
+          <div className="max-w-md">
+            <Link href="/" className="inline-flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-500 text-xl font-black text-white shadow-lg shadow-orange-500/20">
+                P
               </div>
 
-              <p className="mt-2 text-xs text-red-100">
-                No spam. Just pizza, offers and good news.
-              </p>
-            </form>
+              <div>
+                <span className="block text-2xl font-black tracking-tight">
+                  Pizza<span className="text-orange-500">Loot</span>
+                </span>
 
-          </div>
-        </div>
-      </section>
-
-      {/* ================= MAIN FOOTER ================= */}
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
-
-          {/* ================= BRAND ================= */}
-          <div className="lg:col-span-4">
-
-            <Link
-              href="/"
-              className="inline-flex items-center gap-3"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-500 text-2xl">
-                🍕
-              </div>
-
-              <div className="leading-none">
-                <h2 className="text-2xl font-extrabold">
-                  Pizza<span className="text-red-500">Lab</span>
-                </h2>
-
-                <p className="mt-1 text-[10px] font-medium uppercase tracking-[0.2em] text-gray-500">
-                  Fresh & Hot
-                </p>
+                <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                  Pizza Partnership
+                </span>
               </div>
             </Link>
 
-            <p className="mt-5 max-w-sm text-sm leading-7 text-gray-400">
-              Freshly baked pizzas, loaded with delicious toppings
-              and delivered hot to your doorstep. Made with quality
-              ingredients and lots of love.
+            <p className="mt-6 text-sm leading-7 text-slate-400">
+              Your shop. Our brand. More growth. PizzaLoot helps shopkeepers
+              and food entrepreneurs build a pizza business with a strong
+              brand identity, proven systems, recipes, training, marketing
+              support, and ongoing business guidance.
             </p>
 
             {/* Social Icons */}
-            <div className="mt-6 flex items-center gap-3">
-
+            <div className="mt-7 flex items-center gap-3">
               <a
                 href="#"
                 aria-label="Facebook"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-800 text-gray-400 transition hover:border-red-500 hover:bg-red-500 hover:text-white"
+                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-400 transition hover:border-orange-500 hover:bg-orange-500 hover:text-white"
               >
-                {/* <Facebook size={18} /> */}
+                {/* <Facebook className="h-4 w-4" /> */}
               </a>
 
               <a
                 href="#"
                 aria-label="Instagram"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-800 text-gray-400 transition hover:border-red-500 hover:bg-red-500 hover:text-white"
+                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-400 transition hover:border-orange-500 hover:bg-orange-500 hover:text-white"
               >
-                {/* <Instagram size={18} /> */}
+                {/* <Instagram className="h-4 w-4" /> */}
               </a>
 
               <a
                 href="#"
-                aria-label="Twitter"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-800 text-gray-400 transition hover:border-red-500 hover:bg-red-500 hover:text-white"
+                aria-label="LinkedIn"
+                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-400 transition hover:border-orange-500 hover:bg-orange-500 hover:text-white"
               >
-                {/* <Twitter size={18} /> */}
+                {/* <Linkedin className="h-4 w-4" /> */}
               </a>
-
-              <a
-                href="#"
-                aria-label="YouTube"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-800 text-gray-400 transition hover:border-red-500 hover:bg-red-500 hover:text-white"
-              >
-                {/* <Youtube size={18} /> */}
-              </a>
-
             </div>
           </div>
 
-          {/* ================= QUICK LINKS ================= */}
-          <div className="lg:col-span-2">
-
-            <h3 className="mb-5 text-sm font-bold uppercase tracking-wider text-white">
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-white">
               Quick Links
             </h3>
 
-            <ul className="space-y-3">
-
-              <li>
-                <Link
-                  href="/"
-                  className="text-sm text-gray-400 transition hover:text-red-500"
-                >
-                  Home
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/menu"
-                  className="text-sm text-gray-400 transition hover:text-red-500"
-                >
-                  Our Menu
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/offers"
-                  className="text-sm text-gray-400 transition hover:text-red-500"
-                >
-                  Offers
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/locations"
-                  className="text-sm text-gray-400 transition hover:text-red-500"
-                >
-                  Locations
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/about"
-                  className="text-sm text-gray-400 transition hover:text-red-500"
-                >
-                  About Us
-                </Link>
-              </li>
-
+            <ul className="mt-6 space-y-3">
+              {quickLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="group inline-flex items-center text-sm text-slate-400 transition hover:text-orange-400"
+                  >
+                    <ArrowRight className="mr-2 h-3.5 w-3.5 -translate-x-1 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* ================= MENU ================= */}
-          <div className="lg:col-span-2">
-
-            <h3 className="mb-5 text-sm font-bold uppercase tracking-wider text-white">
-              Our Menu
+          {/* Business */}
+          <div>
+            <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-white">
+              Business
             </h3>
 
-            <ul className="space-y-3">
-
-              <li>
-                <Link
-                  href="/menu/pizza"
-                  className="text-sm text-gray-400 transition hover:text-red-500"
-                >
-                  Pizza
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/menu/burgers"
-                  className="text-sm text-gray-400 transition hover:text-red-500"
-                >
-                  Burgers
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/menu/sides"
-                  className="text-sm text-gray-400 transition hover:text-red-500"
-                >
-                  Sides
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/menu/drinks"
-                  className="text-sm text-gray-400 transition hover:text-red-500"
-                >
-                  Drinks
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/menu/desserts"
-                  className="text-sm text-gray-400 transition hover:text-red-500"
-                >
-                  Desserts
-                </Link>
-              </li>
-
+            <ul className="mt-6 space-y-3">
+              {businessLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="group inline-flex items-center text-sm text-slate-400 transition hover:text-orange-400"
+                  >
+                    <ArrowRight className="mr-2 h-3.5 w-3.5 -translate-x-1 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* ================= CONTACT ================= */}
-          <div className="sm:col-span-2 lg:col-span-4">
-
-            <h3 className="mb-5 text-sm font-bold uppercase tracking-wider text-white">
+          {/* Contact */}
+          <div>
+            <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-white">
               Get In Touch
             </h3>
 
-            <div className="space-y-4">
-
-              {/* Location */}
-              <div className="flex gap-3">
-
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-900 text-red-500">
-                  <MapPin size={17} />
-                </div>
-
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    Visit Us
-                  </p>
-
-                  <p className="mt-1 text-sm leading-6 text-gray-400">
-                    Pune, Maharashtra, India
-                  </p>
-                </div>
-
-              </div>
-
+            <div className="mt-6 space-y-5">
               {/* Phone */}
-              <div className="flex gap-3">
-
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-900 text-red-500">
-                  <Phone size={17} />
+              <a
+                href="tel:+919876543210"
+                className="group flex items-start gap-3"
+              >
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500/10 text-orange-500 transition group-hover:bg-orange-500 group-hover:text-white">
+                  <Phone className="h-4 w-4" />
                 </div>
 
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    Call Us
+                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    Phone
                   </p>
-
-                  <a
-                    href="tel:+919999999999"
-                    className="mt-1 block text-sm text-gray-400 transition hover:text-red-500"
-                  >
-                    +91 99999 99999
-                  </a>
+                  <p className="mt-1 text-sm font-semibold text-slate-300 transition group-hover:text-orange-400">
+                    +91 98765 43210
+                  </p>
                 </div>
-
-              </div>
+              </a>
 
               {/* Email */}
-              <div className="flex gap-3">
-
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-900 text-red-500">
-                  <Mail size={17} />
+              <a
+                href="mailto:hello@pizzaloot.com"
+                className="group flex items-start gap-3"
+              >
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500/10 text-orange-500 transition group-hover:bg-orange-500 group-hover:text-white">
+                  <Mail className="h-4 w-4" />
                 </div>
 
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    Email Us
+                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    Email
                   </p>
-
-                  <a
-                    href="mailto:hello@pizzalab.com"
-                    className="mt-1 block text-sm text-gray-400 transition hover:text-red-500"
-                  >
-                    hello@pizzalab.com
-                  </a>
+                  <p className="mt-1 break-all text-sm font-semibold text-slate-300 transition group-hover:text-orange-400">
+                    hello@pizzaloot.com
+                  </p>
                 </div>
+              </a>
 
-              </div>
-
-              {/* Opening Hours */}
-              <div className="flex gap-3">
-
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-900 text-red-500">
-                  <Clock size={17} />
+              {/* Location */}
+              <div className="flex items-start gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500/10 text-orange-500">
+                  <MapPin className="h-4 w-4" />
                 </div>
 
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    Opening Hours
+                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    Location
                   </p>
-
-                  <p className="mt-1 text-sm text-gray-400">
-                    Mon - Sun: 11:00 AM - 11:00 PM
+                  <p className="mt-1 text-sm font-semibold text-slate-300">
+                    Maharashtra, India
                   </p>
                 </div>
-
               </div>
-
             </div>
           </div>
         </div>
-      </div>
 
-      {/* ================= BOTTOM FOOTER ================= */}
-      <div className="border-t border-gray-800">
+        {/* CTA */}
+        <div className="mt-14 overflow-hidden rounded-[2rem] bg-orange-500 p-7 sm:p-8">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-xl font-black text-white sm:text-2xl">
+                Ready to build with PizzaLoot?
+              </p>
 
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-6 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
-
-          <p className="text-center text-xs text-gray-500 md:text-left">
-            © {new Date().getFullYear()} PizzaLab. All rights reserved.
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-5">
+              <p className="mt-1 text-sm text-orange-50">
+                Start your partnership journey with us.
+              </p>
+            </div>
 
             <Link
+              href="/contact#enquiry"
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-orange-600 transition hover:bg-orange-50 sm:w-auto"
+            >
+              Become a Partner
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+        </div>
+
+        {/* Bottom */}
+        <div className="mt-10 flex flex-col gap-5 border-t border-white/10 pt-7 text-sm sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-center text-slate-500 sm:text-left">
+            © {new Date().getFullYear()} PizzaLoot. All rights reserved.
+          </p>
+
+          <div className="flex items-center justify-center gap-5 sm:justify-end">
+            <Link
               href="/privacy-policy"
-              className="text-xs text-gray-500 transition hover:text-white"
+              className="text-slate-500 transition hover:text-orange-400"
             >
               Privacy Policy
             </Link>
 
             <Link
               href="/terms"
-              className="text-xs text-gray-500 transition hover:text-white"
+              className="text-slate-500 transition hover:text-orange-400"
             >
               Terms & Conditions
             </Link>
-
-            <Link
-              href="/refund-policy"
-              className="text-xs text-gray-500 transition hover:text-white"
-            >
-              Refund Policy
-            </Link>
-
           </div>
-
         </div>
       </div>
-
     </footer>
   );
-};
-
-export default Footer;
+}
