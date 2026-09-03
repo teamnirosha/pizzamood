@@ -14,20 +14,52 @@ export default function ContactPage() {
     const [loading, setLoading] = useState(false);
     const [submitted, setSubmitted] = useState(false);
 
-    const handleSubmit = async (e:FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (
+        e: FormEvent<HTMLFormElement>
+    ) => {
         e.preventDefault();
 
         if (loading) return;
 
         setLoading(true);
 
-        // Dummy submit — no API, no database
-        await new Promise((resolve) => setTimeout(resolve, 800));
+        const form = e.currentTarget;
 
-        setSubmitted(true);
-        e.currentTarget.reset();
+        const formData = new FormData(form);
 
-        setLoading(false);
+        const data = {
+            name: formData.get("name")?.toString().trim(),
+            phone: formData.get("phone")?.toString().trim(),
+            city: formData.get("city")?.toString().trim(),
+            shopType: formData.get("shopType")?.toString(),
+            message: formData.get("message")?.toString().trim(),
+        };
+
+        try {
+            const response = await fetch("/api/enquiries", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    result?.message || "Failed to submit enquiry."
+                );
+            }
+
+            setSubmitted(true);
+            form.reset();
+        } catch (error) {
+            console.error(error);
+            alert("Failed to submit enquiry. Please try again.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleNewEnquiry = () => {

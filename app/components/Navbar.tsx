@@ -18,7 +18,8 @@ const navItems = [
   { label: "Partnership Plans", href: "/partnership-plans" },
   { label: "Success Stories", href: "/success-stories" },
   { label: "FAQ", href: "/faq" },
-  { label: "Contact", href: "/contact" },
+    { label: "Contact", href: "/contact" },
+  { label: "Admin", href: "/admin" },
 ];
 
 export default function Navbar() {
@@ -26,7 +27,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200/70 bg-white/90 backdrop-blur-xl">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-20 max-w-8xl items-center justify-between px-5 sm:px-6 lg:px-8">
         
         {/* Logo */}
         <Link
