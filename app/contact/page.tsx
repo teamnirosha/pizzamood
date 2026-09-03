@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import {
-  ArrowRight,
+//   ArrowRight,
   CheckCircle2,
   Clock3,
   Mail,
