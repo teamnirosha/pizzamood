@@ -19,6 +19,10 @@ const navItems: NavItem[] = [
   {
     name: "Home",
     href: "/",
+    },
+  {
+    name: "Story",
+    href: "/story",
   },
   {
     name: "Menu",
