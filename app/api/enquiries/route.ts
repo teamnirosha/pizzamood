@@ -1,122 +1,69 @@
 import { NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
-
-type Enquiry = {
-    id: string;
-    name: string;
-    phone: string;
-    city: string;
-    shopType: string;
-    message: string;
-    status: "new" | "contacted" | "qualified" | "closed";
-    createdAt: string;
-};
-
-const filePath = path.join(
-    process.cwd(),
-    "data",
-    "enquiries.json"
-);
+import { getLeads, saveLead } from "@/lib/db";
 
 export async function GET() {
-    try {
-        const file = await fs.readFile(filePath, "utf-8");
-        const enquiries: Enquiry[] = JSON.parse(file);
-
-        return NextResponse.json({
-            success: true,
-            enquiries,
-        });
-    } catch (error) {
-        console.error(error);
-
-        return NextResponse.json(
-            {
-                success: false,
-                message: "Unable to load enquiries.",
-            },
-            { status: 500 }
-        );
-    }
+  try {
+    const leads = await getLeads();
+    return NextResponse.json({
+      success: true,
+      leads,
+      count: leads.length,
+    });
+  } catch (error) {
+    console.error("GET Leads error:", error);
+    return NextResponse.json(
+      { success: false, message: "Failed to fetch leads." },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(request: Request) {
-    try {
-        const body = await request.json();
+  try {
+    const body = await request.json();
+    const { name, phone, city, investmentBudget } = body;
 
-        const {
-            name,
-            phone,
-            city,
-            shopType,
-            message,
-        } = body;
-
-        if (!name || !phone || !city || !shopType) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: "Please fill all required fields.",
-                },
-                { status: 400 }
-            );
-        }
-
-        let enquiries: Enquiry[] = [];
-
-        try {
-            const file = await fs.readFile(
-                filePath,
-                "utf-8"
-            );
-
-            enquiries = JSON.parse(file);
-        } catch {
-            enquiries = [];
-        }
-
-        const newEnquiry: Enquiry = {
-            id: `PL-${Date.now()}`,
-            name,
-            phone,
-            city,
-            shopType,
-            message: message || "",
-            status: "new",
-            createdAt: new Date().toISOString(),
-        };
-
-        enquiries.unshift(newEnquiry);
-
-        await fs.mkdir(
-            path.dirname(filePath),
-            { recursive: true }
-        );
-
-        await fs.writeFile(
-            filePath,
-            JSON.stringify(enquiries, null, 2),
-            "utf-8"
-        );
-
-        return NextResponse.json(
-            {
-                success: true,
-                message: "Enquiry submitted successfully.",
-                enquiry: newEnquiry,
-            },
-            { status: 201 }
-        );
-    } catch (error) {
-        console.error("Enquiry error:", error);
-
-        return NextResponse.json(
-            {
-                success: false,
-                message: "Something went wrong.",
-            },
-            { status: 500 }
-        );
+    if (!name || !phone || !city) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Full Name, Mobile Number, and City are required.",
+        },
+        { status: 400 }
+      );
     }
+
+    const newLead = await saveLead({
+      name,
+      phone,
+      whatsapp: body.whatsapp || phone,
+      email: body.email || "",
+      city,
+      preferredLocation: body.preferredLocation || city,
+      investmentBudget: investmentBudget || "₹4–6 Lakh",
+      ownsProperty: body.ownsProperty ?? false,
+      preferredStoreType: body.preferredStoreType || "Takeaway",
+      timeline: body.timeline || "Immediate",
+      message: body.message || "",
+      status: "new",
+      notes: [`Submitted via website franchise enquiry form on ${new Date().toLocaleDateString()}`],
+      assignedTo: "Unassigned",
+      source: body.source || {},
+    });
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Franchise enquiry submitted successfully. Our team will contact you shortly.",
+        lead: newLead,
+      },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error("POST Lead error:", error);
+    return NextResponse.json(
+      { success: false, message: "Unable to process franchise enquiry." },
+      { status: 500 }
+    );
+  }
 }

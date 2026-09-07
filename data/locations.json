@@ -1,0 +1,401 @@
+[
+  {
+    "id": "pm-pune-karve-nagar",
+    "name": "Pizza Mood Karve Nagar",
+    "slug": "pune/karve-nagar",
+    "city": "Pune",
+    "area": "Karve Nagar",
+    "state": "Maharashtra",
+    "country": "India",
+    "postalCode": "411052",
+    "address": "88/2B/1/2, Shop 03, Mauli Krupa Complex, Gujarat Colony, Karve Nagar, Pune, Maharashtra 411052",
+    "phone": "+91 99222 71166",
+    "whatsapp": "+91 99222 71166",
+    "email": "karvenagar@pizzamood.in",
+    "latitude": 18.4952,
+    "longitude": 73.8183,
+    "googleMapsUrl": "https://maps.google.com/?q=18.4952,73.8183",
+    "osmUrl": "https://www.openstreetmap.org/?mlat=18.4952&mlon=73.8183#map=16/18.4952/73.8183",
+    "shortDescription": "Popular Pizza Mood outlet in Gujarat Colony, Karve Nagar serving hot oven-baked pizzas & sides.",
+    "description": "Welcome to Pizza Mood Karve Nagar, situated near Mauli Krupa Complex in Gujarat Colony. Known for fresh hand-tossed dough, 100% mozzarella cheese burst crusts, tandoori paneer specials, garlic breads, and student combo deals.",
+    "status": "active",
+    "hours": [
+      { "day": "Monday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Tuesday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Wednesday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Thursday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Friday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:30 PM" },
+      { "day": "Saturday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:30 PM" },
+      { "day": "Sunday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:30 PM" }
+    ],
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1000&q=80", "alt": "Pizza Mood Karve Nagar Store" },
+      { "url": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1000&q=80", "alt": "Tandoori Paneer Pizza Karve Nagar" }
+    ],
+    "popularProducts": [
+      { "name": "Tandoori Paneer Overload", "price": "₹249", "description": "Marinated paneer, onions, green capsicum & red paprika.", "badge": "Bestseller", "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80" },
+      { "name": "Triple Cheese Melt", "price": "₹299", "description": "Blend of Mozzarella & Cheddar cheese sauce.", "badge": "Must Try", "image": "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=600&q=80" }
+    ],
+    "amenities": ["Dine-In", "Takeaway", "Home Delivery", "Contactless Payment"],
+    "nearbyLandmarks": ["Gujarat Colony", "Cummins College", "Karve Statue Chowk"],
+    "seo": {
+      "title": "Best Pizza Store in Karve Nagar, Pune | Pizza Mood Store & Delivery",
+      "description": "Looking for fresh pizza in Karve Nagar, Pune? Visit Pizza Mood near Gujarat Colony for delicious pizzas, garlic bread, store hours & directions.",
+      "focusKeyword": "best pizza store in Karve Nagar",
+      "secondaryKeywords": ["pizza in Karve Nagar", "pizza shop near Gujarat Colony", "fast food Karve Nagar"]
+    },
+    "createdAt": "2026-01-10T10:00:00.000Z"
+  },
+  {
+    "id": "pm-pune-warje",
+    "name": "Pizza Mood Warje",
+    "slug": "pune/warje",
+    "city": "Pune",
+    "area": "Warje",
+    "state": "Maharashtra",
+    "country": "India",
+    "postalCode": "411058",
+    "address": "Prestige Point, Near RMD Sinhgad College, Warje, Pune, Maharashtra 411058",
+    "phone": "+91 97779 71197",
+    "whatsapp": "+91 97779 71197",
+    "email": "warje@pizzamood.in",
+    "latitude": 18.4795,
+    "longitude": 73.8016,
+    "googleMapsUrl": "https://maps.google.com/?q=18.4795,73.8016",
+    "osmUrl": "https://www.openstreetmap.org/?mlat=18.4795&mlon=73.8016#map=16/18.4795/73.8016",
+    "shortDescription": "Hot takeaway pizza destination near RMD Sinhgad College in Warje.",
+    "description": "Pizza Mood Warje is located right opposite RMD College at Prestige Point. Serving students and residential families with quick, hot pizza takeaway and online food delivery.",
+    "status": "active",
+    "hours": [
+      { "day": "Monday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Tuesday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Wednesday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Thursday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Friday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:30 PM" },
+      { "day": "Saturday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:30 PM" },
+      { "day": "Sunday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:30 PM" }
+    ],
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80", "alt": "Pizza Mood Warje Store" }
+    ],
+    "popularProducts": [
+      { "name": "Student Combo Meal", "price": "₹199", "description": "Medium Pizza + Garlic Bread + Cold Drink.", "badge": "Value Offer", "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80" }
+    ],
+    "amenities": ["Takeaway Counter", "Home Delivery", "Online Ordering"],
+    "nearbyLandmarks": ["RMD Sinhgad Technical Institutes", "Prestige Point", "Warje Flyover"],
+    "seo": {
+      "title": "Best Pizza Store in Warje, Pune | Pizza Mood Near RMD College",
+      "description": "Order fresh pizza in Warje, Pune from Pizza Mood near RMD College. Check store menu, phone number & directions.",
+      "focusKeyword": "best pizza store in Warje"
+    },
+    "createdAt": "2026-01-15T10:00:00.000Z"
+  },
+  {
+    "id": "pm-pune-narhe",
+    "name": "Pizza Mood Narhe",
+    "slug": "pune/narhe",
+    "city": "Pune",
+    "area": "Narhe",
+    "state": "Maharashtra",
+    "country": "India",
+    "postalCode": "411041",
+    "address": "Serial 48/25/5, Ward 54, Near Sanla Company, Dhayari-Narhe Road, Pune, Maharashtra 411041",
+    "phone": "+91 74996 70788",
+    "whatsapp": "+91 74996 70788",
+    "email": "narhe@pizzamood.in",
+    "latitude": 18.4485,
+    "longitude": 73.8242,
+    "googleMapsUrl": "https://maps.google.com/?q=18.4485,73.8242",
+    "osmUrl": "https://www.openstreetmap.org/?mlat=18.4485&mlon=73.8242#map=16/18.4485/73.8242",
+    "shortDescription": "Serving hot pizza delights to Narhe & Vadgaon Dhayari residents.",
+    "description": "Pizza Mood Narhe offers fast pizza delivery and quick takeout for residents around JMS College, Narhe Phata & Dhayari.",
+    "status": "active",
+    "hours": [
+      { "day": "Monday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Tuesday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Wednesday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Thursday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Friday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Saturday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:30 PM" },
+      { "day": "Sunday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:30 PM" }
+    ],
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1590947132387-155cc02f3212?auto=format&fit=crop&w=1000&q=80", "alt": "Pizza Mood Narhe Store" }
+    ],
+    "popularProducts": [
+      { "name": "Corn & Cheese Burst", "price": "₹189", "description": "Golden sweet corn kernels loaded with cheese.", "badge": "Bestseller", "image": "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=600&q=80" }
+    ],
+    "amenities": ["Takeaway", "Home Delivery"],
+    "nearbyLandmarks": ["JSPM Narhe Campus", "Sanla Company", "Zelam College"],
+    "seo": {
+      "title": "Pizza Shop in Narhe, Pune | Pizza Mood Outlet",
+      "description": "Looking for pizza near Narhe & Dhayari? Contact Pizza Mood Narhe for hot pizza delivery and takeaway details.",
+      "focusKeyword": "pizza shop in Narhe"
+    },
+    "createdAt": "2026-02-01T10:00:00.000Z"
+  },
+  {
+    "id": "pm-pune-hinjewadi",
+    "name": "Pizza Mood Hinjewadi",
+    "slug": "pune/hinjewadi",
+    "city": "Pune",
+    "area": "Hinjewadi",
+    "state": "Maharashtra",
+    "country": "India",
+    "postalCode": "411057",
+    "address": "Phase 3 Main Road, Near Tech Park, Hinjewadi, Pune, Maharashtra 411057",
+    "phone": "+91 90969 70369",
+    "whatsapp": "+91 90969 70369",
+    "email": "hinjewadi@pizzamood.in",
+    "latitude": 18.5912,
+    "longitude": 73.7189,
+    "googleMapsUrl": "https://maps.google.com/?q=18.5912,73.7189",
+    "osmUrl": "https://www.openstreetmap.org/?mlat=18.5912&mlon=73.7189#map=16/18.5912/73.7189",
+    "shortDescription": "Fast pizza delivery outlet serving IT corporate hubs in Hinjewadi Phase 3.",
+    "description": "Pizza Mood Hinjewadi delivers piping hot pizzas to IT tech parks and residential societies in Hinjewadi Phase 1, 2 & 3.",
+    "status": "active",
+    "hours": [
+      { "day": "Monday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "01:00 AM" },
+      { "day": "Tuesday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "01:00 AM" },
+      { "day": "Wednesday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "01:00 AM" },
+      { "day": "Thursday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "01:00 AM" },
+      { "day": "Friday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "02:00 AM" },
+      { "day": "Saturday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "02:00 AM" },
+      { "day": "Sunday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "02:00 AM" }
+    ],
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=1000&q=80", "alt": "Pizza Mood Hinjewadi Store" }
+    ],
+    "popularProducts": [
+      { "name": "IT Corporate Party Combo", "price": "₹499", "description": "2 Medium Pizzas + Stuffed Garlic Bread + Drinks.", "badge": "Corporate Special", "image": "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=600&q=80" }
+    ],
+    "amenities": ["Late Night Delivery", "Corporate Catering", "Takeaway"],
+    "nearbyLandmarks": ["Tech Mahindra Hinjewadi", "TCS Phase 3", "Megapolis Hinjewadi"],
+    "seo": {
+      "title": "Best Pizza Store in Hinjewadi, Pune | Pizza Mood Delivery",
+      "description": "Order hot late night pizza in Hinjewadi Phase 1, 2 & 3. Pizza Mood offers fast corporate delivery and combo deals.",
+      "focusKeyword": "best pizza store in Hinjewadi"
+    },
+    "createdAt": "2026-02-10T10:00:00.000Z"
+  },
+  {
+    "id": "pm-pune-shivane",
+    "name": "Pizza Mood Shivane",
+    slug: "pune/shivane",
+    "city": "Pune",
+    "area": "Shivane",
+    "state": "Maharashtra",
+    "country": "India",
+    "postalCode": "411023",
+    "address": "Shop No-9, Ashirvad Garden, Ingale Colony, NDA Road, Shivane, Pune, Maharashtra 411023",
+    "phone": "+91 90969 70369",
+    "whatsapp": "+91 90969 70369",
+    "email": "shivane@pizzamood.in",
+    "latitude": 18.4682,
+    "longitude": 73.7845,
+    "googleMapsUrl": "https://maps.google.com/?q=18.4682,73.7845",
+    "osmUrl": "https://www.openstreetmap.org/?mlat=18.4682&mlon=73.7845#map=16/18.4682/73.7845",
+    "shortDescription": "Cozy QSR outlet on NDA Road, Shivane serving fresh pizzas.",
+    "description": "Pizza Mood Shivane brings our signature ₹4 Lakh franchise model in action near NDA Road, serving Ingale Colony & Uttam Nagar.",
+    "status": "active",
+    "hours": [
+      { "day": "Monday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Tuesday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Wednesday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Thursday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Friday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:30 PM" },
+      { "day": "Saturday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:30 PM" },
+      { "day": "Sunday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:30 PM" }
+    ],
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1000&q=80", "alt": "Pizza Mood Shivane Store" }
+    ],
+    "popularProducts": [
+      { "name": "Peri Peri Veggie Fest", "price": "₹229", "description": "Spicy peri-peri dust with corn, olives & peppers.", "badge": "Popular", "image": "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=600&q=80" }
+    ],
+    "amenities": ["Dine-In", "Takeaway", "Delivery"],
+    "nearbyLandmarks": ["Ashirvad Garden", "Ingale Colony", "NDA Road Shivane"],
+    "seo": {
+      "title": "Pizza Shop in Shivane, Pune | Pizza Mood NDA Road",
+      "description": "Find Pizza Mood in Shivane near Ingale Colony NDA Road. Explore store opening hours, contact details and fast pizza delivery.",
+      "focusKeyword": "pizza shop in Shivane"
+    },
+    "createdAt": "2026-02-15T10:00:00.000Z"
+  },
+  {
+    "id": "pm-pune-kharadi",
+    "name": "Pizza Mood Kharadi",
+    "slug": "pune/kharadi",
+    "city": "Pune",
+    "area": "Kharadi",
+    "state": "Maharashtra",
+    "country": "India",
+    "postalCode": "411014",
+    "address": "Shop 4, Ground Floor, World Trade Center Road, Opposite EON Free Zone, Kharadi, Pune, Maharashtra 411014",
+    "phone": "+91 90969 70369",
+    "whatsapp": "+91 90969 70369",
+    "email": "kharadi@pizzamood.in",
+    "latitude": 18.5518,
+    "longitude": 73.9463,
+    "googleMapsUrl": "https://maps.google.com/?q=18.5518,73.9463",
+    "osmUrl": "https://www.openstreetmap.org/?mlat=18.5518&mlon=73.9463#map=16/18.5518/73.9463",
+    "shortDescription": "Prime pizza store opposite EON Free Zone & WTC Kharadi.",
+    "description": "Pizza Mood Kharadi serves fresh-baked artisanal pizzas, 100% mozzarella cheese crusts, tandoori paneer specials, crispy garlic bread, and sizzling sides.",
+    "status": "active",
+    "hours": [
+      { "day": "Monday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Tuesday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Wednesday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Thursday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Friday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:59 PM" },
+      { "day": "Saturday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:59 PM" },
+      { "day": "Sunday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:59 PM" }
+    ],
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1000&q=80", "alt": "Pizza Mood Kharadi Store" }
+    ],
+    "popularProducts": [
+      { "name": "Tandoori Paneer Overload", "price": "₹249", "description": "Cottage cheese cubes in Indian spices.", "badge": "Bestseller", "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80" }
+    ],
+    "amenities": ["Dine-In", "Takeaway", "Delivery"],
+    "nearbyLandmarks": ["EON Free Zone Kharadi", "World Trade Center Pune"],
+    "seo": {
+      "title": "Best Pizza Store in Kharadi, Pune | Pizza Mood Store & Delivery",
+      "description": "Looking for the best pizza in Kharadi, Pune? Visit Pizza Mood Kharadi for fresh pizzas, garlic bread, store hours & directions.",
+      "focusKeyword": "best pizza store in Kharadi"
+    },
+    "createdAt": "2026-02-18T10:00:00.000Z"
+  },
+  {
+    "id": "pm-mumbai-andheri-west",
+    "name": "Pizza Mood Andheri West",
+    "slug": "mumbai/andheri-west",
+    "city": "Mumbai",
+    "area": "Andheri West",
+    "state": "Maharashtra",
+    "country": "India",
+    "postalCode": "400053",
+    "address": "Shop 1016, Adarsh Nagar, Opp. Oriental College, New Link Road, Jogeshwari-Andheri West, Mumbai, Maharashtra 400053",
+    "phone": "+91 97683 41261",
+    "whatsapp": "+91 97683 41261",
+    "email": "andheri@pizzamood.in",
+    "latitude": 19.1363,
+    "longitude": 72.8277,
+    "googleMapsUrl": "https://maps.google.com/?q=19.1363,72.8277",
+    "osmUrl": "https://www.openstreetmap.org/?mlat=19.1363&mlon=72.8277#map=16/19.1363/72.8277",
+    "shortDescription": "High-street takeaway pizza hub on New Link Road, Andheri West.",
+    "description": "Pizza Mood Andheri West serves the energetic youth and entertainment capital of Mumbai with fast, piping hot takeaway pizzas and late night snacks.",
+    "status": "active",
+    "hours": [
+      { "day": "Monday", "isClosed": false, "openingTime": "12:00 PM", "closingTime": "02:00 AM" },
+      { "day": "Tuesday", "isClosed": false, "openingTime": "12:00 PM", "closingTime": "02:00 AM" },
+      { "day": "Wednesday", "isClosed": false, "openingTime": "12:00 PM", "closingTime": "02:00 AM" },
+      { "day": "Thursday", "isClosed": false, "openingTime": "12:00 PM", "closingTime": "02:00 AM" },
+      { "day": "Friday", "isClosed": false, "openingTime": "12:00 PM", "closingTime": "03:00 AM" },
+      { "day": "Saturday", "isClosed": false, "openingTime": "12:00 PM", "closingTime": "03:00 AM" },
+      { "day": "Sunday", "isClosed": false, "openingTime": "12:00 PM", "closingTime": "03:00 AM" }
+    ],
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1590947132387-155cc02f3212?auto=format&fit=crop&w=1000&q=80", "alt": "Pizza Mood Andheri West Store" }
+    ],
+    "popularProducts": [
+      { "name": "Bombay Schezwan Blast", "price": "₹279", "description": "Spicy Schezwan sauce base loaded with cheese.", "badge": "Mumbai Special", "image": "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=600&q=80" }
+    ],
+    "amenities": ["Takeaway Counter", "Late Night Delivery", "Online Ordering"],
+    "nearbyLandmarks": ["Oriental College", "Adarsh Nagar", "New Link Road Jogeshwari"],
+    "seo": {
+      "title": "Best Pizza Store in Andheri West, Mumbai | Pizza Mood",
+      "description": "Order hot pizzas in Jogeshwari & Andheri West. Pizza Mood offers fast delivery, opening hours & quick takeaway.",
+      "focusKeyword": "best pizza store in Andheri West"
+    },
+    "createdAt": "2026-02-20T10:00:00.000Z"
+  },
+  {
+    "id": "pm-mumbai-malad-west",
+    "name": "Pizza Mood Malad West",
+    "slug": "mumbai/malad-west",
+    "city": "Mumbai",
+    "area": "Malad West",
+    "state": "Maharashtra",
+    "country": "India",
+    "postalCode": "400064",
+    "address": "Shop 280, Link Road Market, Near Inorbit Mall, Malad West, Mumbai, Maharashtra 400064",
+    "phone": "+91 74000 44470",
+    "whatsapp": "+91 74000 44470",
+    "email": "malad@pizzamood.in",
+    "latitude": 19.1860,
+    "longitude": 72.8350,
+    "googleMapsUrl": "https://maps.google.com/?q=19.1860,72.8350",
+    "osmUrl": "https://www.openstreetmap.org/?mlat=19.1860&mlon=72.8350#map=16/19.1860/72.8350",
+    "shortDescription": "Popular QSR pizza outlet near Inorbit Mall in Malad West.",
+    "description": "Pizza Mood Malad West brings fresh oven-baked pizzas, cheesy breads & fast food delivery to residents of Malad & Goregaon.",
+    "status": "active",
+    "hours": [
+      { "day": "Monday", "isClosed": false, "openingTime": "11:30 AM", "closingTime": "11:30 PM" },
+      { "day": "Tuesday", "isClosed": false, "openingTime": "11:30 AM", "closingTime": "11:30 PM" },
+      { "day": "Wednesday", "isClosed": false, "openingTime": "11:30 AM", "closingTime": "11:30 PM" },
+      { "day": "Thursday", "isClosed": false, "openingTime": "11:30 AM", "closingTime": "11:30 PM" },
+      { "day": "Friday", "isClosed": false, "openingTime": "11:30 AM", "closingTime": "01:00 AM" },
+      { "day": "Saturday", "isClosed": false, "openingTime": "11:30 AM", "closingTime": "01:00 AM" },
+      { "day": "Sunday", "isClosed": false, "openingTime": "11:30 AM", "closingTime": "01:00 AM" }
+    ],
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?auto=format&fit=crop&w=1000&q=80", "alt": "Pizza Mood Malad West Store" }
+    ],
+    "popularProducts": [
+      { "name": "Cheese Melt Paneer", "price": "₹259", "description": "Loaded with cottage cheese & liquid cheddar.", "badge": "Bestseller", "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80" }
+    ],
+    "amenities": ["Dine-In", "Takeaway", "Delivery"],
+    "nearbyLandmarks": ["Inorbit Mall Malad", "Link Road Market", "Mindspace Malad"],
+    "seo": {
+      "title": "Pizza Shop in Malad West, Mumbai | Pizza Mood Store",
+      "description": "Looking for fresh pizza in Malad West near Inorbit Mall? Contact Pizza Mood for menu, timings & directions.",
+      "focusKeyword": "pizza shop in Malad West"
+    },
+    "createdAt": "2026-02-22T10:00:00.000Z"
+  },
+  {
+    "id": "pm-pcmc-chinchwad",
+    "name": "Pizza Mood Chinchwad",
+    "slug": "pcmc/chinchwad",
+    "city": "PCMC",
+    "area": "Chinchwad",
+    "state": "Maharashtra",
+    "country": "India",
+    "postalCode": "411033",
+    "address": "Shop 8, Fountain Market Road, Near DY Patil College, Akurdi-Chinchwad, PCMC, Pune, Maharashtra 411033",
+    "phone": "+91 90969 70369",
+    "whatsapp": "+91 90969 70369",
+    "email": "chinchwad@pizzamood.in",
+    "latitude": 18.6476,
+    "longitude": 73.7712,
+    "googleMapsUrl": "https://maps.google.com/?q=18.6476,73.7712",
+    "osmUrl": "https://www.openstreetmap.org/?mlat=18.6476&mlon=73.7712#map=16/18.6476/73.7712",
+    "shortDescription": "Favorite student hangout spot near DY Patil College Akurdi & Chinchwad.",
+    "description": "Pizza Mood Chinchwad brings student saver combos, cheese burst pizzas and cold beverages to the bustling student hub of PCMC.",
+    "status": "active",
+    "hours": [
+      { "day": "Monday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Tuesday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Wednesday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Thursday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },
+      { "day": "Friday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:30 PM" },
+      { "day": "Saturday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:30 PM" },
+      { "day": "Sunday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:30 PM" }
+    ],
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80", "alt": "Pizza Mood Chinchwad Store" }
+    ],
+    "popularProducts": [
+      { "name": "Student Value Combo", "price": "₹199", "description": "Personal Pizza + Garlic Bread + Cold Drink.", "badge": "Best Value", "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80" }
+    ],
+    "amenities": ["Dine-In", "Takeaway", "Delivery", "Free Wi-Fi"],
+    "nearbyLandmarks": ["DY Patil International University", "Fountain Market", "Akurdi Railway Station"],
+    "seo": {
+      "title": "Best Pizza Store in Chinchwad, PCMC | Pizza Mood Akurdi",
+      "description": "Find Pizza Mood Chinchwad near DY Patil College. Explore menu, opening hours, contact details and fast pizza delivery.",
+      "focusKeyword": "best pizza store in Chinchwad"
+    },
+    "createdAt": "2026-02-25T10:00:00.000Z"
+  }
+]

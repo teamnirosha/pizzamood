@@ -1,239 +1,290 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import {
-  ArrowRight,
-//   Facebook,
-//   Instagram,
-//   Linkedin,
-  Mail,
-  MapPin,
   Phone,
+  MessageSquare,
+  MapPin,
+  Mail,
+  ArrowRight,
+  ShieldCheck,
+  Lock,
 } from "lucide-react";
+import FranchiseModal from "./FranchiseModal";
 
-const quickLinks = [
-  { name: "Home", href: "/" },
-  { name: "How It Works", href: "/how-it-works" },
-  { name: "Why PizzaLoot", href: "/why-pizzaloot" },
-  { name: "What We Provide", href: "/what-we-provide" },
-];
+function InstagramIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+    </svg>
+  );
+}
 
-const businessLinks = [
-  { name: "Partnership Plans", href: "/partnership-plans" },
-  { name: "Success Stories", href: "/success-stories" },
-  { name: "FAQ", href: "/faq" },
-  { name: "Contact Us", href: "/contact" },
-];
+function FacebookIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+    </svg>
+  );
+}
 
 export default function Footer() {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
-    <footer className="bg-slate-950 text-white">
-      {/* Main Footer */}
-      <div className="mx-auto max-w-7xl px-6 pb-10 pt-16 sm:px-8 lg:px-12 lg:pt-20">
-        <div className="grid gap-12 lg:grid-cols-[1.4fr_0.8fr_0.8fr_1.2fr]">
-          {/* Brand */}
-          <div className="max-w-md">
-            <Link href="/" className="inline-flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-500 text-xl font-black text-white shadow-lg shadow-orange-500/20">
-                P
-              </div>
-
-              <div>
-                <span className="block text-2xl font-black tracking-tight">
-                  Pizza<span className="text-orange-500">Loot</span>
-                </span>
-
-                <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                  Pizza Partnership
-                </span>
-              </div>
-            </Link>
-
-            <p className="mt-6 text-sm leading-7 text-slate-400">
-              Your shop. Our brand. More growth. PizzaLoot helps shopkeepers
-              and food entrepreneurs build a pizza business with a strong
-              brand identity, proven systems, recipes, training, marketing
-              support, and ongoing business guidance.
-            </p>
-
-            {/* Social Icons */}
-            <div className="mt-7 flex items-center gap-3">
-              <a
-                href="#"
-                aria-label="Facebook"
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-400 transition hover:border-orange-500 hover:bg-orange-500 hover:text-white"
-              >
-                {/* <Facebook className="h-4 w-4" /> */}
-              </a>
-
-              <a
-                href="#"
-                aria-label="Instagram"
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-400 transition hover:border-orange-500 hover:bg-orange-500 hover:text-white"
-              >
-                {/* <Instagram className="h-4 w-4" /> */}
-              </a>
-
-              <a
-                href="#"
-                aria-label="LinkedIn"
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-400 transition hover:border-orange-500 hover:bg-orange-500 hover:text-white"
-              >
-                {/* <Linkedin className="h-4 w-4" /> */}
-              </a>
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-white">
-              Quick Links
-            </h3>
-
-            <ul className="mt-6 space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="group inline-flex items-center text-sm text-slate-400 transition hover:text-orange-400"
-                  >
-                    <ArrowRight className="mr-2 h-3.5 w-3.5 -translate-x-1 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Business */}
-          <div>
-            <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-white">
-              Business
-            </h3>
-
-            <ul className="mt-6 space-y-3">
-              {businessLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="group inline-flex items-center text-sm text-slate-400 transition hover:text-orange-400"
-                  >
-                    <ArrowRight className="mr-2 h-3.5 w-3.5 -translate-x-1 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-white">
-              Get In Touch
-            </h3>
-
-            <div className="mt-6 space-y-5">
-              {/* Phone */}
-              <a
-                href="tel:+919876543210"
-                className="group flex items-start gap-3"
-              >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500/10 text-orange-500 transition group-hover:bg-orange-500 group-hover:text-white">
-                  <Phone className="h-4 w-4" />
-                </div>
-
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Phone
-                  </p>
-                  <p className="mt-1 text-sm font-semibold text-slate-300 transition group-hover:text-orange-400">
-                    +91 98765 43210
-                  </p>
-                </div>
-              </a>
-
-              {/* Email */}
-              <a
-                href="mailto:hello@pizzaloot.com"
-                className="group flex items-start gap-3"
-              >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500/10 text-orange-500 transition group-hover:bg-orange-500 group-hover:text-white">
-                  <Mail className="h-4 w-4" />
-                </div>
-
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Email
-                  </p>
-                  <p className="mt-1 break-all text-sm font-semibold text-slate-300 transition group-hover:text-orange-400">
-                    hello@pizzaloot.com
-                  </p>
-                </div>
-              </a>
-
-              {/* Location */}
-              <div className="flex items-start gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500/10 text-orange-500">
-                  <MapPin className="h-4 w-4" />
-                </div>
-
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Location
-                  </p>
-                  <p className="mt-1 text-sm font-semibold text-slate-300">
-                    Maharashtra, India
-                  </p>
-                </div>
+    <>
+      <footer className="border-t border-slate-200 bg-slate-950 text-white pt-16 pb-24 md:pb-12">
+        {/* Banner CTA */}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-sky-600 via-sky-500 to-yellow-500 p-8 sm:p-12 shadow-2xl">
+            <div className="relative z-10 max-w-2xl">
+              <span className="inline-block rounded-full bg-yellow-400 px-3.5 py-1 text-xs font-black uppercase tracking-wider text-slate-900 shadow-sm">
+                Franchise Opportunity
+              </span>
+              <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl text-white">
+                Ready to Start Your Pizza Mood Franchise?
+              </h2>
+              <p className="mt-2 text-sm font-medium text-sky-50 sm:text-base">
+                Tell us where you want to open your outlet and our franchise team will guide you through site selection, setup, and store launch.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-4">
+                <button
+                  onClick={() => setModalOpen(true)}
+                  className="group flex items-center gap-2 rounded-2xl bg-white px-6 py-3.5 text-sm font-black text-sky-600 shadow-xl transition hover:bg-slate-100"
+                >
+                  Start Your Franchise Now
+                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                </button>
+                <a
+                  href="https://wa.me/919096970369?text=Hi%20Pizza%20Mood,%20I%20want%20to%20know%20more%20about%20starting%20a%20franchise."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-emerald-700"
+                >
+                  <MessageSquare className="h-4 w-4" /> WhatsApp Franchise Team
+                </a>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* CTA */}
-        <div className="mt-14 overflow-hidden rounded-[2rem] bg-orange-500 p-7 sm:p-8">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          {/* Main Footer Links */}
+          <div className="mt-16 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
+            {/* Col 1: Brand info */}
+            <div className="lg:col-span-2 space-y-4">
+              <Link href="/" className="flex items-center">
+                <img src="/logo.svg" alt="Pizza Mood" className="h-14 w-14 object-contain" />
+              </Link>
+
+              <p className="text-xs font-medium text-slate-400 leading-relaxed max-w-sm">
+                Pizza Mood is India's fast-growing pizza and fast-food QSR franchise brand. Built for aspiring entrepreneurs to launch high-profit takeaway & small QSR stores starting from ₹4 Lakh investment.
+              </p>
+
+              <div className="space-y-2 text-xs font-semibold text-slate-300 pt-2">
+                <div className="flex items-start gap-2">
+                  <Phone className="h-4 w-4 text-sky-400 shrink-0 mt-0.5" />
+                  <div>
+                    <a href="tel:+919096970369" className="hover:text-white block">+91 90969 70369</a>
+                    <a href="tel:+918390909027" className="hover:text-white block">+91 83909 09027</a>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Mail className="h-4 w-4 text-sky-400 shrink-0 mt-0.5" />
+                  <div>
+                    <a href="mailto:info@pizzamood.in" className="hover:text-white block font-bold text-sky-400">info@pizzamood.in</a>
+                    <a href="mailto:pizzamoodho@gmail.com" className="hover:text-white block text-slate-400 text-[11px]">pizzamoodho@gmail.com</a>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <MapPin className="h-4 w-4 text-sky-400 shrink-0 mt-0.5" />
+                  <span>HQ: Mauli Krupa Complex, Karve Nagar, Pune, Maharashtra 411052</span>
+                </div>
+              </div>
+
+              {/* Social Links */}
+              <div className="flex items-center gap-3 pt-2">
+                <a
+                  href="https://instagram.com/pizzamoodpune"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 rounded-xl bg-slate-900 border border-slate-800 px-3 py-1.5 text-xs font-bold text-pink-400 hover:bg-slate-800 transition"
+                >
+                  <InstagramIcon className="h-3.5 w-3.5" /> @pizzamoodpune
+                </a>
+                <a
+                  href="https://facebook.com/pizzamood11"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 rounded-xl bg-slate-900 border border-slate-800 px-3 py-1.5 text-xs font-bold text-blue-400 hover:bg-slate-800 transition"
+                >
+                  <FacebookIcon className="h-3.5 w-3.5" /> facebook.com/pizzamood11
+                </a>
+              </div>
+            </div>
+
+            {/* Col 2: Navigation */}
             <div>
-              <p className="text-xl font-black text-white sm:text-2xl">
-                Ready to build with PizzaLoot?
-              </p>
-
-              <p className="mt-1 text-sm text-orange-50">
-                Start your partnership journey with us.
-              </p>
+              <h3 className="text-xs font-black uppercase tracking-wider text-yellow-400">
+                Franchise Hub
+              </h3>
+              <ul className="mt-4 space-y-2.5 text-xs font-semibold text-slate-400">
+                <li>
+                  <Link href="/franchise" className="hover:text-white">
+                    Franchise Overview
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/how-it-works" className="hover:text-white">
+                    7-Step Launch Process
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/investment" className="hover:text-white">
+                    ₹4 Lakh Investment Breakdown
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/support" className="hover:text-white">
+                    360° Operational Support
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/faq" className="hover:text-white">
+                    Franchise FAQs
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/contact" className="hover:text-white">
+                    Franchise Enquiry Form
+                  </Link>
+                </li>
+              </ul>
             </div>
 
-            <Link
-              href="/contact#enquiry"
-              className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-orange-600 transition hover:bg-orange-50 sm:w-auto"
-            >
-              Become a Partner
-              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </Link>
+            {/* Col 3: Outlets & SEO */}
+            <div>
+              <h3 className="text-xs font-black uppercase tracking-wider text-yellow-400">
+                Popular Outlets
+              </h3>
+              <ul className="mt-4 space-y-2.5 text-xs font-semibold text-slate-400">
+                <li>
+                  <Link href="/locations/pune/kharadi" className="hover:text-white">
+                    Pizza Mood Kharadi, Pune
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/pune/viman-nagar" className="hover:text-white">
+                    Pizza Mood Viman Nagar, Pune
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/pune/hadapsar" className="hover:text-white">
+                    Pizza Mood Hadapsar, Pune
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/mumbai/andheri-west" className="hover:text-white">
+                    Pizza Mood Andheri West, Mumbai
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations/mumbai/thane-west" className="hover:text-white">
+                    Pizza Mood Thane West, Mumbai
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/locations" className="text-sky-400 font-bold hover:text-sky-300">
+                    Explore All Outlets →
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Col 4: Corporate & Portal */}
+            <div>
+              <h3 className="text-xs font-black uppercase tracking-wider text-yellow-400">
+                Company & Portal
+              </h3>
+              <ul className="mt-4 space-y-2.5 text-xs font-semibold text-slate-400">
+                <li>
+                  <Link href="/gallery" className="hover:text-white">
+                    Photo Gallery
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/admin" className="hover:text-white flex items-center gap-1.5 text-slate-300 font-bold">
+                    <Lock className="h-3.5 w-3.5 text-amber-400" /> Admin Portal
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/privacy-policy" className="hover:text-white">
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/terms" className="hover:text-white">
+                    Terms & Conditions
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Legal Disclaimer */}
+          <div className="mt-12 border-t border-slate-800 pt-8 text-[11px] font-medium text-slate-500 leading-relaxed">
+            <p>
+              <strong className="text-slate-400">Franchise Disclaimer:</strong> Investment requirements, store launch timelines and financial figures displayed on this website starting from ₹4 Lakh are indicative estimates for standard takeaway formats. Actual investment may vary depending on store format, city tier, property condition, equipment selection and local operating factors. Pizza Mood does not make or imply any legally binding guarantees regarding store revenues, customer footfall, or monthly profit margins. Store approval is subject to site viability verification by Pizza Mood brand representatives.
+            </p>
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-between border-t border-slate-900 pt-6 text-xs text-slate-500">
+            <p>© {new Date().getFullYear()} Pizza Mood India. All rights reserved.</p>
+            <div className="mt-3 sm:mt-0 text-slate-950 select-none">
+              Designed and developed by{" "}
+              <a
+                href="https://nirosha.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-950 hover:text-slate-950"
+              >
+                Team Nirosha
+              </a>
+            </div>
           </div>
         </div>
+      </footer>
 
-        {/* Bottom */}
-        <div className="mt-10 flex flex-col gap-5 border-t border-white/10 pt-7 text-sm sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-center text-slate-500 sm:text-left">
-            © {new Date().getFullYear()} PizzaLoot. All rights reserved.
-          </p>
-
-          <div className="flex items-center justify-center gap-5 sm:justify-end">
-            <Link
-              href="/privacy-policy"
-              className="text-slate-500 transition hover:text-orange-400"
-            >
-              Privacy Policy
-            </Link>
-
-            <Link
-              href="/terms"
-              className="text-slate-500 transition hover:text-orange-400"
-            >
-              Terms & Conditions
-            </Link>
-          </div>
-        </div>
+      {/* STICKY MOBILE QUICK-ACTION BAR */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around border-t border-slate-200 bg-white/95 p-2.5 backdrop-blur-md md:hidden shadow-2xl">
+        <a
+          href="tel:+919096970369"
+          className="flex flex-1 flex-col items-center gap-1 py-1 text-[11px] font-bold text-slate-700 hover:text-sky-600"
+        >
+          <Phone className="h-4 w-4 text-sky-600" />
+          <span>Call Us</span>
+        </a>
+        <a
+          href="https://wa.me/919096970369?text=Hi%20Pizza%20Mood,%20I%20want%20franchise%20info."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex flex-1 flex-col items-center gap-1 py-1 text-[11px] font-bold text-slate-700 hover:text-emerald-600"
+        >
+          <MessageSquare className="h-4 w-4 text-emerald-600" />
+          <span>WhatsApp</span>
+        </a>
+        <button
+          onClick={() => setModalOpen(true)}
+          className="flex flex-[1.5] items-center justify-center gap-1.5 rounded-xl bg-sky-500 border border-yellow-400 py-2.5 text-xs font-black text-white shadow-md shadow-sky-500/30"
+        >
+          <span>Enquire Now</span>
+          <ArrowRight className="h-3.5 w-3.5" />
+        </button>
       </div>
-    </footer>
+
+      <FranchiseModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+    </>
   );
 }

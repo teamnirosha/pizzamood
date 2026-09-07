@@ -1,396 +1,170 @@
-"use client";
-import type { FormEvent } from "react";
-import { useState } from "react";
-import {
-    ArrowRight,
-    CheckCircle2,
-    Mail,
-    MapPin,
-    Phone,
-    Store,
-} from "lucide-react";
+import { Metadata } from "next";
+import Link from "next/link";
+import { Phone, Mail, MapPin, MessageSquare, ArrowRight } from "lucide-react";
+
+import FranchiseForm from "../components/FranchiseForm";
+
+function InstagramIcon({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+    </svg>
+  );
+}
+
+function FacebookIcon({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+    </svg>
+  );
+}
+
+export const metadata: Metadata = {
+  title: "Contact Pizza Mood Franchise Team | Enquire Today",
+  description: "Get in touch with Pizza Mood franchise development managers. Phone, WhatsApp, email & office address for franchise opportunities in India.",
+};
 
 export default function ContactPage() {
-    const [loading, setLoading] = useState(false);
-    const [submitted, setSubmitted] = useState(false);
+  return (
+    <div className="bg-slate-50 min-h-screen py-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <span className="inline-block rounded-full bg-sky-100 px-3.5 py-1 text-xs font-black uppercase tracking-wider text-sky-700">
+            Get In Touch
+          </span>
+          <h1 className="mt-3 text-4xl font-black tracking-tight text-slate-900 sm:text-5xl">
+            Contact Pizza Mood Franchise Team
+          </h1>
+          <p className="mt-3 text-sm font-semibold text-slate-600">
+            Have questions about territorial rights, investment breakdown, or store setup? Submit your enquiry below or reach out to our team.
+          </p>
+        </div>
 
-    const handleSubmit = async (
-        e: FormEvent<HTMLFormElement>
-    ) => {
-        e.preventDefault();
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          {/* Contact Details Card */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl space-y-6">
+              <h2 className="text-2xl font-black text-slate-900 border-b border-slate-100 pb-4">
+                Corporate Contact Details
+              </h2>
 
-        if (loading) return;
-
-        setLoading(true);
-
-        const form = e.currentTarget;
-
-        const formData = new FormData(form);
-
-        const data = {
-            name: formData.get("name")?.toString().trim(),
-            phone: formData.get("phone")?.toString().trim(),
-            city: formData.get("city")?.toString().trim(),
-            shopType: formData.get("shopType")?.toString(),
-            message: formData.get("message")?.toString().trim(),
-        };
-
-        try {
-            const response = await fetch("/api/enquiries", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            });
-
-            const result = await response.json();
-
-            if (!response.ok) {
-                throw new Error(
-                    result?.message || "Failed to submit enquiry."
-                );
-            }
-
-            setSubmitted(true);
-            form.reset();
-        } catch (error) {
-            console.error(error);
-            alert("Failed to submit enquiry. Please try again.");
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleNewEnquiry = () => {
-        setSubmitted(false);
-    };
-
-    return (
-        <main className="min-h-screen bg-[#fffaf5] text-slate-900">
-            {/* Hero */}
-            <section className="relative overflow-hidden">
-                <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-orange-200/40 blur-3xl" />
-                <div className="absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-yellow-200/40 blur-3xl" />
-
-                <div className="relative mx-auto max-w-7xl px-6 py-20 sm:px-8 lg:px-12 lg:py-28">
-                    <div className="max-w-3xl">
-                        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-orange-200 bg-white px-4 py-2 text-sm font-semibold text-orange-600 shadow-sm">
-                            <Store className="h-4 w-4" />
-                            PizzaLoot Partnership
-                        </div>
-
-                        <h1 className="text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">
-                            Let&apos;s Grow Your{" "}
-                            <span className="text-orange-500">
-                                Pizza Business
-                            </span>
-                        </h1>
-
-                        <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">
-                            Have a shop or planning to start one? Tell us about
-                            your business and our team will get in touch to
-                            discuss the PizzaLoot partnership opportunity.
-                        </p>
-                    </div>
+              <div className="space-y-5 text-xs font-semibold text-slate-700">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-50 text-sky-600 shrink-0">
+                    <Phone className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] font-black uppercase tracking-wider text-slate-400">Phone / WhatsApp</span>
+                    <a href="tel:+919096970369" className="text-base font-black text-slate-900 hover:text-sky-600 block">
+                      +91 90969 70369
+                    </a>
+                    <a href="tel:+918390909027" className="text-base font-black text-slate-900 hover:text-sky-600 block">
+                      +91 83909 09027
+                    </a>
+                  </div>
                 </div>
-            </section>
 
-            {/* Contact + Form */}
-            <section
-                id="enquiry"
-                className="mx-auto max-w-7xl px-6 pb-20 sm:px-8 lg:px-12 lg:pb-28"
-            >
-                <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-                    {/* Contact Info */}
-                    <div className="rounded-[2rem] bg-slate-900 p-8 text-white shadow-xl sm:p-10">
-                        <div className="max-w-md">
-                            <p className="text-sm font-bold uppercase tracking-[0.2em] text-orange-400">
-                                Get In Touch
-                            </p>
-
-                            <h2 className="mt-4 text-3xl font-black sm:text-4xl">
-                                Let&apos;s talk about your shop.
-                            </h2>
-
-                            <p className="mt-5 leading-7 text-slate-300">
-                                Whether you already run a food shop or are
-                                planning a new outlet, we&apos;d love to
-                                understand your plans and explain how the
-                                PizzaLoot partnership works.
-                            </p>
-
-                            <div className="mt-10 space-y-6">
-                                <div className="flex items-start gap-4">
-                                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-orange-500">
-                                        <Phone className="h-5 w-5 text-white" />
-                                    </div>
-
-                                    <div>
-                                        <p className="text-sm font-semibold text-slate-400">
-                                            Phone
-                                        </p>
-                                        <p className="mt-1 font-semibold text-white">
-                                            +91 98765 43210
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="flex items-start gap-4">
-                                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-orange-500">
-                                        <Mail className="h-5 w-5 text-white" />
-                                    </div>
-
-                                    <div>
-                                        <p className="text-sm font-semibold text-slate-400">
-                                            Email
-                                        </p>
-                                        <p className="mt-1 font-semibold text-white">
-                                            hello@pizzaloot.com
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="flex items-start gap-4">
-                                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-orange-500">
-                                        <MapPin className="h-5 w-5 text-white" />
-                                    </div>
-
-                                    <div>
-                                        <p className="text-sm font-semibold text-slate-400">
-                                            Location
-                                        </p>
-                                        <p className="mt-1 font-semibold text-white">
-                                            Maharashtra, India
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-5">
-                                <p className="text-sm font-semibold text-orange-400">
-                                    Who can partner?
-                                </p>
-
-                                <p className="mt-2 text-sm leading-6 text-slate-300">
-                                    Existing shopkeepers, food entrepreneurs,
-                                    and new business owners looking to build a
-                                    pizza-focused outlet with the PizzaLoot
-                                    brand.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Enquiry Form */}
-                    <div className="rounded-[2rem] border border-orange-100 bg-white p-8 shadow-xl sm:p-10">
-                        {!submitted ? (
-                            <>
-                                <div>
-                                    <p className="text-sm font-bold uppercase tracking-[0.2em] text-orange-500">
-                                        Enquiry Form
-                                    </p>
-
-                                    <h2 className="mt-3 text-3xl font-black text-slate-900">
-                                        Become a PizzaLoot Partner
-                                    </h2>
-
-                                    <p className="mt-3 text-slate-600">
-                                        Fill in your details and tell us a
-                                        little about your business.
-                                    </p>
-                                </div>
-
-                                <form
-                                    onSubmit={handleSubmit}
-                                    className="mt-8 space-y-5"
-                                >
-                                    {/* Name */}
-                                    <div>
-                                        <label
-                                            htmlFor="name"
-                                            className="mb-2 block text-sm font-bold text-slate-700"
-                                        >
-                                            Full Name
-                                        </label>
-
-                                        <input
-                                            id="name"
-                                            name="name"
-                                            type="text"
-                                            required
-                                            placeholder="Enter your name"
-                                            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-orange-500 focus:bg-white focus:ring-4 focus:ring-orange-500/10"
-                                        />
-                                    </div>
-
-                                    {/* Phone */}
-                                    <div>
-                                        <label
-                                            htmlFor="phone"
-                                            className="mb-2 block text-sm font-bold text-slate-700"
-                                        >
-                                            Phone Number
-                                        </label>
-
-                                        <input
-                                            id="phone"
-                                            name="phone"
-                                            type="tel"
-                                            required
-                                            placeholder="Enter your phone number"
-                                            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-orange-500 focus:bg-white focus:ring-4 focus:ring-orange-500/10"
-                                        />
-                                    </div>
-
-                                    {/* City */}
-                                    <div>
-                                        <label
-                                            htmlFor="city"
-                                            className="mb-2 block text-sm font-bold text-slate-700"
-                                        >
-                                            City
-                                        </label>
-
-                                        <input
-                                            id="city"
-                                            name="city"
-                                            type="text"
-                                            required
-                                            placeholder="Enter your city"
-                                            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-orange-500 focus:bg-white focus:ring-4 focus:ring-orange-500/10"
-                                        />
-                                    </div>
-
-                                    {/* Shop Type */}
-                                    <div>
-                                        <label
-                                            htmlFor="shopType"
-                                            className="mb-2 block text-sm font-bold text-slate-700"
-                                        >
-                                            Business Type
-                                        </label>
-
-                                        <select
-                                            id="shopType"
-                                            name="shopType"
-                                            required
-                                            defaultValue=""
-                                            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm text-slate-900 outline-none transition focus:border-orange-500 focus:bg-white focus:ring-4 focus:ring-orange-500/10"
-                                        >
-                                            <option value="" disabled>
-                                                Select your business type
-                                            </option>
-                                            <option value="existing">
-                                                I already have a shop
-                                            </option>
-                                            <option value="new">
-                                                I want to start a new shop
-                                            </option>
-                                            <option value="food-business">
-                                                I already run a food business
-                                            </option>
-                                        </select>
-                                    </div>
-
-                                    {/* Message */}
-                                    <div>
-                                        <label
-                                            htmlFor="message"
-                                            className="mb-2 block text-sm font-bold text-slate-700"
-                                        >
-                                            Message
-                                        </label>
-
-                                        <textarea
-                                            id="message"
-                                            name="message"
-                                            rows={5}
-                                            placeholder="Tell us about your shop, location, plans, or any questions..."
-                                            className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-orange-500 focus:bg-white focus:ring-4 focus:ring-orange-500/10"
-                                        />
-                                    </div>
-
-                                    {/* Submit */}
-                                    <button
-                                        type="submit"
-                                        disabled={loading}
-                                        className="group flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 px-6 py-4 text-sm font-bold text-white transition hover:bg-orange-600 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
-                                    >
-                                        {loading
-                                            ? "Sending..."
-                                            : "Send Enquiry"}
-
-                                        {!loading && (
-                                            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                                        )}
-                                    </button>
-
-                                    <p className="text-center text-xs leading-5 text-slate-400">
-                                        By submitting this form, you&apos;re
-                                        expressing interest in a PizzaLoot
-                                        partnership. Our team will contact you
-                                        to discuss the next steps.
-                                    </p>
-                                </form>
-                            </>
-                        ) : (
-                            /* Success State */
-                            <div className="flex min-h-[560px] flex-col items-center justify-center text-center">
-                                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-50">
-                                    <CheckCircle2 className="h-10 w-10 text-green-500" />
-                                </div>
-
-                                <h2 className="mt-7 text-3xl font-black text-slate-900">
-                                    Enquiry received!
-                                </h2>
-
-                                <p className="mt-4 max-w-md leading-7 text-slate-600">
-                                    Thank you for your interest in PizzaLoot.
-                                    Your enquiry has been submitted
-                                    successfully. Our team will get in touch
-                                    with you soon.
-                                </p>
-
-                                <button
-                                    type="button"
-                                    onClick={handleNewEnquiry}
-                                    className="group mt-8 inline-flex items-center gap-2 rounded-xl bg-orange-500 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-orange-600"
-                                >
-                                    Send Another Enquiry
-
-                                    <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                                </button>
-                            </div>
-                        )}
-                    </div>
+                <div className="flex items-start gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-50 text-sky-600 shrink-0">
+                    <Mail className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] font-black uppercase tracking-wider text-slate-400">Official Email</span>
+                    <a href="mailto:info@pizzamood.in" className="text-sm font-black text-sky-600 hover:underline block">
+                      info@pizzamood.in
+                    </a>
+                    <a href="mailto:pizzamoodho@gmail.com" className="text-xs font-bold text-slate-500 hover:underline block">
+                      pizzamoodho@gmail.com
+                    </a>
+                  </div>
                 </div>
-            </section>
 
-            {/* Bottom CTA */}
-            <section className="border-t border-orange-100 bg-white">
-                <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 lg:px-12">
-                    <div className="rounded-[2rem] bg-orange-500 px-8 py-12 text-center sm:px-12">
-                        <h2 className="text-3xl font-black text-white sm:text-4xl">
-                            Ready to build with PizzaLoot?
-                        </h2>
-
-                        <p className="mx-auto mt-4 max-w-2xl text-orange-50">
-                            Start a conversation with our team and explore how
-                            the PizzaLoot partnership can fit your business.
-                        </p>
-
-                        <a
-                            href="#enquiry"
-                            className="mt-7 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-orange-600 transition hover:bg-orange-50"
-                        >
-                            Become a Partner
-
-                            <ArrowRight className="h-5 w-5" />
-                        </a>
-                    </div>
+                <div className="flex items-start gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-pink-50 text-pink-600 shrink-0">
+                    <InstagramIcon className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] font-black uppercase tracking-wider text-slate-400">Instagram Handle</span>
+                    <a
+                      href="https://instagram.com/pizzamoodpune"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-black text-slate-900 hover:text-pink-600"
+                    >
+                      @pizzamoodpune
+                    </a>
+                  </div>
                 </div>
-            </section>
-        </main>
-    );
+
+                <div className="flex items-start gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 shrink-0">
+                    <FacebookIcon className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] font-black uppercase tracking-wider text-slate-400">Facebook Page</span>
+                    <a
+                      href="https://facebook.com/pizzamood11"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-black text-slate-900 hover:text-blue-600"
+                    >
+                      facebook.com/pizzamood11
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-50 text-amber-600 shrink-0">
+                    <MapPin className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] font-black uppercase tracking-wider text-slate-400">HQ Office</span>
+                    <span className="text-slate-900 font-bold leading-relaxed">
+                      Mauli Krupa Complex, Karve Nagar, Pune, Maharashtra 411052
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-slate-100">
+                <a
+                  href="https://wa.me/919096970369?text=Hi%20Pizza%20Mood,%20I%20want%20to%20know%20more%20about%20franchise."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-600 py-3.5 text-xs font-black text-white shadow-lg shadow-emerald-600/30 hover:bg-emerald-700 transition"
+                >
+                  <MessageSquare className="h-4 w-4" /> Connect Directly on WhatsApp
+                </a>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+              <h3 className="text-base font-black text-slate-900">Looking for an existing store?</h3>
+              <p className="text-xs text-slate-600 mt-1 font-medium">Check address, timings and contact details of active Pizza Mood outlets across India.</p>
+              <Link href="/locations" className="mt-4 inline-flex items-center gap-1.5 text-xs font-black text-sky-600 hover:underline">
+                View Locations Directory <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Embedded Franchise Application Form */}
+          <div className="lg:col-span-7 rounded-3xl border border-slate-200 bg-white p-8 shadow-xl">
+            <h2 className="text-2xl font-black text-slate-900">Start Your Franchise Application</h2>
+            <p className="mt-1 text-xs font-medium text-slate-600 mb-6">
+              Fill out the form below to request a direct call back from our franchise business development manager.
+            </p>
+
+            <FranchiseForm />
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  );
 }

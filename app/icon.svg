@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <!-- Outer Yellow Border Circle -->
+  <circle cx="250" cy="250" r="240" fill="#EAD800" />
+  
+  <!-- Inner Electric Blue Circle -->
+  <circle cx="250" cy="250" r="210" fill="#009AD8" />
+  
+  <!-- Pizza Slice icon over i -->
+  <g transform="translate(180, 95) scale(0.65)">
+    <polygon points="40,10 75,75 5,75" fill="#EAD800" stroke="#7C2D12" stroke-width="3" />
+    <polygon points="38,18 68,70 12,70" fill="#D92323" />
+    <circle cx="35" cy="45" r="7" fill="#FACC15" />
+    <circle cx="50" cy="60" r="6" fill="#FACC15" />
+    <circle cx="25" cy="62" r="5" fill="#FACC15" />
+  </g>
+
+  <!-- PIZZA Text -->
+  <text x="250" y="230" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="76" fill="#FFFFFF" letter-spacing="2">
+    PiZZA
+  </text>
+  
+  <!-- MOOD Text with Pizza O's -->
+  <g transform="translate(0, 335)">
+    <!-- M -->
+    <text x="110" y="0" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="82" fill="#FFFFFF">M</text>
+    
+    <!-- First Pizza O -->
+    <g transform="translate(205, -30)">
+      <circle cx="0" cy="0" r="32" fill="#EAD800" />
+      <circle cx="0" cy="0" r="28" fill="#D92323" />
+      <circle cx="-10" cy="-10" r="7" fill="#FACC15" />
+      <circle cx="10" cy="-5" r="6" fill="#FACC15" />
+      <circle cx="-5" cy="12" r="8" fill="#FACC15" />
+      <circle cx="12" cy="10" r="5" fill="#FACC15" />
+    </g>
+
+    <!-- Second Pizza O -->
+    <g transform="translate(295, -30)">
+      <circle cx="0" cy="0" r="32" fill="#EAD800" />
+      <circle cx="0" cy="0" r="28" fill="#D92323" />
+      <circle cx="-8" cy="-8" r="6" fill="#FACC15" />
+      <circle cx="12" cy="-6" r="7" fill="#FACC15" />
+      <circle cx="0" cy="10" r="7" fill="#FACC15" />
+    </g>
+
+    <!-- D -->
+    <text x="390" y="0" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="82" fill="#FFFFFF">D</text>
+  </g>
+
+  <!-- Smile with Tongue Graphic -->
+  <path d="M 160 380 Q 250 440 340 380" fill="none" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round" />
+  <path d="M 315 390 Q 330 365 345 385" fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" />
+</svg>

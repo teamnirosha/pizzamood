@@ -1,5 +1,31 @@
 [
   {
+    "id": "PM-549840",
+    "name": "Test User",
+    "phone": "9876543210",
+    "whatsapp": "9876543210",
+    "email": "",
+    "city": "Pune",
+    "preferredLocation": "Pune",
+    "investmentBudget": "₹4–6 Lakh",
+    "ownsProperty": false,
+    "preferredStoreType": "Takeaway",
+    "timeline": "Within 30 days",
+    "message": "",
+    "status": "new",
+    "notes": [
+      "Submitted via website franchise enquiry form on 9/7/2026"
+    ],
+    "assignedTo": "Unassigned",
+    "source": {
+      "landingPage": "/",
+      "referrer": "direct",
+      "device": "desktop"
+    },
+    "createdAt": "2026-09-07T13:59:09.840Z",
+    "updatedAt": "2026-09-07T13:59:09.840Z"
+  },
+  {
     "id": "PL-1788439376973",
     "name": "Ahmad Raza",
     "phone": "8937951234",
