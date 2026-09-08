@@ -1,7 +1,7 @@
 import { Metadata } from "next";
-import { getSiteSettings, getFAQs } from "@/lib/db";
+import { getFAQs } from "@/lib/db";
 import WhyPizzaMood from "../components/WhyPizzaMood";
-import InvestmentSection from "../components/InvestmentSection";
+import FranchiseInvestmentSection from "../components/FranchiseInvestmentSection";
 import LaunchTimeline from "../components/LaunchTimeline";
 import SupportSection from "../components/SupportSection";
 import HomeFAQ from "../components/HomeFAQ";
@@ -12,7 +12,6 @@ export const metadata: Metadata = {
 };
 
 export default async function FranchisePage() {
-  const settings = await getSiteSettings();
   const faqs = await getFAQs();
 
   return (
@@ -33,7 +32,7 @@ export default async function FranchisePage() {
       </section>
 
       {/* Main Sections */}
-      <InvestmentSection breakdown={settings.investmentBreakdown} disclaimer={settings.disclaimerText} />
+      <FranchiseInvestmentSection />
       <WhyPizzaMood />
       <LaunchTimeline />
       <SupportSection />
