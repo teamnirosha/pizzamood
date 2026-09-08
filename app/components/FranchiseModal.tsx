@@ -26,6 +26,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [leadId, setLeadId] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -72,7 +73,34 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
     }
   };
 
-  const handleNext = () => {
+  const saveOrUpdateLead = async (overrideId?: string | null) => {
+    try {
+      const utms = getUTMParams();
+      const payload = {
+        id: overrideId || leadId || undefined,
+        ...formData,
+        whatsapp: formData.whatsapp || formData.phone,
+        source: utms,
+      };
+
+      const res = await fetch("/api/enquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success && data.lead) {
+        setLeadId(data.lead.id);
+        return data.lead;
+      }
+    } catch (err) {
+      console.error("Lead save error:", err);
+    }
+    return null;
+  };
+
+  const handleNext = async () => {
     setErrorMsg("");
     if (step === 1) {
       if (!formData.name.trim() || formData.name.length < 2) {
@@ -83,18 +111,31 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
         setErrorMsg("Please enter a valid 10-digit mobile number.");
         return;
       }
+
+      setIsSubmitting(true);
+      await saveOrUpdateLead();
+      setIsSubmitting(false);
+      setStep(2);
+      return;
     }
+
     if (step === 2) {
       if (!formData.city.trim()) {
         setErrorMsg("Please enter your preferred city.");
         return;
       }
+      saveOrUpdateLead();
+      setStep(3);
+      return;
     }
 
-    if (step < 4) {
-      const nextStep = step + 1;
-      setStep(nextStep);
-    } else if (step === 4) {
+    if (step === 3) {
+      saveOrUpdateLead();
+      setStep(4);
+      return;
+    }
+
+    if (step === 4) {
       handleSubmit();
     }
   };
@@ -111,27 +152,10 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
     setErrorMsg("");
 
     try {
-      const utms = getUTMParams();
-      const payload = {
-        ...formData,
-        whatsapp: formData.whatsapp || formData.phone,
-        source: utms,
-      };
-
-      const res = await fetch("/api/enquiries", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json();
-      if (res.ok && data.success) {
-        setIsSuccess(true);
-        setStep(5);
-        trackLeadFormSubmission(data.lead?.id || "PM-NEW", formData.city, formData.investmentBudget);
-      } else {
-        setErrorMsg(data.message || "Failed to submit enquiry. Please try again.");
-      }
+      const finalLead = await saveOrUpdateLead(leadId);
+      setIsSuccess(true);
+      setStep(5);
+      trackLeadFormSubmission(finalLead?.id || leadId || "PM-NEW", formData.city || "Not Specified", formData.investmentBudget);
     } catch (err) {
       setErrorMsg("Network error. Please check your internet connection.");
     } finally {

@@ -100,28 +100,30 @@ export async function getLeads(): Promise<Lead[]> {
 
 export async function saveLead(lead: Partial<Lead>): Promise<Lead> {
   const leads = await getLeads();
+  const existingIndex = lead.id ? leads.findIndex((l) => l.id === lead.id) : -1;
+  const existing = existingIndex >= 0 ? leads[existingIndex] : null;
+
   const newLead: Lead = {
-    id: lead.id || `PM-${Date.now().toString().slice(-6)}`,
-    name: lead.name || "Anonymous",
-    phone: lead.phone || "",
-    whatsapp: lead.whatsapp || lead.phone || "",
-    email: lead.email || "",
-    city: lead.city || "Not Specified",
-    preferredLocation: lead.preferredLocation || "Flexible",
-    investmentBudget: lead.investmentBudget || "₹4–6 Lakh",
-    ownsProperty: lead.ownsProperty ?? false,
-    preferredStoreType: lead.preferredStoreType || "Takeaway",
-    timeline: lead.timeline || "Immediate",
-    message: lead.message || "",
-    status: lead.status || "new",
-    notes: lead.notes || [],
-    assignedTo: lead.assignedTo || "Unassigned",
-    source: lead.source || {},
-    createdAt: lead.createdAt || new Date().toISOString(),
+    id: lead.id || existing?.id || `PM-${Date.now().toString().slice(-6)}`,
+    name: lead.name || existing?.name || "Anonymous",
+    phone: lead.phone || existing?.phone || "",
+    whatsapp: lead.whatsapp || lead.phone || existing?.whatsapp || "",
+    email: lead.email !== undefined ? lead.email : (existing?.email || ""),
+    city: lead.city || existing?.city || "Not Specified",
+    preferredLocation: lead.preferredLocation || existing?.preferredLocation || "Flexible",
+    investmentBudget: lead.investmentBudget || existing?.investmentBudget || "₹4–6 Lakh",
+    ownsProperty: lead.ownsProperty ?? existing?.ownsProperty ?? false,
+    preferredStoreType: lead.preferredStoreType || existing?.preferredStoreType || "Takeaway",
+    timeline: lead.timeline || existing?.timeline || "Immediate",
+    message: lead.message !== undefined ? lead.message : (existing?.message || ""),
+    status: lead.status || existing?.status || "new",
+    notes: lead.notes || existing?.notes || [],
+    assignedTo: lead.assignedTo || existing?.assignedTo || "Unassigned",
+    source: lead.source || existing?.source || {},
+    createdAt: lead.createdAt || existing?.createdAt || new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
 
-  const existingIndex = leads.findIndex((l) => l.id === newLead.id);
   if (existingIndex >= 0) {
     leads[existingIndex] = newLead;
   } else {

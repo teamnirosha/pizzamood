@@ -22,25 +22,26 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, phone, city, investmentBudget } = body;
+    const { name, phone, city, investmentBudget, id } = body;
 
-    if (!name || !phone || !city) {
+    if (!name || !phone) {
       return NextResponse.json(
         {
           success: false,
-          message: "Full Name, Mobile Number, and City are required.",
+          message: "Full Name and Mobile Number are required.",
         },
         { status: 400 }
       );
     }
 
     const newLead = await saveLead({
+      id: id || undefined,
       name,
       phone,
       whatsapp: body.whatsapp || phone,
       email: body.email || "",
-      city,
-      preferredLocation: body.preferredLocation || city,
+      city: city && city.trim() ? city : "Not Specified",
+      preferredLocation: body.preferredLocation || city || "Flexible",
       investmentBudget: investmentBudget || "₹4–6 Lakh",
       ownsProperty: body.ownsProperty ?? false,
       preferredStoreType: body.preferredStoreType || "Takeaway",

@@ -1,5 +1,27 @@
 [
   {
+    "id": "PM-645949",
+    "name": "Abhishek Test",
+    "phone": "9988776655",
+    "whatsapp": "9988776655",
+    "email": "abhishek@example.com",
+    "city": "Pune",
+    "preferredLocation": "Kharadi",
+    "investmentBudget": "₹4–6 Lakh",
+    "ownsProperty": false,
+    "preferredStoreType": "Takeaway",
+    "timeline": "Immediate",
+    "message": "",
+    "status": "new",
+    "notes": [
+      "Submitted via website franchise enquiry form on 9/8/2026"
+    ],
+    "assignedTo": "Unassigned",
+    "source": {},
+    "createdAt": "2026-09-08T08:54:05.949Z",
+    "updatedAt": "2026-09-08T08:56:12.200Z"
+  },
+  {
     "id": "PM-549840",
     "name": "Test User",
     "phone": "9876543210",
