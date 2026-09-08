@@ -195,7 +195,13 @@ export default function LocationMap({
       </div>
 
       {/* Location Cards List below Map */}
-      <div className="max-h-72 overflow-y-auto divide-y divide-slate-100 bg-white p-4">
+      <div
+        data-lenis-prevent
+        data-lenis-prevent-wheel
+        data-lenis-prevent-touch
+        className="max-h-72 overflow-y-auto overscroll-contain divide-y divide-slate-100 bg-white p-4"
+        onWheel={(e) => e.stopPropagation()}
+      >
         <p className="text-xs font-black uppercase tracking-wider text-slate-400 mb-3 px-2">
           Showing {filteredLocations.length} Pizza Mood Franchise Outlets
         </p>
