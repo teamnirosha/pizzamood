@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getLeads, saveLead } from "@/lib/db";
+import { sendLeadToN8n } from "@/lib/webhook";
 
 export async function GET() {
   try {
@@ -50,6 +51,11 @@ export async function POST(request: Request) {
       assignedTo: "Unassigned",
       source: body.source || {},
     });
+
+    // Trigger n8n Webhook forward asynchronously
+    sendLeadToN8n(newLead).catch((err) =>
+      console.error("n8n webhook background error:", err)
+    );
 
     return NextResponse.json(
       {

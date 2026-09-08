@@ -34,5 +34,58 @@
     "message": "testing",
     "status": "new",
     "createdAt": "2026-09-03T12:42:56.973Z"
+  },
+  {
+    "id": "PM-1001",
+    "name": "Vikram Patil",
+    "phone": "+91 98220 11223",
+    "whatsapp": "+91 98220 11223",
+    "email": "vikram.patil@example.com",
+    "city": "Pune",
+    "preferredLocation": "Kothrud / Karve Nagar",
+    "investmentBudget": "₹4–6 Lakh",
+    "ownsProperty": true,
+    "preferredStoreType": "Takeaway",
+    "timeline": "Within 30 days",
+    "message": "I own a 180 sq ft commercial shop in Karve Nagar near Cummins College and want to start a pizza takeaway counter immediately.",
+    "status": "new",
+    "notes": [
+      "Lead submitted via website homepage modal.",
+      "Verified property ownership in Karve Nagar."
+    ],
+    "assignedTo": "Rajesh (Franchise Mgr)",
+    "source": {
+      "utm_source": "google",
+      "utm_medium": "cpc",
+      "utm_campaign": "pune_franchise_search",
+      "device": "mobile"
+    },
+    "createdAt": "2026-03-01T14:32:00.000Z"
+  },
+  {
+    "id": "PM-1002",
+    "name": "Sanjay Mehta",
+    "phone": "+91 98900 44556",
+    "whatsapp": "+91 98900 44556",
+    "email": "mehta.sanjay@example.com",
+    "city": "Mumbai",
+    "preferredLocation": "Malad West",
+    "investmentBudget": "₹6–10 Lakh",
+    "ownsProperty": false,
+    "preferredStoreType": "Small QSR",
+    "timeline": "1–3 months",
+    "message": "Looking for a small QSR dine-in franchise opportunity in Western suburbs.",
+    "status": "contacted",
+    "notes": [
+      "Initial discovery call completed on March 2. Interested in rental site in Malad."
+    ],
+    "assignedTo": "Priya (West Zone Lead)",
+    "source": {
+      "utm_source": "facebook",
+      "utm_medium": "social",
+      "utm_campaign": "mumbai_entrepreneurs",
+      "device": "desktop"
+    },
+    "createdAt": "2026-03-02T10:15:00.000Z"
   }
 ]
