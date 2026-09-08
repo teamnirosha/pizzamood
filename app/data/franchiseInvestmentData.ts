@@ -78,7 +78,7 @@ export const investmentItemsData: InvestmentItemData[] = [
   },
   {
     id: "item-4",
-    name: "1day opening ceremony",
+    name: "1st day opening ceremony",
     amount: 100000,
     formattedAmount: "₹ 1,00,000",
     notes: "Including decorations & whole management by Pizza Mood",
