@@ -240,15 +240,15 @@ export default function Footer() {
           </div>
 
           {/* Bottom Bar */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-between border-t border-slate-900 pt-6 text-xs text-slate-500">
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-900 pt-6 text-xs text-slate-400">
             <p>© {new Date().getFullYear()} Pizza Mood India. All rights reserved.</p>
-            <div className="mt-3 sm:mt-0 text-slate-950 select-none">
-              Designed and developed by{" "}
+            <div className="flex items-center gap-1.5 text-xs text-slate-400">
+              <span>Designed and Developed by</span>
               <a
-                href="https://nirosha.org"
+                href="https://nirosha.org/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-950 hover:text-slate-950"
+                className="font-bold text-sky-400 hover:text-yellow-400 transition-colors underline decoration-sky-400/40 hover:decoration-yellow-400 underline-offset-4"
               >
                 Team Nirosha
               </a>
