@@ -14,6 +14,7 @@ import {
   Clock,
   CheckCircle2,
   AlertCircle,
+  Send,
 } from "lucide-react";
 import { Lead, LeadStatus } from "@/types";
 import AdminHeader from "../components/AdminHeader";
@@ -26,6 +27,30 @@ export default function AdminLeadsPage() {
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
   const [newNote, setNewNote] = useState("");
   const [updating, setUpdating] = useState(false);
+  const [syncingWebhook, setSyncingWebhook] = useState(false);
+  const [syncMsg, setSyncMsg] = useState("");
+
+  const syncToN8n = async () => {
+    try {
+      setSyncingWebhook(true);
+      setSyncMsg("Syncing...");
+      const res = await fetch("/api/webhook/dump-leads", { method: "POST" });
+      const data = await res.json();
+      if (data.success) {
+        setSyncMsg(`Synced ${data.count} leads!`);
+        setTimeout(() => setSyncMsg(""), 4000);
+      } else {
+        setSyncMsg("Sync failed");
+        setTimeout(() => setSyncMsg(""), 4000);
+      }
+    } catch (err) {
+      console.error(err);
+      setSyncMsg("Error");
+      setTimeout(() => setSyncMsg(""), 4000);
+    } finally {
+      setSyncingWebhook(false);
+    }
+  };
 
   const fetchLeads = async () => {
     try {
@@ -154,12 +179,21 @@ export default function AdminLeadsPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans">
       <AdminHeader title="FRANCHISE LEAD CRM" subtitle="Pizza Mood Business Portal">
-        <button
-          onClick={exportCSV}
-          className="flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-black text-white hover:bg-emerald-700 transition"
-        >
-          <FileSpreadsheet className="h-4 w-4" /> Export Leads CSV
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={syncToN8n}
+            disabled={syncingWebhook}
+            className="flex items-center gap-2 rounded-xl bg-sky-600 px-4 py-2 text-xs font-black text-white hover:bg-sky-700 transition"
+          >
+            <Send className="h-4 w-4" /> {syncMsg || "Sync to n8n Webhook"}
+          </button>
+          <button
+            onClick={exportCSV}
+            className="flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-black text-white hover:bg-emerald-700 transition"
+          >
+            <FileSpreadsheet className="h-4 w-4" /> Export Leads CSV
+          </button>
+        </div>
       </AdminHeader>
 
       <div className="mx-auto max-w-7xl px-6 py-8">
