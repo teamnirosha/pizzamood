@@ -15,6 +15,8 @@ export type InvestmentBudget =
   | "Need guidance";
 
 export type StoreType =
+  | "Cafe"
+  | "Kiosk"
   | "Takeaway"
   | "Small QSR"
   | "High Street"

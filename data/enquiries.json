@@ -1,5 +1,31 @@
 [
   {
+    "id": "PM-243688",
+    "name": "efwsdg",
+    "phone": "5241745869",
+    "whatsapp": "5241745869",
+    "email": "",
+    "city": "rgrg",
+    "preferredLocation": "rgrg",
+    "investmentBudget": "₹4–6 Lakh",
+    "ownsProperty": false,
+    "preferredStoreType": "Cafe",
+    "timeline": "Within 30 days",
+    "message": "",
+    "status": "new",
+    "notes": [
+      "Submitted via website franchise enquiry form on 9/10/2026"
+    ],
+    "assignedTo": "Unassigned",
+    "source": {
+      "landingPage": "/",
+      "referrer": "direct",
+      "device": "desktop"
+    },
+    "createdAt": "2026-09-10T11:04:03.688Z",
+    "updatedAt": "2026-09-10T11:04:30.411Z"
+  },
+  {
     "id": "PM-645949",
     "name": "Abhishek Test",
     "phone": "9988776655",
