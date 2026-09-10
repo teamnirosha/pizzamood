@@ -13,7 +13,7 @@ export async function sendLeadToN8n(lead: any, eventType: string = "lead_created
       preferredLocation: lead.preferredLocation || lead.city,
       investmentBudget: lead.investmentBudget || "₹4–6 Lakh",
       ownsProperty: lead.ownsProperty ?? false,
-      preferredStoreType: lead.preferredStoreType || "Takeaway",
+      preferredStoreType: lead.preferredStoreType || "Cafe",
       timeline: lead.timeline || "Immediate",
       message: lead.message || "",
       status: lead.status || "new",
