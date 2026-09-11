@@ -64,22 +64,24 @@ export default function FranchiseInvestmentSection() {
       return;
     }
 
+    const isMobile = window.innerWidth < 1024;
+
     const ctx = gsap.context(() => {
       // 1. Fade & reveal Left Content
       if (leftContentRef.current) {
         const leftItems = leftContentRef.current.children;
         gsap.fromTo(
           Array.from(leftItems),
-          { opacity: 0, y: 30 },
+          { opacity: 0, y: 24 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.75,
-            stagger: 0.1,
+            duration: 0.7,
+            stagger: 0.08,
             ease: "power3.out",
             scrollTrigger: {
               trigger: sectionRef.current,
-              start: "top 75%",
+              start: "top 80%",
               toggleActions: "play none none reverse",
             },
           }
@@ -90,16 +92,22 @@ export default function FranchiseInvestmentSection() {
       if (cardRef.current) {
         gsap.fromTo(
           cardRef.current,
-          { opacity: 0, x: 50, scale: 0.96 },
+          {
+            opacity: 0,
+            x: isMobile ? 0 : 40,
+            y: isMobile ? 30 : 0,
+            scale: 0.98,
+          },
           {
             opacity: 1,
             x: 0,
+            y: 0,
             scale: 1,
-            duration: 0.9,
+            duration: 0.85,
             ease: "power3.out",
             scrollTrigger: {
               trigger: cardRef.current,
-              start: "top 80%",
+              start: "top 85%",
               onEnter: () => setCounterStarted(true),
               toggleActions: "play none none reverse",
             },
@@ -107,8 +115,8 @@ export default function FranchiseInvestmentSection() {
         );
       }
 
-      // 3. Pizza Parallax Entrance (Controlled bounds)
-      if (pizzaRef.current) {
+      // 3. Pizza Parallax Entrance (Desktop only)
+      if (pizzaRef.current && !isMobile) {
         gsap.fromTo(
           pizzaRef.current,
           { x: -20, rotation: -3, scale: 0.96 },
@@ -126,21 +134,23 @@ export default function FranchiseInvestmentSection() {
         );
       }
 
-      // 4. Floating Ingredients Parallax
-      const floatingItems = sectionRef.current?.querySelectorAll(".floating-food");
-      if (floatingItems) {
-        floatingItems.forEach((item, idx) => {
-          gsap.to(item, {
-            y: -(idx + 1) * 18,
-            rotation: (idx + 1) * 15,
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1.2,
-            },
+      // 4. Floating Ingredients Parallax (Tablet / Desktop only)
+      if (!isMobile) {
+        const floatingItems = sectionRef.current?.querySelectorAll(".floating-food");
+        if (floatingItems) {
+          floatingItems.forEach((item, idx) => {
+            gsap.to(item, {
+              y: -(idx + 1) * 18,
+              rotation: (idx + 1) * 15,
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1.2,
+              },
+            });
           });
-        });
+        }
       }
     }, sectionRef);
 
@@ -152,19 +162,19 @@ export default function FranchiseInvestmentSection() {
       ref={sectionRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full min-h-[720px] lg:min-h-[780px] overflow-hidden bg-[#F7FBFF] dark:bg-slate-950 py-12 lg:py-16 px-4 sm:px-6 lg:px-12 selection:bg-[#079FE8] selection:text-white"
+      className="relative w-full overflow-hidden bg-[#F7FBFF] dark:bg-slate-950 py-10 sm:py-14 lg:py-16 px-4 sm:px-6 lg:px-12 selection:bg-[#079FE8] selection:text-white"
     >
       {/* Background Soft Glows */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-0 left-0 w-[450px] h-[450px] rounded-full bg-sky-200/30 blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-amber-100/40 blur-3xl" />
+        <div className="absolute top-0 left-0 w-[300px] sm:w-[450px] h-[300px] sm:h-[450px] rounded-full bg-sky-200/30 blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full bg-amber-100/40 blur-3xl" />
       </div>
 
-      {/* Floating Ingredients Parallax */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden z-20">
-        {/* Floating Basil Leaf Top Left */}
+      {/* Floating Ingredients Parallax - Only on Desktop/Tablet to avoid blocking text on mobile */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden z-0 hidden lg:block">
+        {/* Floating Basil Leaf */}
         <motion.div
-          className="floating-food absolute top-10 left-[20%] w-10 h-10"
+          className="floating-food absolute top-8 left-[6%] w-9 h-9 opacity-80"
           style={{ x: pizzaParallaxX, y: pizzaParallaxY }}
         >
           <svg viewBox="0 0 100 100" fill="none" className="w-full h-full text-emerald-500 drop-shadow-md">
@@ -175,7 +185,7 @@ export default function FranchiseInvestmentSection() {
 
         {/* Floating Tomato Slice */}
         <motion.div
-          className="floating-food absolute top-1/2 left-[10%] w-9 h-9"
+          className="floating-food absolute bottom-16 left-[4%] w-8 h-8 opacity-80"
           style={{ x: pizzaParallaxX }}
         >
           <div className="w-full h-full rounded-full bg-rose-500 border-2 border-rose-300 shadow-md flex items-center justify-center p-1 opacity-90">
@@ -185,15 +195,15 @@ export default function FranchiseInvestmentSection() {
       </div>
 
       {/* MAIN CONTENT CONTAINER */}
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+      <div className="max-w-7xl mx-auto relative z-10 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
           
           {/* ================================================== */}
           {/* LEFT SIDE (~48% Desktop / lg:col-span-6) */}
           {/* ================================================== */}
-          <div ref={leftContentRef} className="lg:col-span-6 space-y-6 relative pl-0 lg:pl-14 xl:pl-20">
+          <div ref={leftContentRef} className="lg:col-span-6 space-y-5 sm:space-y-6 relative pl-0 lg:pl-10 xl:pl-16 w-full min-w-0">
             
-            {/* REALISTIC PIZZA IMAGE (Positioned strictly in the outer section margin so it NEVER touches text) */}
+            {/* REALISTIC PIZZA IMAGE (Desktop only, positioned safely off canvas) */}
             <motion.div
               ref={pizzaRef}
               style={{ x: pizzaParallaxX, y: pizzaParallaxY }}
@@ -212,24 +222,24 @@ export default function FranchiseInvestmentSection() {
             </motion.div>
 
             {/* Main Pill Badge */}
-            <div>
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-black tracking-wider uppercase bg-[#FFD21C] text-[#101A35] shadow-xs border border-amber-300">
-                <Sparkles className="w-3.5 h-3.5 fill-[#101A35]" />
-                {franchiseInvestmentConfig.badgeText}
+            <div className="flex items-center">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-black tracking-wider uppercase bg-[#FFD21C] text-[#101A35] shadow-xs border border-amber-300">
+                <Sparkles className="w-3.5 h-3.5 shrink-0 fill-[#101A35]" />
+                <span>{franchiseInvestmentConfig.badgeText}</span>
               </span>
             </div>
 
             {/* Main Heading */}
-            <div className="space-y-1 relative z-10">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#101A35] dark:text-white tracking-tight leading-[1.15]">
+            <div className="space-y-1.5 relative z-10">
+              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-[#101A35] dark:text-white tracking-tight leading-[1.15] break-words">
                 {franchiseInvestmentConfig.mainHeadingLine1}
               </h1>
-              <div className="relative inline-block">
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#079FE8] tracking-tight leading-[1.15]">
+              <div className="relative inline-block max-w-full pb-1.5">
+                <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-[#079FE8] tracking-tight leading-[1.15] break-words">
                   {franchiseInvestmentConfig.mainHeadingLine2}
                 </h2>
                 {/* Yellow accent underline curve */}
-                <svg className="w-full h-3 text-[#FFD21C] absolute -bottom-2 left-0 pointer-events-none" viewBox="0 0 200 20" fill="none">
+                <svg className="w-full max-w-[260px] sm:max-w-full h-2.5 sm:h-3 text-[#FFD21C] absolute bottom-0 left-0 pointer-events-none" viewBox="0 0 200 20" fill="none">
                   <path d="M5 12 Q 100 22 195 8" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
                 </svg>
               </div>
@@ -237,48 +247,48 @@ export default function FranchiseInvestmentSection() {
 
             {/* Description */}
             <div className="relative z-10">
-              <p className="text-sm sm:text-base text-slate-700 dark:text-slate-200 font-semibold leading-relaxed max-w-xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm p-3.5 rounded-2xl border border-sky-100/60 dark:border-slate-800/60 shadow-2xs">
+              <p className="text-xs sm:text-sm lg:text-base text-slate-700 dark:text-slate-200 font-semibold leading-relaxed max-w-xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm p-3.5 sm:p-4 rounded-2xl border border-sky-100/60 dark:border-slate-800/60 shadow-2xs">
                 {franchiseInvestmentConfig.description}
               </p>
             </div>
 
             {/* 3 Benefit Blocks */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-sky-100 dark:border-slate-800">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-2 border-t border-sky-100 dark:border-slate-800">
               {benefitItemsData.map((item) => (
                 <BenefitItem key={item.id} data={item} />
               ))}
             </div>
 
             {/* CTA Buttons Row */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-2">
               {/* Primary CTA Button */}
               <motion.button
-                whileHover={{ scale: 1.03, translateY: -2 }}
+                whileHover={{ scale: 1.02, translateY: -2 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => {
                   const modalBtn = document.getElementById("open-franchise-modal");
                   if (modalBtn) modalBtn.click();
                   else window.location.href = "#franchise-form";
                 }}
-                className="group relative inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full bg-[#FFD21C] hover:bg-[#facc15] text-[#101A35] font-extrabold text-sm sm:text-base shadow-md shadow-amber-300/40 hover:shadow-amber-300/60 transition-all duration-200 cursor-pointer"
+                className="group relative inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3.5 rounded-full bg-[#FFD21C] hover:bg-[#facc15] text-[#101A35] font-extrabold text-xs sm:text-sm md:text-base shadow-md shadow-amber-300/40 hover:shadow-amber-300/60 transition-all duration-200 cursor-pointer w-full sm:w-auto text-center"
               >
-                <span>{franchiseInvestmentConfig.primaryCtaText}</span>
-                <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                <span className="whitespace-normal">{franchiseInvestmentConfig.primaryCtaText}</span>
+                <ArrowRight className="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1" />
               </motion.button>
 
               {/* Secondary Video Button */}
               <button
                 onClick={() => setIsVideoModalOpen(true)}
-                className="group inline-flex items-center gap-3 px-4 py-2.5 rounded-full bg-white dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 border border-sky-100 dark:border-slate-700 text-[#101A35] dark:text-white text-xs sm:text-sm font-semibold transition-all duration-200 shadow-xs cursor-pointer"
+                className="group inline-flex items-center justify-center sm:justify-start gap-3 px-4 py-2.5 rounded-full bg-white dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 border border-sky-100 dark:border-slate-700 text-[#101A35] dark:text-white text-xs sm:text-sm font-semibold transition-all duration-200 shadow-xs cursor-pointer w-full sm:w-auto"
               >
-                <span className="w-8 h-8 rounded-full bg-[#079FE8] text-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-200">
+                <span className="w-8 h-8 rounded-full bg-[#079FE8] text-white flex items-center justify-center shadow-sm shrink-0 group-hover:scale-110 transition-transform duration-200">
                   <Play className="w-3.5 h-3.5 fill-white ml-0.5" />
                 </span>
-                <div className="flex flex-col items-start leading-tight">
+                <div className="flex flex-col items-start leading-tight text-left">
                   <span className="font-bold text-[#101A35] dark:text-white">
                     {franchiseInvestmentConfig.secondaryCtaText}
                   </span>
-                  <span className="text-[11px] text-slate-500 font-normal">
+                  <span className="text-[10px] sm:text-[11px] text-slate-500 font-normal">
                     {franchiseInvestmentConfig.secondaryCtaSubtext}
                   </span>
                 </div>
@@ -288,16 +298,16 @@ export default function FranchiseInvestmentSection() {
             {/* Handwritten Decorative Text - Good Food Good Mood */}
             <div className="pt-2 flex items-center gap-3 select-none">
               <div className="flex flex-col">
-                <span className="font-serif italic text-xl sm:text-2xl font-bold text-[#101A35] dark:text-white tracking-wide rotate-[-4deg]">
+                <span className="font-serif italic text-lg sm:text-2xl font-bold text-[#101A35] dark:text-white tracking-wide rotate-[-3deg]">
                   Good Food
                 </span>
-                <span className="font-serif italic text-xl sm:text-2xl font-bold text-[#101A35] dark:text-white tracking-wide rotate-[-2deg] -mt-1">
+                <span className="font-serif italic text-lg sm:text-2xl font-bold text-[#101A35] dark:text-white tracking-wide rotate-[-2deg] -mt-1">
                   Good Mood
                 </span>
               </div>
               {/* Smile arc doodle */}
-              <div className="text-[#FFD21C] -mt-2">
-                <svg className="w-10 h-5" viewBox="0 0 100 40" fill="none">
+              <div className="text-[#FFD21C] -mt-1 sm:-mt-2">
+                <svg className="w-8 sm:w-10 h-4 sm:h-5" viewBox="0 0 100 40" fill="none">
                   <path d="M10 10 Q 50 40 90 10" stroke="currentColor" strokeWidth="5" strokeLinecap="round" />
                   <circle cx="20" cy="8" r="4" fill="currentColor" />
                   <circle cx="80" cy="8" r="4" fill="currentColor" />
@@ -310,17 +320,17 @@ export default function FranchiseInvestmentSection() {
           {/* ================================================== */}
           {/* RIGHT SIDE — SETUP EXPENSES CARD (~52% Desktop / lg:col-span-6) */}
           {/* ================================================== */}
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-6 w-full min-w-0">
             <motion.div
               ref={cardRef}
               style={{ rotateX, rotateY }}
-              className="relative w-full rounded-[24px] bg-white dark:bg-slate-900 border border-sky-100 dark:border-slate-800 p-5 sm:p-7 shadow-xl shadow-sky-900/5 transition-shadow duration-300"
+              className="relative w-full rounded-[20px] sm:rounded-[24px] bg-white dark:bg-slate-900 border border-sky-100 dark:border-slate-800 p-4 sm:p-7 shadow-xl shadow-sky-900/5 transition-shadow duration-300"
             >
               {/* Card Header */}
-              <div className="flex items-center justify-between gap-4 pb-5 border-b border-sky-100 dark:border-slate-800">
-                <div className="flex items-center gap-3.5">
-                  <div className="w-12 h-12 rounded-2xl bg-[#E6F4FE] dark:bg-sky-950/80 text-[#079FE8] flex items-center justify-center flex-shrink-0 shadow-2xs">
-                    <Calculator className="w-6 h-6" />
+              <div className="flex items-center justify-between gap-3 sm:gap-4 pb-4 sm:pb-5 border-b border-sky-100 dark:border-slate-800">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-[#E6F4FE] dark:bg-sky-950/80 text-[#079FE8] flex items-center justify-center shrink-0 shadow-2xs">
+                    <Calculator className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                   <div>
                     <h3 className="text-xl sm:text-2xl font-black text-[#101A35] dark:text-white tracking-tight">

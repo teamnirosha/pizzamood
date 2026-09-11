@@ -71,9 +71,9 @@ export default function Footer() {
           </div>
 
           {/* Main Footer Links */}
-          <div className="mt-16 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="mt-16 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {/* Col 1: Brand info */}
-            <div className="lg:col-span-2 space-y-4">
+            <div className="lg:col-span-1 sm:col-span-2 space-y-4">
               <Link href="/" className="flex items-center">
                 <img src="/logo.svg" alt="Pizza Mood" className="h-14 w-14 object-contain" />
               </Link>
@@ -202,20 +202,20 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Col 4: Corporate & Portal */}
+            {/* Col 4: Corporate & Information */}
             <div>
               <h3 className="text-xs font-black uppercase tracking-wider text-yellow-400">
-                Company & Portal
+                Company & Info
               </h3>
               <ul className="mt-4 space-y-2.5 text-xs font-semibold text-slate-400">
                 <li>
-                  <Link href="/gallery" className="hover:text-white">
-                    Photo Gallery
+                  <Link href="/story" className="hover:text-white">
+                    Brand Story
                   </Link>
                 </li>
                 <li>
-                  <Link href="/admin" className="hover:text-white flex items-center gap-1.5 text-slate-300 font-bold">
-                    <Lock className="h-3.5 w-3.5 text-amber-400" /> Admin Portal
+                  <Link href="/gallery" className="hover:text-white">
+                    Photo Gallery
                   </Link>
                 </li>
                 <li>
