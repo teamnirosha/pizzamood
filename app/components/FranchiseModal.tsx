@@ -172,7 +172,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
     onClose();
   };
 
-  const whatsappDirectUrl = `https://wa.me/919876543210?text=${encodeURIComponent(
+  const whatsappDirectUrl = `https://wa.me/919096970369?text=${encodeURIComponent(
     `Hi Pizza Mood Franchise Team, I have submitted an enquiry for ${formData.city || "my city"}. I'd like to get complete franchise details for starting with ₹4 Lakh.`
   )}`;
 

@@ -28,6 +28,7 @@ export const metadata: Metadata = {
 };
 
 import SmoothScroll from "./components/SmoothScroll";
+import WhatsAppBubble from "./components/WhatsAppBubble";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main>{children}</main>
           <Footer />
         </SmoothScroll>
+        <WhatsAppBubble />
       </body>
     </html>
   );

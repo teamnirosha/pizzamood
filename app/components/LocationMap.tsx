@@ -45,7 +45,7 @@ export default function LocationMap({
     const isAtBottom = Math.ceil(el.scrollTop + el.clientHeight) >= el.scrollHeight - 1;
 
     if ((isScrollingUp && isAtTop) || (isScrollingDown && isAtBottom)) {
-      return; // Do NOT stop propagation, continue scrolling the page!
+      return; // Allow parent page to scroll
     }
 
     e.stopPropagation();
@@ -63,7 +63,7 @@ export default function LocationMap({
     return matchesCity && matchesSearch;
   });
 
-  // Display "Use 2 fingers to move map" toast
+  // Display "Use 2 fingers to move map" toast on mobile
   const triggerGestureToast = useCallback(() => {
     setShowGestureToast(true);
     if (gestureTimeoutRef.current) {
@@ -161,19 +161,17 @@ export default function LocationMap({
         const initialLat = locations[0]?.latitude || 18.5204;
         const initialLng = locations[0]?.longitude || 73.8567;
 
-        // On touch devices: disable 1-finger dragging so page scroll works naturally!
-        // On desktop (mouse): allow dragging smoothly.
         const map = L.map(mapContainerRef.current, {
           center: [initialLat, initialLng],
           zoom: 12,
           minZoom: 5,
           maxZoom: 18,
-          scrollWheelZoom: false, // Prevent mouse wheel from trapping vertical page scroll
+          scrollWheelZoom: false,
           dragging: !isTouchDevice,
           doubleClickZoom: true,
           keyboard: false,
-          touchZoom: true, // Native pinch to zoom with 2 fingers
-          zoomControl: false, // We use sleek custom zoom controls
+          touchZoom: true,
+          zoomControl: false,
         });
 
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -261,10 +259,8 @@ export default function LocationMap({
       if (e.touches.length === 1) {
         touchStartY = e.touches[0].clientY;
         touchStartX = e.touches[0].clientX;
-        // Keep 1-finger dragging disabled so page scrolls freely
         leafletMapRef.current?.dragging.disable();
       } else if (e.touches.length >= 2) {
-        // 2 fingers: enable map dragging & pinch zoom
         leafletMapRef.current?.dragging.enable();
         setShowGestureToast(false);
       }
@@ -274,7 +270,6 @@ export default function LocationMap({
       if (e.touches.length === 1) {
         const deltaY = Math.abs(e.touches[0].clientY - touchStartY);
         const deltaX = Math.abs(e.touches[0].clientX - touchStartX);
-        // If user drags horizontally or vertically with 1 finger inside the map, show helper toast
         if (deltaX > 25 || deltaY > 25) {
           triggerGestureToast();
         }
@@ -284,7 +279,6 @@ export default function LocationMap({
     };
 
     const handleTouchEnd = () => {
-      // Reset dragging to disabled on touch device when fingers are released
       const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
       if (isTouch) {
         leafletMapRef.current?.dragging.disable();
@@ -335,7 +329,6 @@ export default function LocationMap({
 
         if (!map || !L) return;
 
-        // Display user location pin
         if (userMarkerRef.current) {
           map.removeLayer(userMarkerRef.current);
         }
@@ -354,7 +347,6 @@ export default function LocationMap({
           );
         userMarkerRef.current = uMarker;
 
-        // Find nearest outlet using Haversine formula
         if (locations.length > 0) {
           let nearestLoc = locations[0];
           let shortestDist = Number.MAX_VALUE;
@@ -392,10 +384,10 @@ export default function LocationMap({
   return (
     <div
       ref={mapWrapperRef}
-      className="overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200 bg-white shadow-xl max-w-full"
+      className="flex flex-col rounded-2xl sm:rounded-3xl border border-slate-200 bg-white shadow-xl overflow-hidden max-w-full"
     >
-      {/* Map Controls Header */}
-      <div className="border-b border-slate-200 bg-slate-50 p-3 sm:p-5">
+      {/* 1. Header Bar: Search + City Filter + Near Me Button */}
+      <div className="border-b border-slate-200 bg-slate-50 p-3 sm:p-5 shrink-0 z-20">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           {/* Search Box */}
           <div className="relative flex-1">
@@ -405,13 +397,14 @@ export default function LocationMap({
               placeholder="Search area, city or store (e.g. Kharadi, Pune, Warje)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-xl sm:rounded-2xl border border-slate-300 bg-white pl-9 pr-8 py-2 text-xs sm:text-sm font-semibold text-slate-900 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20 shadow-xs"
+              className="w-full rounded-xl sm:rounded-2xl border border-slate-300 bg-white pl-9 pr-8 py-2 text-xs sm:text-sm font-semibold text-slate-900 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20 shadow-2xs"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 p-0.5"
+                className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 p-0.5 cursor-pointer"
+                aria-label="Clear search"
               >
                 <X className="h-3.5 w-3.5" />
               </button>
@@ -426,7 +419,7 @@ export default function LocationMap({
                 setSelectedCity(e.target.value);
                 setSelectedLocId(null);
               }}
-              className="flex-1 sm:flex-initial rounded-xl sm:rounded-2xl border border-slate-300 bg-white px-3 py-2 text-xs font-bold text-slate-800 focus:border-sky-500 focus:outline-none shadow-xs cursor-pointer"
+              className="flex-1 sm:flex-initial rounded-xl sm:rounded-2xl border border-slate-300 bg-white px-3.5 py-2 text-xs font-bold text-slate-800 focus:border-sky-500 focus:outline-none shadow-2xs cursor-pointer"
             >
               {cities.map((c) => (
                 <option key={c} value={c}>
@@ -439,7 +432,7 @@ export default function LocationMap({
               onClick={handleNearMe}
               disabled={isLocating}
               type="button"
-              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-xl sm:rounded-2xl bg-sky-500 border border-yellow-400 px-3.5 py-2 text-xs font-black text-white shadow-md shadow-sky-500/20 transition hover:bg-sky-600 active:scale-95 disabled:opacity-50 cursor-pointer text-center"
+              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-xl sm:rounded-2xl bg-sky-500 border border-yellow-400 px-4 py-2 text-xs font-black text-white shadow-md shadow-sky-500/20 transition hover:bg-sky-600 active:scale-95 disabled:opacity-50 cursor-pointer text-center"
             >
               <Navigation className={`h-3.5 w-3.5 shrink-0 ${isLocating ? "animate-spin" : ""}`} />
               <span className="whitespace-nowrap">{isLocating ? "Locating..." : "Find Near Me"}</span>
@@ -455,17 +448,17 @@ export default function LocationMap({
         )}
       </div>
 
-      {/* Interactive Map Canvas Container */}
-      <div className="relative h-[340px] sm:h-[420px] md:h-[460px] w-full bg-slate-100 overflow-hidden">
-        {/* The Leaflet Map Mount Point */}
+      {/* 2. Interactive Map Container (Attached below controls, above list divider) */}
+      <div className="relative h-[320px] sm:h-[400px] md:h-[440px] w-full bg-slate-100 overflow-hidden shrink-0 border-b border-slate-200">
+        {/* Leaflet Map Mount Point */}
         <div ref={mapContainerRef} className="h-full w-full z-10" />
 
-        {/* Custom Sleek Map Floating Controls (Zoom & Reset) */}
+        {/* Floating Zoom & Reset Controls */}
         <div className="absolute top-3 right-3 z-[400] flex flex-col gap-1.5 shadow-md">
           <button
             type="button"
             onClick={handleZoomIn}
-            className="w-8 h-8 rounded-lg bg-white/95 text-slate-800 hover:bg-sky-50 hover:text-sky-600 flex items-center justify-center border border-slate-200 shadow-sm transition active:scale-95"
+            className="w-8 h-8 rounded-lg bg-white/95 text-slate-800 hover:bg-sky-50 hover:text-sky-600 flex items-center justify-center border border-slate-200 shadow-sm transition active:scale-95 cursor-pointer"
             title="Zoom In"
             aria-label="Zoom In"
           >
@@ -474,7 +467,7 @@ export default function LocationMap({
           <button
             type="button"
             onClick={handleZoomOut}
-            className="w-8 h-8 rounded-lg bg-white/95 text-slate-800 hover:bg-sky-50 hover:text-sky-600 flex items-center justify-center border border-slate-200 shadow-sm transition active:scale-95"
+            className="w-8 h-8 rounded-lg bg-white/95 text-slate-800 hover:bg-sky-50 hover:text-sky-600 flex items-center justify-center border border-slate-200 shadow-sm transition active:scale-95 cursor-pointer"
             title="Zoom Out"
             aria-label="Zoom Out"
           >
@@ -483,7 +476,7 @@ export default function LocationMap({
           <button
             type="button"
             onClick={handleResetView}
-            className="w-8 h-8 rounded-lg bg-white/95 text-slate-800 hover:bg-yellow-50 hover:text-amber-600 flex items-center justify-center border border-slate-200 shadow-sm transition active:scale-95"
+            className="w-8 h-8 rounded-lg bg-white/95 text-slate-800 hover:bg-yellow-50 hover:text-amber-600 flex items-center justify-center border border-slate-200 shadow-sm transition active:scale-95 cursor-pointer"
             title="Fit All Outlets"
             aria-label="Fit All Outlets"
           >
@@ -491,7 +484,7 @@ export default function LocationMap({
           </button>
         </div>
 
-        {/* Mobile Two-Finger Gesture Helper Toast (Google Maps style) */}
+        {/* Mobile 2-Finger Gesture Helper */}
         {showGestureToast && (
           <div className="pointer-events-none absolute inset-0 z-[500] flex items-center justify-center bg-black/40 backdrop-blur-[1px] transition-opacity duration-200">
             <div className="flex items-center gap-2 rounded-2xl bg-white px-4 py-2.5 text-xs font-black text-slate-900 shadow-2xl border-2 border-yellow-400 animate-in fade-in zoom-in duration-150">
@@ -502,97 +495,110 @@ export default function LocationMap({
         )}
       </div>
 
-      {/* Location Cards List below Map */}
+      {/* 3. SOLID DIVIDER BAR (Physically OUTSIDE and ABOVE the scrollable list container) */}
+      <div className="bg-slate-50 border-b border-slate-200 px-4 py-3 flex items-center justify-between shrink-0 z-20 shadow-2xs">
+        <p className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+          <MapPin className="h-3.5 w-3.5 text-sky-500 shrink-0" />
+          <span>SHOWING {filteredLocations.length} PIZZA MOOD FRANCHISE OUTLETS</span>
+        </p>
+        {filteredLocations.length > 2 && (
+          <span className="text-[10px] font-extrabold text-sky-700 bg-sky-100/80 px-2.5 py-0.5 rounded-full border border-sky-200">
+            Scroll list ↓
+          </span>
+        )}
+      </div>
+
+      {/* 4. DEDICATED SCROLLABLE OUTLETS LIST (2-Column Grid on Tablet/Desktop for sleek proportions) */}
       <div
         ref={listRef}
         data-lenis-prevent="true"
         onWheel={handleListWheel}
-        className="max-h-72 sm:max-h-80 overflow-y-auto divide-y divide-slate-100 bg-white p-3 sm:p-4 scroll-smooth"
+        className="h-[420px] sm:h-[460px] overflow-y-auto location-scrollbar p-3.5 sm:p-4 bg-slate-50/40 relative z-10"
       >
-        {/* Sticky Header inside Location Cards List */}
-        <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md pb-2 pt-0.5 mb-1 border-b border-slate-100 flex items-center justify-between">
-          <p className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
-            <MapPin className="h-3.5 w-3.5 text-sky-500" />
-            Showing {filteredLocations.length} Pizza Mood Franchise Outlets
-          </p>
-          {filteredLocations.length > 3 && (
-            <span className="text-[10px] font-bold text-sky-600 bg-sky-50 px-2 py-0.5 rounded-full border border-sky-100">
-              Scroll list ↓
-            </span>
-          )}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-3.5">
+          {filteredLocations.map((loc) => {
+            const isSelected = loc.id === selectedLocId;
+
+            return (
+              <div
+                key={loc.id}
+                onClick={() => focusLocation(loc, 15)}
+                className={`p-4 rounded-2xl transition-all duration-200 cursor-pointer flex flex-col justify-between ${
+                  isSelected
+                    ? "bg-white border-2 border-sky-500 shadow-md ring-2 ring-sky-100"
+                    : "bg-white hover:bg-sky-50/40 hover:border-sky-200 border border-slate-200 shadow-xs"
+                }`}
+              >
+                <div>
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="text-lg shrink-0">🍕</span>
+                      <h4 className="text-sm font-black text-slate-900 truncate leading-snug">
+                        {loc.name}
+                      </h4>
+                    </div>
+                    <div className="flex items-center gap-1 shrink-0">
+                      {isSelected && (
+                        <span className="rounded-full bg-yellow-400/40 px-2 py-0.5 text-[9px] font-extrabold text-amber-900">
+                          Active
+                        </span>
+                      )}
+                      <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] font-extrabold text-emerald-700">
+                        Open Now
+                      </span>
+                    </div>
+                  </div>
+
+                  <p className="mt-2 text-xs font-medium text-slate-600 line-clamp-2 leading-relaxed">
+                    {loc.address}
+                  </p>
+
+                  <div className="mt-2.5 flex flex-wrap items-center gap-3 text-[11px] font-bold text-slate-500 pt-2 border-t border-slate-100">
+                    <a
+                      href={`tel:${loc.phone}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="flex items-center gap-1 text-sky-600 hover:text-sky-700 hover:underline"
+                    >
+                      <Phone className="h-3.5 w-3.5" /> {loc.phone}
+                    </a>
+                    <span className="flex items-center gap-1">
+                      <Clock className="h-3.5 w-3.5 text-amber-500" /> {loc.hours[0]?.openingTime || "11 AM"} - {loc.hours[0]?.closingTime || "11 PM"}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Actions Button Row */}
+                <div className="mt-3.5 pt-2.5 border-t border-slate-100 flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      focusLocation(loc, 15);
+                    }}
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-100 hover:bg-sky-50 hover:text-sky-700 py-2 px-3 text-xs font-extrabold text-slate-700 transition active:scale-95 cursor-pointer"
+                  >
+                    <Navigation className="h-3.5 w-3.5 text-sky-500" /> Focus on Map
+                  </button>
+                  <Link
+                    href={`/locations/${loc.slug}`}
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-sky-500 hover:bg-sky-600 py-2 px-3 text-xs font-extrabold text-white transition shadow-xs text-center active:scale-95"
+                  >
+                    View Store <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
-        {filteredLocations.map((loc) => {
-          const isSelected = loc.id === selectedLocId;
-
-          return (
-            <div
-              key={loc.id}
-              onClick={() => focusLocation(loc, 15)}
-              className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl sm:rounded-2xl transition cursor-pointer ${
-                isSelected
-                  ? "bg-sky-50/90 border border-sky-300 shadow-xs"
-                  : "hover:bg-slate-50 border border-transparent"
-              }`}
-            >
-              <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                  <span className="text-base">🍕</span>
-                  <h4 className="text-xs sm:text-sm font-black text-slate-900 truncate">{loc.name}</h4>
-                  <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] sm:text-[10px] font-extrabold text-emerald-700 shrink-0">
-                    Open Now
-                  </span>
-                  {isSelected && (
-                    <span className="rounded-full bg-yellow-400/40 px-2 py-0.5 text-[9px] sm:text-[10px] font-extrabold text-amber-900 shrink-0">
-                      Active
-                    </span>
-                  )}
-                </div>
-                <p className="mt-1 text-[11px] sm:text-xs font-medium text-slate-600 line-clamp-1">{loc.address}</p>
-                <div className="mt-1 flex flex-wrap items-center gap-3 text-[10px] sm:text-[11px] font-bold text-slate-500">
-                  <a
-                    href={`tel:${loc.phone}`}
-                    onClick={(e) => e.stopPropagation()}
-                    className="flex items-center gap-1 text-sky-600 hover:underline"
-                  >
-                    <Phone className="h-3 w-3" /> {loc.phone}
-                  </a>
-                  <span className="flex items-center gap-1">
-                    <Clock className="h-3 w-3 text-amber-500" /> {loc.hours[0]?.openingTime || "11 AM"} -{" "}
-                    {loc.hours[0]?.closingTime || "11 PM"}
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 shrink-0 pt-1 sm:pt-0">
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    focusLocation(loc, 15);
-                  }}
-                  className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1 rounded-lg sm:rounded-xl bg-slate-100 hover:bg-sky-50 hover:text-sky-700 px-2.5 py-1.5 text-[11px] sm:text-xs font-extrabold text-slate-700 transition"
-                >
-                  <Navigation className="h-3 w-3 text-sky-500" /> Focus
-                </button>
-                <Link
-                  href={`/locations/${loc.slug}`}
-                  onClick={(e) => e.stopPropagation()}
-                  className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1 rounded-lg sm:rounded-xl bg-sky-500 hover:bg-sky-600 px-3 py-1.5 text-[11px] sm:text-xs font-extrabold text-white transition shadow-xs text-center"
-                >
-                  View Store <ArrowRight className="h-3 w-3" />
-                </Link>
-              </div>
-            </div>
-          );
-        })}
-
         {filteredLocations.length === 0 && (
-          <div className="py-6 text-center text-xs sm:text-sm font-semibold text-slate-500">
+          <div className="py-12 text-center text-xs sm:text-sm font-semibold text-slate-500">
             No outlets found matching "{searchQuery}".
           </div>
         )}
       </div>
+
     </div>
   );
 }

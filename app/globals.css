@@ -130,3 +130,24 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #007bb5;
 }
+
+/* Custom Location List Scrollbar */
+.location-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #009ad8 #f1f5f9;
+}
+.location-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.location-scrollbar::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 9999px;
+}
+.location-scrollbar::-webkit-scrollbar-thumb {
+  background: #009ad8;
+  border-radius: 9999px;
+}
+.location-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #007bb5;
+}
+
