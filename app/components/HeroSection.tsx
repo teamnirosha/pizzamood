@@ -21,10 +21,10 @@ export default function HeroSection() {
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center">
-          
+
           {/* Left Column: Headlines & Badges */}
           <div className="lg:col-span-7 space-y-6">
-            
+
             {/* Top Tagline Badge */}
             <div className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 py-1.5 text-xs font-black text-sky-700 shadow-sm">
               <Sparkles className="h-4 w-4 text-amber-500" />
@@ -43,7 +43,7 @@ export default function HeroSection() {
             <p className="text-base font-semibold text-slate-600 sm:text-lg leading-relaxed max-w-2xl">
               Start your own Pizza Mood franchise with an investment starting from{" "}
               <strong className="text-slate-900 underline decoration-yellow-400 decoration-4">
-                ₹4 Lakh
+                ₹7 Lakh
               </strong>{" "}
               — complete with location selection assistance, kitchen equipment, staff training, fresh raw materials supply, and ongoing business guidance.
             </p>
@@ -51,7 +51,7 @@ export default function HeroSection() {
             {/* 3 Bold Franchise Opportunity Badges */}
             <div className="grid grid-cols-3 gap-3 sm:gap-4 pt-2">
               <div className="rounded-2xl border border-sky-100 bg-white p-4 shadow-xl shadow-sky-500/10 transition hover:-translate-y-1">
-                <div className="text-2xl font-black text-sky-600 sm:text-3xl">₹4 Lakh+</div>
+                <div className="text-2xl font-black text-sky-600 sm:text-3xl">₹7 Lakh+</div>
                 <div className="mt-1 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
                   Starting Investment
                 </div>
@@ -108,7 +108,7 @@ export default function HeroSection() {
           {/* Right Column: High Quality Food Visuals */}
           <div className="lg:col-span-5 relative">
             <div className="relative mx-auto max-w-md lg:max-w-none">
-              
+
               {/* Main Banner Image Container */}
               <div className="relative overflow-hidden rounded-3xl bg-slate-900 shadow-2xl shadow-sky-900/20 border-4 border-yellow-400">
                 <img

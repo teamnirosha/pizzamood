@@ -3,8 +3,8 @@ import { OutletLocation, Lead, FAQItem, Testimonial, SiteSettings } from "@/type
 export const initialSiteSettings: SiteSettings = {
   brandName: "Pizza Mood",
   tagline: "Your Pizza Business Starts Here.",
-  primaryPhone: "+91 90969 70369",
-  whatsappNumber: "+91 90969 70369",
+  primaryPhone: "+91 96970 00369",
+  whatsappNumber: "+91 96970 00369",
   officialEmail: "info@pizzamood.in",
   headquartersAddress: "Pizza Mood HQ, Mauli Krupa Complex, Karve Nagar, Pune, Maharashtra 411052",
   startingInvestment: "₹4 Lakh",

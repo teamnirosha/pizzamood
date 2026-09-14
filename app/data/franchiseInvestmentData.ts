@@ -37,23 +37,24 @@ export interface FranchiseInvestmentConfig {
 }
 
 export const franchiseInvestmentConfig: FranchiseInvestmentConfig = {
-  badgeText: "LOW ENTRY BARRIER",
-  mainHeadingLine1: "Start With ₹12 Lakh.",
+  badgeText: "FLEXIBLE STORE FORMATS",
+  mainHeadingLine1: "Start From ₹7 Lakh.",
   mainHeadingLine2: "Build Something of Your Own.",
-  description: "Join Pizza Mood – a proven QSR franchise model with low setup costs, high demand and strong brand support. Be part of a growing food brand and bring happiness to your city.",
+  description: "Choose between our compact ₹7 Lakh Kiosk format (no interior setup costs) or our turnkey ₹12 Lakh Full Cafe format (all inclusive with complete interiors & grand launch).",
   primaryCtaText: "Get Complete Investment Details →",
-  secondaryCtaText: "Watch How It Works",
-  secondaryCtaSubtext: "2 min video",
+  secondaryCtaText: "What Franchise Owners Say",
+  secondaryCtaSubtext: "Hear partner stories",
   cardTitle: "Setup Expenses",
-  cardSubtitle: "A clear and transparent investment plan",
+  cardSubtitle: "Transparent investment breakdown by store format",
   totalLabel: "Total Expenses",
   termsText: "T & C Apply",
   cardQuoteText: "Invest in a brand that serves happiness and grows with you.",
 };
 
-export const investmentItemsData: InvestmentItemData[] = [
+// Kiosk / Takeaway Format (₹7 Lakh) - Does NOT include interior setup
+export const kioskInvestmentItemsData: InvestmentItemData[] = [
   {
-    id: "item-1",
+    id: "kiosk-1",
     name: "Franchise Fees",
     amount: 400000,
     formattedAmount: "₹ 4,00,000",
@@ -61,7 +62,27 @@ export const investmentItemsData: InvestmentItemData[] = [
     iconName: "Handshake",
   },
   {
-    id: "item-2",
+    id: "kiosk-2",
+    name: "Kitchen Setup & Equipment",
+    amount: 300000,
+    formattedAmount: "₹ 3,00,000",
+    notes: "Includes commercial pizza oven, refrigeration & prep stations",
+    iconName: "Utensils",
+  },
+];
+
+// Full Cafe / Dine-in Format (₹12 Lakh) - Includes interior setup & opening ceremony
+export const cafeInvestmentItemsData: InvestmentItemData[] = [
+  {
+    id: "cafe-1",
+    name: "Franchise Fees",
+    amount: 400000,
+    formattedAmount: "₹ 4,00,000",
+    notes: "18% GST Applicable on Franchise Fees",
+    iconName: "Handshake",
+  },
+  {
+    id: "cafe-2",
     name: "Kitchen Setup & Equipment",
     amount: 300000,
     formattedAmount: "₹ 3,00,000",
@@ -69,7 +90,7 @@ export const investmentItemsData: InvestmentItemData[] = [
     iconName: "Utensils",
   },
   {
-    id: "item-3",
+    id: "cafe-3",
     name: "Interiors, CCTV & Billing set",
     amount: 400000,
     formattedAmount: "₹ 4,00,000",
@@ -77,7 +98,7 @@ export const investmentItemsData: InvestmentItemData[] = [
     iconName: "Sofa",
   },
   {
-    id: "item-4",
+    id: "cafe-4",
     name: "1st day opening ceremony",
     amount: 100000,
     formattedAmount: "₹ 1,00,000",
@@ -86,11 +107,20 @@ export const investmentItemsData: InvestmentItemData[] = [
   },
 ];
 
-// Calculate total dynamically using reduce
-export const calculatedTotalInvestment = investmentItemsData.reduce(
+// Default fallback export
+export const investmentItemsData: InvestmentItemData[] = cafeInvestmentItemsData;
+
+export const calculatedKioskTotal = kioskInvestmentItemsData.reduce(
   (sum, item) => sum + item.amount,
   0
 );
+
+export const calculatedCafeTotal = cafeInvestmentItemsData.reduce(
+  (sum, item) => sum + item.amount,
+  0
+);
+
+export const calculatedTotalInvestment = calculatedCafeTotal;
 
 export const benefitItemsData: BenefitItemData[] = [
   {

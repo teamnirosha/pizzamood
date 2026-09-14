@@ -30,16 +30,16 @@ export default function Navbar() {
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <div className="hidden sm:flex items-center gap-2">
             <span className="inline-flex items-center gap-1 rounded-full bg-yellow-400 px-2 py-0.5 text-[10px] uppercase font-black text-slate-900 shadow-sm">
-              <Sparkles className="h-3 w-3" /> ₹4 Lakh Opportunity
+              <Sparkles className="h-3 w-3" /> ₹7 Lakh Opportunity
             </span>
             <span className="font-bold text-white">Own a Pizza Mood Franchise in your city!</span>
           </div>
           <div className="w-full sm:w-auto flex items-center justify-center sm:justify-end gap-4">
             <a
-              href="tel:+919096970369"
+              href="tel:+919697000369"
               className="flex items-center gap-1 hover:underline text-white font-bold"
             >
-              <Phone className="h-3 w-3" /> +91 90969 70369
+              <Phone className="h-3 w-3" /> +91 96970 00369
             </a>
             <button
               onClick={() => setModalOpen(true)}

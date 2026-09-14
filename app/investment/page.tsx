@@ -3,8 +3,8 @@ import { getSiteSettings } from "@/lib/db";
 import InvestmentSection from "../components/InvestmentSection";
 
 export const metadata: Metadata = {
-  title: "Pizza Mood Franchise Cost & Investment Breakdown | From ₹4 Lakh",
-  description: "Detailed itemized cost structure for starting a Pizza Mood franchise. Transparent setup capital breakdown for kitchen equipment, franchise fee, inventory & marketing.",
+  title: "Pizza Mood Franchise Cost & Investment Breakdown | ₹7 Lakh to ₹12 Lakh",
+  description: "Detailed itemized cost structure for starting a Pizza Mood franchise. Transparent setup capital breakdown for Kiosk format (₹7 Lakh) and Full Cafe format (₹12 Lakh).",
 };
 
 export default async function InvestmentPage() {
@@ -18,7 +18,7 @@ export default async function InvestmentPage() {
             Transparent Financial Structure
           </span>
           <h1 className="mt-4 text-4xl font-black tracking-tight sm:text-5xl text-white">
-            Start Your Pizza Business From ₹4 Lakh*
+            Start From ₹7 Lakh (Kiosk) to ₹12 Lakh (Cafe)*
           </h1>
           <p className="mt-3 text-sm font-semibold text-slate-400 max-w-xl mx-auto">
             No hidden royalty surprises. Itemized capital requirements engineered for high ROI in Indian tier-1, tier-2 and tier-3 cities.

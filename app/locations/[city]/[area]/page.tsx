@@ -112,7 +112,7 @@ export default async function LocationDetailPage({ params }: PageProps) {
 
   return (
     <div className="bg-slate-50 min-h-screen pb-16">
-      
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(restaurantSchema) }}
@@ -145,7 +145,7 @@ export default async function LocationDetailPage({ params }: PageProps) {
       <section className="bg-slate-900 text-white py-12 lg:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
+
             <div className="lg:col-span-7 space-y-4">
               <div className="inline-flex items-center gap-2 rounded-full bg-sky-500/20 px-3.5 py-1 text-xs font-black uppercase tracking-wider text-sky-400 border border-sky-500/30">
                 <Sparkles className="h-3.5 w-3.5 text-yellow-400" /> Pizza Mood Official Store
@@ -209,10 +209,10 @@ export default async function LocationDetailPage({ params }: PageProps) {
       {/* Main Content Grid */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
+
           {/* Left Main Details */}
           <div className="lg:col-span-8 space-y-8">
-            
+
             {/* Popular Products in this Outlet */}
             {location.popularProducts && location.popularProducts.length > 0 && (
               <div id="popular-menu" className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
@@ -279,7 +279,7 @@ export default async function LocationDetailPage({ params }: PageProps) {
 
           {/* Right Sidebar Info Card */}
           <div className="lg:col-span-4 space-y-6">
-            
+
             {/* NAP Info Card */}
             <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl space-y-6">
               <h3 className="text-lg font-black text-slate-900 border-b border-slate-100 pb-3">

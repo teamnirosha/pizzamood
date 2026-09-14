@@ -28,6 +28,7 @@ export default function FranchiseInvestmentSection() {
 
   const [counterStarted, setCounterStarted] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [activeModel, setActiveModel] = useState<"kiosk" | "cafe">("kiosk");
 
   // Motion values for subtle 3D card tilt & cursor parallax
   const mouseX = useMotionValue(0);
@@ -232,11 +233,11 @@ export default function FranchiseInvestmentSection() {
             {/* Main Heading */}
             <div className="space-y-1.5 relative z-10">
               <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-[#101A35] dark:text-white tracking-tight leading-[1.15] break-words">
-                {franchiseInvestmentConfig.mainHeadingLine1}
+                {activeModel === "kiosk" ? "Start With ₹7 Lakh." : "Start With ₹12 Lakh."}
               </h1>
               <div className="relative inline-block max-w-full pb-1.5">
                 <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-[#079FE8] tracking-tight leading-[1.15] break-words">
-                  {franchiseInvestmentConfig.mainHeadingLine2}
+                  {activeModel === "kiosk" ? "Takeaway Kiosk Format." : "Full Cafe Format."}
                 </h2>
                 {/* Yellow accent underline curve */}
                 <svg className="w-full max-w-[260px] sm:max-w-full h-2.5 sm:h-3 text-[#FFD21C] absolute bottom-0 left-0 pointer-events-none" viewBox="0 0 200 20" fill="none">
@@ -276,9 +277,16 @@ export default function FranchiseInvestmentSection() {
                 <ArrowRight className="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1" />
               </motion.button>
 
-              {/* Secondary Video Button */}
+              {/* Secondary Testimonials / Video Button */}
               <button
-                onClick={() => setIsVideoModalOpen(true)}
+                onClick={() => {
+                  const testimonialEl = document.getElementById("testimonials");
+                  if (testimonialEl) {
+                    testimonialEl.scrollIntoView({ behavior: "smooth" });
+                  } else {
+                    setIsVideoModalOpen(true);
+                  }
+                }}
                 className="group inline-flex items-center justify-center sm:justify-start gap-3 px-4 py-2.5 rounded-full bg-white dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-slate-700 border border-sky-100 dark:border-slate-700 text-[#101A35] dark:text-white text-xs sm:text-sm font-semibold transition-all duration-200 shadow-xs cursor-pointer w-full sm:w-auto"
               >
                 <span className="w-8 h-8 rounded-full bg-[#079FE8] text-white flex items-center justify-center shadow-sm shrink-0 group-hover:scale-110 transition-transform duration-200">
@@ -353,7 +361,11 @@ export default function FranchiseInvestmentSection() {
 
               {/* 3-COLUMN TABLE COMPONENT */}
               <div className="mt-5">
-                <InvestmentTable counterStarted={counterStarted} />
+                <InvestmentTable
+                  counterStarted={counterStarted}
+                  activeModel={activeModel}
+                  onModelChange={setActiveModel}
+                />
               </div>
 
               {/* CARD FOOTER QUOTE BOX */}
@@ -393,9 +405,9 @@ export default function FranchiseInvestmentSection() {
             <div className="aspect-video w-full flex items-center justify-center text-white bg-slate-900 p-8 text-center">
               <div>
                 <Play className="w-14 h-14 text-[#079FE8] mx-auto mb-3 animate-pulse" />
-                <h3 className="text-xl font-bold">Pizza Mood Franchise Model</h3>
+                <h3 className="text-xl font-bold">What Franchise Owners Say</h3>
                 <p className="text-xs text-slate-400 mt-1">
-                  Transparent ₹12 Lakh Setup Expenses Breakdown & Growth Plan.
+                  Real experiences and stories from Pizza Mood franchise partners across India.
                 </p>
               </div>
             </div>

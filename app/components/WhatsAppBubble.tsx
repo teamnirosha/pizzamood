@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 export default function WhatsAppBubble() {
   const [isHovered, setIsHovered] = useState(false);
-  const phoneNumber = "919096970369";
+  const phoneNumber = "919697000369";
   const defaultMessage = encodeURIComponent(
     "Hi Pizza Mood Team, I am interested in opening a Pizza Mood Franchise. Please share the details."
   );
