@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight, Phone, Sparkles } from "lucide-react";
 import FranchiseModal from "./FranchiseModal";
+import { PRICING_COMPACT } from "@/lib/pricing";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -30,7 +31,7 @@ export default function Navbar() {
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <div className="hidden sm:flex items-center gap-2">
             <span className="inline-flex items-center gap-1 rounded-full bg-yellow-400 px-2 py-0.5 text-[10px] uppercase font-black text-slate-900 shadow-sm">
-              <Sparkles className="h-3 w-3" /> ₹4 Lakh Opportunity
+              <Sparkles className="h-3 w-3" /> {PRICING_COMPACT}
             </span>
             <span className="font-bold text-white">Own a Pizza Mood Franchise in your city!</span>
           </div>

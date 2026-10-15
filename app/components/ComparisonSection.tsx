@@ -1,11 +1,12 @@
 "use client";
 
 import { CheckCircle2, XCircle, Sparkles } from "lucide-react";
+import { PRICING_HEADLINE } from "@/lib/pricing";
 
 const comparisons = [
   {
     feature: "Capital Investment Required",
-    pizzaMood: "Starting from accessible ₹4 Lakh setup capital",
+    pizzaMood: `${PRICING_HEADLINE} setup capital`,
     other: "₹25–50 Lakhs for traditional dining restaurant",
   },
   {

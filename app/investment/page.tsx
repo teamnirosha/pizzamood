@@ -1,8 +1,10 @@
 import { Metadata } from "next";
 import InvestmentSection from "../components/InvestmentSection";
+import PricingCards from "@/app/components/PricingCards";
+import { PRICING_HEADLINE } from "@/lib/pricing";
 
 export const metadata: Metadata = {
-  title: "Pizza Mood Franchise Cost & Investment Breakdown | From ₹4 Lakh",
+  title: `Pizza Mood Franchise Cost & Investment Breakdown | ${PRICING_HEADLINE}`,
   description: "Detailed itemized cost structure for starting a Pizza Mood franchise. Transparent setup capital breakdown for kitchen equipment, franchise fee, inventory & marketing.",
 };
 
@@ -15,11 +17,12 @@ export default async function InvestmentPage() {
             Transparent Financial Structure
           </span>
           <h1 className="mt-4 text-4xl font-black tracking-tight sm:text-5xl text-white">
-            Start Your Pizza Business From ₹4 Lakh*
+            {PRICING_HEADLINE}*
           </h1>
           <p className="mt-3 text-sm font-semibold text-slate-400 max-w-xl mx-auto">
             No hidden royalty surprises. Itemized capital requirements engineered for high ROI in Indian tier-1, tier-2 and tier-3 cities.
           </p>
+          <div className="mx-auto mt-6 max-w-xl"><PricingCards /></div>
         </div>
       </section>
 

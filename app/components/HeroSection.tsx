@@ -9,6 +9,8 @@ import {
   CheckCircle,
 } from "lucide-react";
 import FranchiseModal from "./FranchiseModal";
+import PricingCards from "./PricingCards";
+import { PRICING_HEADLINE } from "@/lib/pricing";
 
 export default function HeroSection() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -41,22 +43,17 @@ export default function HeroSection() {
 
             {/* Supporting Copy */}
             <p className="text-base font-semibold text-slate-600 sm:text-lg leading-relaxed max-w-2xl">
-              Start your own Pizza Mood franchise with an investment starting from{" "}
+              Start your own Pizza Mood franchise:{" "}
               <strong className="text-slate-900 underline decoration-yellow-400 decoration-4">
-                ₹4 Lakh
+                {PRICING_HEADLINE}
               </strong>{" "}
               — complete with location selection assistance, kitchen equipment, staff training, fresh raw materials supply, and ongoing business guidance.
             </p>
 
-            {/* 3 Bold Franchise Opportunity Badges */}
-            <div className="grid grid-cols-3 gap-3 sm:gap-4 pt-2">
-              <div className="rounded-2xl border border-sky-100 bg-white p-4 shadow-xl shadow-sky-500/10 transition hover:-translate-y-1">
-                <div className="text-2xl font-black text-sky-600 sm:text-3xl">₹4 Lakh+</div>
-                <div className="mt-1 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
-                  Starting Investment
-                </div>
-              </div>
+            <PricingCards />
 
+            {/* 2 Bold Franchise Opportunity Badges */}
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-2">
               <div className="rounded-2xl border border-amber-100 bg-white p-4 shadow-xl shadow-amber-500/10 transition hover:-translate-y-1">
                 <div className="text-2xl font-black text-amber-600 sm:text-3xl">30 Days</div>
                 <div className="mt-1 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
