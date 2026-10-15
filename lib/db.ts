@@ -1,3 +1,4 @@
+import { DEFAULT_BUDGET } from "./pricing";
 import { promises as fs } from "fs";
 import path from "path";
 import { OutletLocation, Lead, FAQItem, Testimonial, SiteSettings } from "@/types";
@@ -111,7 +112,7 @@ export async function saveLead(lead: Partial<Lead>): Promise<Lead> {
     email: lead.email !== undefined ? lead.email : (existing?.email || ""),
     city: lead.city || existing?.city || "Not Specified",
     preferredLocation: lead.preferredLocation || existing?.preferredLocation || "Flexible",
-    investmentBudget: lead.investmentBudget || existing?.investmentBudget || "₹4–6 Lakh",
+    investmentBudget: lead.investmentBudget || existing?.investmentBudget || DEFAULT_BUDGET,
     ownsProperty: lead.ownsProperty ?? existing?.ownsProperty ?? false,
     preferredStoreType: lead.preferredStoreType || existing?.preferredStoreType || "Takeaway",
     timeline: lead.timeline || existing?.timeline || "Immediate",

@@ -1,3 +1,4 @@
+import { DEFAULT_BUDGET } from "./pricing";
 const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || "https://automate.nirosha.org/webhook/pizzamood";
 
 export async function sendLeadToN8n(lead: any, eventType: string = "lead_created") {
@@ -11,7 +12,7 @@ export async function sendLeadToN8n(lead: any, eventType: string = "lead_created
       email: lead.email || "",
       city: lead.city,
       preferredLocation: lead.preferredLocation || lead.city,
-      investmentBudget: lead.investmentBudget || "₹4–6 Lakh",
+      investmentBudget: lead.investmentBudget || DEFAULT_BUDGET,
       ownsProperty: lead.ownsProperty ?? false,
       preferredStoreType: lead.preferredStoreType || "Takeaway",
       timeline: lead.timeline || "Immediate",
