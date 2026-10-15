@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { getUTMParams, trackLeadFormStep, trackLeadFormSubmission } from "@/lib/analytics";
 import { InvestmentBudget, StoreType } from "@/types";
+import { BUDGET_OPTIONS, DEFAULT_BUDGET, PRICING_COMPACT } from "@/lib/pricing";
 
 interface FranchiseModalProps {
   isOpen: boolean;
@@ -35,7 +36,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
     email: "",
     city: defaultCity,
     preferredLocation: "",
-    investmentBudget: "₹4–6 Lakh" as InvestmentBudget,
+    investmentBudget: DEFAULT_BUDGET as InvestmentBudget,
     ownsProperty: false,
     preferredStoreType: "Takeaway" as StoreType,
     timeline: "Within 30 days",
@@ -171,7 +172,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
   };
 
   const whatsappDirectUrl = `https://wa.me/919876543210?text=${encodeURIComponent(
-    `Hi Pizza Mood Franchise Team, I have submitted an enquiry for ${formData.city || "my city"}. I'd like to get complete franchise details for starting with ₹4 Lakh.`
+    `Hi Pizza Mood Franchise Team, I have submitted an enquiry for ${formData.city || "my city"}. I'd like to get complete franchise details for the Kiosk and Cafe models.`
   )}`;
 
   return (
@@ -190,7 +191,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
 
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-yellow-400 px-3 py-1 text-xs font-black uppercase tracking-wider text-slate-900 shadow-sm">
-              <Sparkles className="h-3.5 w-3.5" /> Start From ₹4 Lakh
+              <Sparkles className="h-3.5 w-3.5" /> {PRICING_COMPACT}
             </span>
           </div>
 
@@ -354,7 +355,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
                 </label>
                 <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
                   {(
-                    ["₹4–6 Lakh", "₹6–10 Lakh", "₹10–15 Lakh", "₹15 Lakh+", "Need guidance"] as InvestmentBudget[]
+                    [...BUDGET_OPTIONS] as InvestmentBudget[]
                   ).map((b) => (
                     <button
                       key={b}
