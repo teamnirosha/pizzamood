@@ -1,25 +1,19 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { SESSION_COOKIE, verifySessionToken } from "@/lib/adminToken";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const authed = await verifySessionToken(request.cookies.get(SESSION_COOKIE)?.value);
 
   // Protect all /admin routes except /admin/login
-  if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
-    const authCookie = request.cookies.get("pm_admin_auth");
-    if (!authCookie || authCookie.value !== "true") {
-      const loginUrl = new URL("/admin/login", request.url);
-      return NextResponse.redirect(loginUrl);
-    }
+  if (pathname.startsWith("/admin") && pathname !== "/admin/login" && !authed) {
+    return NextResponse.redirect(new URL("/admin/login", request.url));
   }
 
-  // If already logged in and visiting /admin/login, redirect to /admin
-  if (pathname === "/admin/login") {
-    const authCookie = request.cookies.get("pm_admin_auth");
-    if (authCookie && authCookie.value === "true") {
-      const adminUrl = new URL("/admin", request.url);
-      return NextResponse.redirect(adminUrl);
-    }
+  // Already logged in: skip the login page
+  if (pathname === "/admin/login" && authed) {
+    return NextResponse.redirect(new URL("/admin", request.url));
   }
 
   return NextResponse.next();
