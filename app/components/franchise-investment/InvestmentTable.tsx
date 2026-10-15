@@ -2,16 +2,13 @@
 
 import React from "react";
 import { Coins, Handshake, CookingPot, Armchair, PartyPopper } from "lucide-react";
-import {
-  investmentItemsData,
-  calculatedTotalInvestment,
-  franchiseInvestmentConfig,
-  InvestmentItemData,
-} from "@/app/data/franchiseInvestmentData";
+import { franchiseInvestmentConfig, InvestmentItemData } from "@/app/data/franchiseInvestmentData";
+import type { PricingModel } from "@/lib/pricing";
 import { InvestmentRow } from "./InvestmentRow";
 import { AnimatedCounter } from "./AnimatedCounter";
 
 interface InvestmentTableProps {
+  model: PricingModel;
   counterStarted: boolean;
 }
 
@@ -22,7 +19,7 @@ const iconMap = {
   PartyPopper: PartyPopper,
 };
 
-export const InvestmentTable: React.FC<InvestmentTableProps> = ({ counterStarted }) => {
+export const InvestmentTable: React.FC<InvestmentTableProps> = ({ model, counterStarted }) => {
   return (
     <div className="w-full rounded-2xl border border-amber-200/60 dark:border-slate-800 shadow-sm bg-white dark:bg-slate-900 overflow-hidden">
       {/* ================================================== */}
@@ -47,7 +44,7 @@ export const InvestmentTable: React.FC<InvestmentTableProps> = ({ counterStarted
 
           {/* Table Body Rows */}
           <tbody className="divide-y divide-sky-100/70 dark:divide-slate-800">
-            {investmentItemsData.map((item, idx) => (
+            {model.items.map((item, idx) => (
               <InvestmentRow key={item.id} data={item} index={idx} />
             ))}
           </tbody>
@@ -68,7 +65,7 @@ export const InvestmentTable: React.FC<InvestmentTableProps> = ({ counterStarted
 
               <td className="w-[25%] py-4 px-4 align-middle border-l border-black/10">
                 <AnimatedCounter
-                  targetAmount={calculatedTotalInvestment}
+                  targetAmount={model.total}
                   prefix="₹ "
                   shouldStart={counterStarted}
                   className="text-base sm:text-lg font-black tracking-tight text-slate-950 block whitespace-nowrap"
@@ -92,7 +89,7 @@ export const InvestmentTable: React.FC<InvestmentTableProps> = ({ counterStarted
         {/* Mobile Header Banner */}
         <div className="bg-[#FFF8D6] dark:bg-amber-950/40 p-3 flex items-center justify-between border-b border-amber-200">
           <span className="font-black text-xs uppercase tracking-wider text-[#101A35]">
-            Setup Expenses Breakdown
+            {model.label} Setup Expenses Breakdown
           </span>
           <span className="text-[11px] font-bold text-amber-800 dark:text-amber-300">
             Itemized Details
@@ -100,7 +97,7 @@ export const InvestmentTable: React.FC<InvestmentTableProps> = ({ counterStarted
         </div>
 
         {/* Mobile Rows */}
-        {investmentItemsData.map((item: InvestmentItemData, idx: number) => {
+        {model.items.map((item: InvestmentItemData, idx: number) => {
           const IconComponent = iconMap[item.iconName] || Handshake;
           return (
             <div key={item.id} className="p-3.5 space-y-2 bg-white dark:bg-slate-900">
@@ -142,7 +139,7 @@ export const InvestmentTable: React.FC<InvestmentTableProps> = ({ counterStarted
 
           <div className="text-right">
             <AnimatedCounter
-              targetAmount={calculatedTotalInvestment}
+              targetAmount={model.total}
               prefix="₹ "
               shouldStart={counterStarted}
               className="text-xl font-black text-slate-950 tracking-tight"

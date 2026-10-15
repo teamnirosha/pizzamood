@@ -1,3 +1,4 @@
+import { PRICING_HEADLINE } from "@/lib/pricing";
 import { OutletLocation, Lead, FAQItem, Testimonial, SiteSettings } from "@/types";
 
 export const initialSiteSettings: SiteSettings = {
@@ -7,19 +8,12 @@ export const initialSiteSettings: SiteSettings = {
   whatsappNumber: "+91 90969 70369",
   officialEmail: "info@pizzamood.in",
   headquartersAddress: "Pizza Mood HQ, Mauli Krupa Complex, Karve Nagar, Pune, Maharashtra 411052",
-  startingInvestment: "₹4 Lakh",
+  startingInvestment: PRICING_HEADLINE,
   targetLaunchDays: "30 Days",
   supportLevel: "360° Support",
   totalOutletsCount: 18,
   citiesCount: 4,
   customerSatisfaction: "98.4%",
-  investmentBreakdown: [
-    { category: "Brand & Franchise Fee", amount: "₹1,50,000", details: "Brand trademark usage, operating manual, onboarding support & site launch rights" },
-    { category: "Kitchen Equipment & Appliances", amount: "₹1,20,000", details: "Commercial pizza oven, refrigeration unit, prep tables, display case & smallwares" },
-    { category: "Store Interior & Signage", amount: "₹70,000", details: "Standardized modern QSR front desk, illuminated LED signboards, menu boards" },
-    { category: "Initial Raw Material & Packaging", amount: "₹35,000", details: "Signature dough mix, pizza sauce, mozzarella cheese, toppings & branded packaging" },
-    { category: "Local Launch Marketing & POS", amount: "₹25,000", details: "Digital marketing campaign, flyers, cloud POS software setup, staff uniforms" },
-  ],
   disclaimerText: "*Investment requirements may vary based on store format, location size, city tier, site readiness and local cost factors. Figures provided are indicative starting estimates for a standard takeaway QSR format. Contact Pizza Mood for customized location assessment.",
   seoDefaultTitle: "Pizza Mood Franchise | Start Your Pizza Business from ₹4 Lakh",
   seoDefaultDescription: "Own a high-profit Pizza Mood outlet in your city with 360° operational support, location selection assistance, staff training and store setup in 30 days.",

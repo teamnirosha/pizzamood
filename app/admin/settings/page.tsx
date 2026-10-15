@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Save, Sparkles, CheckCircle2, Calculator } from "lucide-react";
+import { Save, Sparkles, CheckCircle2 } from "lucide-react";
 import { SiteSettings } from "@/types";
 import AdminHeader from "../components/AdminHeader";
 
@@ -53,13 +53,6 @@ export default function AdminSettingsPage() {
     } finally {
       setSaving(false);
     }
-  };
-
-  const handleInvestmentItemChange = (index: number, field: string, value: string) => {
-    if (!settings) return;
-    const updated = [...settings.investmentBreakdown];
-    updated[index] = { ...updated[index], [field]: value };
-    setSettings({ ...settings, investmentBreakdown: updated });
   };
 
   if (loading || !settings) {
@@ -156,42 +149,6 @@ export default function AdminSettingsPage() {
                 onChange={(e) => setSettings({ ...settings, headquartersAddress: e.target.value })}
                 className="mt-1 w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2.5 text-xs text-white focus:border-red-500"
               />
-            </div>
-          </div>
-
-          {/* Investment Breakdown Config */}
-          <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6 space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h2 className="text-base font-black text-white">Editable ₹4 Lakh Investment Items</h2>
-              <Calculator className="h-4 w-4 text-amber-400" />
-            </div>
-
-            <div className="space-y-3">
-              {settings.investmentBreakdown.map((item, idx) => (
-                <div key={idx} className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3 rounded-2xl bg-slate-950 border border-slate-800">
-                  <input
-                    type="text"
-                    value={item.category}
-                    onChange={(e) => handleInvestmentItemChange(idx, "category", e.target.value)}
-                    placeholder="Category Name"
-                    className="rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-xs font-bold text-white"
-                  />
-                  <input
-                    type="text"
-                    value={item.amount}
-                    onChange={(e) => handleInvestmentItemChange(idx, "amount", e.target.value)}
-                    placeholder="Amount (e.g. ₹1,50,000)"
-                    className="rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-xs font-bold text-red-400"
-                  />
-                  <input
-                    type="text"
-                    value={item.details}
-                    onChange={(e) => handleInvestmentItemChange(idx, "details", e.target.value)}
-                    placeholder="Item details description..."
-                    className="rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-xs text-slate-300"
-                  />
-                </div>
-              ))}
             </div>
           </div>
 

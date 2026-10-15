@@ -127,12 +127,6 @@ export type Testimonial = {
   avatarUrl?: string;
 };
 
-export type InvestmentItem = {
-  category: string;
-  amount: string;
-  details: string;
-};
-
 export type SiteSettings = {
   brandName: string;
   tagline: string;
@@ -146,7 +140,6 @@ export type SiteSettings = {
   totalOutletsCount: number;
   citiesCount: number;
   customerSatisfaction: string;
-  investmentBreakdown: InvestmentItem[];
   disclaimerText: string;
   seoDefaultTitle: string;
   seoDefaultDescription: string;

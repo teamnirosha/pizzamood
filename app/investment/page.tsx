@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { getSiteSettings } from "@/lib/db";
 import InvestmentSection from "../components/InvestmentSection";
 
 export const metadata: Metadata = {
@@ -8,8 +7,6 @@ export const metadata: Metadata = {
 };
 
 export default async function InvestmentPage() {
-  const settings = await getSiteSettings();
-
   return (
     <div className="bg-white min-h-screen">
       <section className="bg-slate-900 py-16 text-white text-center">
@@ -26,7 +23,7 @@ export default async function InvestmentPage() {
         </div>
       </section>
 
-      <InvestmentSection breakdown={settings.investmentBreakdown} disclaimer={settings.disclaimerText} />
+      <InvestmentSection />
     </div>
   );
 }

@@ -57,11 +57,8 @@ export default async function Home() {
       {/* 02 WHY PIZZA MOOD (OPERATING SYSTEM) */}
       <WhyPizzaMood />
 
-      {/* 03 THE ₹4 LAKH OPPORTUNITY BREAKDOWN */}
-      <InvestmentSection
-        breakdown={settings.investmentBreakdown}
-        disclaimer={settings.disclaimerText}
-      />
+      {/* 03 INVESTMENT BREAKDOWN (KIOSK & CAFE) */}
+      <InvestmentSection />
 
       {/* 04 30-DAY STORE LAUNCH TIMELINE */}
       <LaunchTimeline />
