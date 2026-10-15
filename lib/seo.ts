@@ -1,3 +1,5 @@
+import { MODELS } from "@/lib/pricing";
+import { USPS, SLOGAN, FRANCHISE_PHONE_TEL } from "@/lib/usps";
 import { OutletLocation, FAQItem, SiteSettings } from "@/types";
 
 export const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://pizzamood.in";
@@ -12,6 +14,25 @@ export function generateOrganizationSchema(settings: SiteSettings) {
     logo: `${baseUrl}/logo.png`,
     description: settings.seoDefaultDescription,
     telephone: settings.primaryPhone,
+    slogan: SLOGAN,
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "sales",
+      telephone: FRANCHISE_PHONE_TEL,
+      availableLanguage: ["English", "Hindi"],
+    },
+    makesOffer: MODELS.map((m) => ({
+      "@type": "Offer",
+      name: `Pizza Mood ${m.label} Franchise`,
+      price: m.total,
+      priceCurrency: "INR",
+      availability: "https://schema.org/LimitedAvailability",
+      itemOffered: {
+        "@type": "Service",
+        name: `Pizza Mood ${m.label} Franchise`,
+        description: `Total investment ${m.lakh}. Only one Pizza Mood outlet per area.`,
+      },
+    })),
     email: settings.officialEmail,
     address: {
       "@type": "PostalAddress",
@@ -124,4 +145,18 @@ function convert12To24(time12: string): string {
     hours = (parseInt(hours, 10) + 12).toString();
   }
   return `${hours.padStart(2, "0")}:${minutes || "00"}`;
+}
+
+export function generateUspListSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Why choose a Pizza Mood franchise",
+    itemListElement: USPS.map((u, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: u.title,
+      description: u.line,
+    })),
+  };
 }

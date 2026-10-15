@@ -469,6 +469,24 @@ export const initialFAQs: FAQItem[] = [
     category: "General",
     question: "How do I apply for a Pizza Mood franchise?",
     answer: "Simply click the 'Start Your Pizza Mood Franchise' button on this website and submit the 5-step enquiry form. Our franchise development team will call you within 24 hours to discuss site availability in your city."
+  },
+  {
+    id: "faq-9",
+    category: "Store & Setup",
+    question: "Is the 30-day go-live really guaranteed?",
+    answer: "Yes. Pizza Mood guarantees your outlet goes live within 30 days, with hand-holding from day one until opening day and after. The guarantee is subject to the terms of your franchise agreement."
+  },
+  {
+    id: "faq-10",
+    category: "General",
+    question: "Can another Pizza Mood outlet open near mine?",
+    answer: "No. We allow only ONE Pizza Mood outlet (Kiosk or Cafe) per area. Once an area is taken, it is gone, so enquire early."
+  },
+  {
+    id: "faq-11",
+    category: "Investment & Cost",
+    question: "Are there any hidden charges?",
+    answer: "No. There are no hidden charges, not even a visiting fee for site finalization. We also explain your return on investment clearly, in plain numbers."
   }
 ];
 

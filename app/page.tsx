@@ -10,7 +10,7 @@ import OutletShowcase from "./components/OutletShowcase";
 import TestimonialSection from "./components/TestimonialSection";
 import HomeFAQ from "./components/HomeFAQ";
 import LocationMap from "./components/LocationMap";
-import { generateOrganizationSchema, generateWebSiteSchema } from "@/lib/seo";
+import { generateOrganizationSchema, generateWebSiteSchema, generateUspListSchema } from "@/lib/seo";
 
 export async function generateMetadata() {
   const settings = await getSiteSettings();
@@ -50,6 +50,10 @@ export default async function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(generateUspListSchema()) }}
       />
 
       {/* 01 HERO SECTION */}

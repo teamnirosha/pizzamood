@@ -7,6 +7,7 @@ import LaunchTimeline from "../components/LaunchTimeline";
 import SupportSection from "../components/SupportSection";
 import HomeFAQ from "../components/HomeFAQ";
 import UspTicker from "../components/UspTicker";
+import FranchiseJsonLd from "../components/FranchiseJsonLd";
 
 export const metadata: Metadata = {
   title: "Own a Pizza Mood Franchise | High Profit QSR Opportunity in India",
@@ -18,6 +19,7 @@ export default async function FranchisePage() {
 
   return (
     <div className="bg-white min-h-screen">
+      <FranchiseJsonLd />
       {/* Franchise Page Hero */}
       <section className="bg-gradient-to-b from-red-600 via-red-500 to-amber-500 py-20 text-white text-center">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">

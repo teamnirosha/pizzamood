@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import InvestmentSection from "../components/InvestmentSection";
 import PricingCards from "@/app/components/PricingCards";
 import UspTicker from "@/app/components/UspTicker";
+import FranchiseJsonLd from "@/app/components/FranchiseJsonLd";
 import { PRICING_HEADLINE } from "@/lib/pricing";
 
 export const metadata: Metadata = {
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 export default async function InvestmentPage() {
   return (
     <div className="bg-white min-h-screen">
+      <FranchiseJsonLd />
       <section className="bg-slate-900 py-16 text-white text-center">
         <div className="mx-auto max-w-4xl px-4">
           <span className="inline-block rounded-full bg-amber-500/20 px-3.5 py-1 text-xs font-black uppercase tracking-wider text-amber-400 border border-amber-500/30">
