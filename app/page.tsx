@@ -1,5 +1,6 @@
 import { getLocations, getFAQs, getTestimonials, getSiteSettings } from "@/lib/db";
 import HeroSection from "./components/HeroSection";
+import UspSection from "./components/UspSection";
 import WhyPizzaMood from "./components/WhyPizzaMood";
 import InvestmentSection from "./components/InvestmentSection";
 import LaunchTimeline from "./components/LaunchTimeline";
@@ -9,7 +10,7 @@ import OutletShowcase from "./components/OutletShowcase";
 import TestimonialSection from "./components/TestimonialSection";
 import HomeFAQ from "./components/HomeFAQ";
 import LocationMap from "./components/LocationMap";
-import { generateOrganizationSchema, generateWebSiteSchema } from "@/lib/seo";
+import { generateOrganizationSchema, generateWebSiteSchema, generateUspListSchema } from "@/lib/seo";
 
 export async function generateMetadata() {
   const settings = await getSiteSettings();
@@ -26,6 +27,7 @@ export async function generateMetadata() {
       siteName: "Pizza Mood Franchise",
       locale: "en_IN",
       type: "website",
+      images: [{ url: "/logo.png", width: 512, height: 512, alt: "Pizza Mood" }],
     },
   };
 }
@@ -50,18 +52,20 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(generateUspListSchema()) }}
+      />
 
       {/* 01 HERO SECTION */}
       <HeroSection />
+      <UspSection />
 
       {/* 02 WHY PIZZA MOOD (OPERATING SYSTEM) */}
       <WhyPizzaMood />
 
-      {/* 03 THE ₹4 LAKH OPPORTUNITY BREAKDOWN */}
-      <InvestmentSection
-        breakdown={settings.investmentBreakdown}
-        disclaimer={settings.disclaimerText}
-      />
+      {/* 03 INVESTMENT BREAKDOWN (KIOSK & CAFE) */}
+      <InvestmentSection />
 
       {/* 04 30-DAY STORE LAUNCH TIMELINE */}
       <LaunchTimeline />

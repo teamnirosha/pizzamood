@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import { getUTMParams, trackLeadFormSubmission } from "@/lib/analytics";
 import { InvestmentBudget, StoreType } from "@/types";
+import { BUDGET_OPTIONS, DEFAULT_BUDGET } from "@/lib/pricing";
+import { EXCLUSIVITY_LINE } from "@/lib/usps";
 
 export default function FranchiseForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -24,7 +26,7 @@ export default function FranchiseForm() {
     email: "",
     city: "",
     preferredLocation: "",
-    investmentBudget: "₹4–6 Lakh" as InvestmentBudget,
+    investmentBudget: DEFAULT_BUDGET as InvestmentBudget,
     ownsProperty: false,
     preferredStoreType: "Takeaway" as StoreType,
     timeline: "Within 30 days",
@@ -79,7 +81,7 @@ export default function FranchiseForm() {
   };
 
   const whatsappDirectUrl = `https://wa.me/919096970369?text=${encodeURIComponent(
-    `Hi Pizza Mood Franchise Team, I have submitted an enquiry for ${formData.city || "my city"}. I'd like to get complete franchise details for starting with ₹4 Lakh.`
+    `Hi Pizza Mood Franchise Team, I have submitted an enquiry for ${formData.city || "my city"}. I'd like to get complete franchise details for the Kiosk and Cafe models.`
   )}`;
 
   if (isSuccess) {
@@ -216,6 +218,7 @@ export default function FranchiseForm() {
               onChange={(e) => setFormData({ ...formData, preferredLocation: e.target.value })}
               className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-900 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20"
             />
+            <p className="mt-1.5 text-[11px] font-bold text-red-600">{EXCLUSIVITY_LINE}</p>
           </div>
         </div>
       </div>
@@ -233,7 +236,7 @@ export default function FranchiseForm() {
             </label>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
               {(
-                ["₹4–6 Lakh", "₹6–10 Lakh", "₹10–15 Lakh", "₹15 Lakh+", "Need guidance"] as InvestmentBudget[]
+                [...BUDGET_OPTIONS] as InvestmentBudget[]
               ).map((b) => (
                 <button
                   key={b}

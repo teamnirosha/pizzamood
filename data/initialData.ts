@@ -1,3 +1,4 @@
+import { PRICING_HEADLINE, MODEL_BY_ID } from "@/lib/pricing";
 import { OutletLocation, Lead, FAQItem, Testimonial, SiteSettings } from "@/types";
 
 export const initialSiteSettings: SiteSettings = {
@@ -7,21 +8,14 @@ export const initialSiteSettings: SiteSettings = {
   whatsappNumber: "+91 90969 70369",
   officialEmail: "info@pizzamood.in",
   headquartersAddress: "Pizza Mood HQ, Mauli Krupa Complex, Karve Nagar, Pune, Maharashtra 411052",
-  startingInvestment: "₹4 Lakh",
+  startingInvestment: PRICING_HEADLINE,
   targetLaunchDays: "30 Days",
   supportLevel: "360° Support",
   totalOutletsCount: 18,
   citiesCount: 4,
   customerSatisfaction: "98.4%",
-  investmentBreakdown: [
-    { category: "Brand & Franchise Fee", amount: "₹1,50,000", details: "Brand trademark usage, operating manual, onboarding support & site launch rights" },
-    { category: "Kitchen Equipment & Appliances", amount: "₹1,20,000", details: "Commercial pizza oven, refrigeration unit, prep tables, display case & smallwares" },
-    { category: "Store Interior & Signage", amount: "₹70,000", details: "Standardized modern QSR front desk, illuminated LED signboards, menu boards" },
-    { category: "Initial Raw Material & Packaging", amount: "₹35,000", details: "Signature dough mix, pizza sauce, mozzarella cheese, toppings & branded packaging" },
-    { category: "Local Launch Marketing & POS", amount: "₹25,000", details: "Digital marketing campaign, flyers, cloud POS software setup, staff uniforms" },
-  ],
   disclaimerText: "*Investment requirements may vary based on store format, location size, city tier, site readiness and local cost factors. Figures provided are indicative starting estimates for a standard takeaway QSR format. Contact Pizza Mood for customized location assessment.",
-  seoDefaultTitle: "Pizza Mood Franchise | Start Your Pizza Business from ₹4 Lakh",
+  seoDefaultTitle: `Pizza Mood Franchise | ${PRICING_HEADLINE}`,
   seoDefaultDescription: "Own a high-profit Pizza Mood outlet in your city with 360° operational support, location selection assistance, staff training and store setup in 30 days.",
 };
 
@@ -223,7 +217,7 @@ export const initialLocations: OutletLocation[] = [
     googleMapsUrl: "https://maps.google.com/?q=18.4682,73.7845",
     osmUrl: "https://www.openstreetmap.org/?mlat=18.4682&mlon=73.7845#map=16/18.4682/73.7845",
     shortDescription: "Cozy QSR outlet on NDA Road, Shivane serving fresh pizzas.",
-    description: "Pizza Mood Shivane brings our signature ₹4 Lakh franchise model in action near NDA Road, serving Ingale Colony & Uttam Nagar.",
+    description: "Pizza Mood Shivane brings our signature franchise model in action near NDA Road, serving Ingale Colony & Uttam Nagar.",
     status: "active",
     hours: [
       { day: "Monday", isClosed: false, openingTime: "11:00 AM", closingTime: "11:00 PM" },
@@ -432,19 +426,19 @@ export const initialFAQs: FAQItem[] = [
     id: "faq-1",
     category: "Investment & Cost",
     question: "How much does a Pizza Mood franchise cost?",
-    answer: "A standard Pizza Mood franchise requires an investment starting from ₹4 Lakh. This indicative setup cost covers brand franchise rights, essential commercial kitchen equipment, store exterior branding, initial raw material inventory, staff uniform, and launch marketing support."
+    answer: `A Pizza Mood franchise comes in two models: ${PRICING_HEADLINE} (total investment). This indicative setup cost covers brand franchise rights, essential commercial kitchen equipment, store exterior branding, initial raw material inventory, staff uniform, and launch marketing support.`
   },
   {
     id: "faq-2",
     category: "Investment & Cost",
-    question: "Can I really start a Pizza Mood franchise with ₹4 Lakh?",
-    answer: "Yes! Our compact Takeaway & Cloud QSR model has been specifically engineered to eliminate unnecessary expensive fluff. With optimized space requirements starting at 120–250 sq. ft., aspiring entrepreneurs can launch a fully operational store with a ₹4 Lakh setup capital."
+    question: `Can I really start a Pizza Mood franchise with ${MODEL_BY_ID.kiosk.lakh}?`,
+    answer: `Yes! Our compact Kiosk model has been specifically engineered to eliminate unnecessary expensive fluff. With optimized space requirements starting at 120–250 sq. ft., aspiring entrepreneurs can launch a fully operational store with ${MODEL_BY_ID.kiosk.lakh} setup capital. The Cafe model is ${MODEL_BY_ID.cafe.lakh}.`
   },
   {
     id: "faq-3",
     category: "Store & Setup",
     question: "How long does it take to open a Pizza Mood outlet?",
-    answer: "Our target launch timeline is as little as 30 days* from site finalization. The process includes site assessment (Days 1–3), store design & setup (Days 8–15), equipment installation (Days 16–22), staff training (Days 23–26), and trial run leading to grand launch on Day 30."
+    answer: "We guarantee a 30-day go-live* from site finalization. The process includes site assessment (Days 1–3), store design & setup (Days 8–15), equipment installation (Days 16–22), staff training (Days 23–26), and trial run leading to grand launch on Day 30."
   },
   {
     id: "faq-4",
@@ -475,6 +469,24 @@ export const initialFAQs: FAQItem[] = [
     category: "General",
     question: "How do I apply for a Pizza Mood franchise?",
     answer: "Simply click the 'Start Your Pizza Mood Franchise' button on this website and submit the 5-step enquiry form. Our franchise development team will call you within 24 hours to discuss site availability in your city."
+  },
+  {
+    id: "faq-9",
+    category: "Store & Setup",
+    question: "Is the 30-day go-live really guaranteed?",
+    answer: "Yes. Pizza Mood guarantees your outlet goes live within 30 days, with hand-holding from day one until opening day and after. The guarantee is subject to the terms of your franchise agreement."
+  },
+  {
+    id: "faq-10",
+    category: "General",
+    question: "Can another Pizza Mood outlet open near mine?",
+    answer: "No. We allow only ONE Pizza Mood outlet (Kiosk or Cafe) per area. Once an area is taken, it is gone, so enquire early."
+  },
+  {
+    id: "faq-11",
+    category: "Investment & Cost",
+    question: "Are there any hidden charges?",
+    answer: "No. There are no hidden charges, not even a visiting fee for site finalization. We also explain your return on investment clearly, in plain numbers."
   }
 ];
 
@@ -495,7 +507,7 @@ export const initialTestimonials: Testimonial[] = [
     role: "Franchise Partner",
     location: "Andheri West, Mumbai",
     investmentYear: "2025",
-    content: "The low investment barrier of ₹4 Lakh was the main reason I chose Pizza Mood over high-cost franchises. Their supply chain delivers fresh dough and sauces reliably, and the customer repeat rate in Adarsh Nagar has been fantastic.",
+    content: "The low investment barrier was the main reason I chose Pizza Mood over high-cost franchises. Their supply chain delivers fresh dough and sauces reliably, and the customer repeat rate in Adarsh Nagar has been fantastic.",
     rating: 5,
     avatarUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
   },
@@ -520,7 +532,7 @@ export const initialLeads: Lead[] = [
     email: "vikram.patil@example.com",
     city: "Pune",
     preferredLocation: "Kothrud / Karve Nagar",
-    investmentBudget: "₹4–6 Lakh",
+    investmentBudget: "Kiosk – ₹7 Lakh",
     ownsProperty: true,
     preferredStoreType: "Takeaway",
     timeline: "Within 30 days",
@@ -544,7 +556,7 @@ export const initialLeads: Lead[] = [
     email: "mehta.sanjay@example.com",
     city: "Mumbai",
     preferredLocation: "Malad West",
-    investmentBudget: "₹6–10 Lakh",
+    investmentBudget: "Cafe – ₹12 Lakh",
     ownsProperty: false,
     preferredStoreType: "Small QSR",
     timeline: "1–3 months",

@@ -196,7 +196,7 @@
     "googleMapsUrl": "https://maps.google.com/?q=18.4682,73.7845",
     "osmUrl": "https://www.openstreetmap.org/?mlat=18.4682&mlon=73.7845#map=16/18.4682/73.7845",
     "shortDescription": "Cozy QSR outlet on NDA Road, Shivane serving fresh pizzas.",
-    "description": "Pizza Mood Shivane brings our signature ₹4 Lakh franchise model in action near NDA Road, serving Ingale Colony & Uttam Nagar.",
+    "description": "Pizza Mood Shivane brings our signature franchise model in action near NDA Road, serving Ingale Colony & Uttam Nagar.",
     "status": "active",
     "hours": [
       { "day": "Monday", "isClosed": false, "openingTime": "11:00 AM", "closingTime": "11:00 PM" },

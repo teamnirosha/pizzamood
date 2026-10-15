@@ -13,6 +13,7 @@ import {
 } from "@/app/data/franchiseInvestmentData";
 
 import { BenefitItem } from "./franchise-investment/BenefitItem";
+import { MODELS, MODEL_BY_ID, PRICING_HEADLINE, type ModelId } from "@/lib/pricing";
 import { InvestmentTable } from "./franchise-investment/InvestmentTable";
 
 // Register GSAP ScrollTrigger safely on client side
@@ -28,6 +29,7 @@ export default function FranchiseInvestmentSection() {
 
   const [counterStarted, setCounterStarted] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [modelId, setModelId] = useState<ModelId>("kiosk");
 
   // Motion values for subtle 3D card tilt & cursor parallax
   const mouseX = useMotionValue(0);
@@ -343,7 +345,25 @@ export default function FranchiseInvestmentSection() {
 
               {/* 3-COLUMN TABLE COMPONENT */}
               <div className="mt-5">
-                <InvestmentTable counterStarted={counterStarted} />
+                <div role="tablist" aria-label="Franchise model" className="mb-3 flex gap-2">
+                  {MODELS.map((m) => (
+                    <button
+                      key={m.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={m.id === modelId}
+                      onClick={() => setModelId(m.id)}
+                      className={`flex-1 rounded-xl border px-3 py-2 text-xs font-black uppercase tracking-wide transition ${
+                        m.id === modelId
+                          ? "border-amber-300 bg-[#FFD21C] text-[#101A35]"
+                          : "border-slate-200 bg-white text-slate-600"
+                      }`}
+                    >
+                      {m.label} · {m.lakh}
+                    </button>
+                  ))}
+                </div>
+                <InvestmentTable key={modelId} model={MODEL_BY_ID[modelId]} counterStarted={counterStarted} />
               </div>
 
               {/* CARD FOOTER QUOTE BOX */}
@@ -385,7 +405,7 @@ export default function FranchiseInvestmentSection() {
                 <Play className="w-14 h-14 text-[#079FE8] mx-auto mb-3 animate-pulse" />
                 <h3 className="text-xl font-bold">Pizza Mood Franchise Model</h3>
                 <p className="text-xs text-slate-400 mt-1">
-                  Transparent ₹12 Lakh Setup Expenses Breakdown & Growth Plan.
+                  Transparent {PRICING_HEADLINE} Setup Expenses Breakdown & Growth Plan.
                 </p>
               </div>
             </div>

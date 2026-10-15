@@ -1,11 +1,12 @@
 "use client";
 
 import { CheckCircle2, XCircle, Sparkles } from "lucide-react";
+import { PRICING_HEADLINE } from "@/lib/pricing";
 
 const comparisons = [
   {
     feature: "Capital Investment Required",
-    pizzaMood: "Starting from accessible ₹4 Lakh setup capital",
+    pizzaMood: `${PRICING_HEADLINE} setup capital`,
     other: "₹25–50 Lakhs for traditional dining restaurant",
   },
   {
@@ -30,8 +31,13 @@ const comparisons = [
   },
   {
     feature: "Store Launch Speed",
-    pizzaMood: "Target store launch in as little as 30 days*",
+    pizzaMood: "Guaranteed 30-day go-live*",
     other: "6 to 12 months long setup timelines",
+  },
+  {
+    feature: "Area Protection",
+    pizzaMood: "Only ONE Pizza Mood outlet per area",
+    other: "Territory protection is not always promised",
   },
 ];
 

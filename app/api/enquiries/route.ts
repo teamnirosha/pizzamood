@@ -1,3 +1,4 @@
+import { DEFAULT_BUDGET } from "@/lib/pricing";
 import { NextResponse } from "next/server";
 import { getLeads, saveLead } from "@/lib/db";
 import { sendLeadToN8n } from "@/lib/webhook";
@@ -42,7 +43,7 @@ export async function POST(request: Request) {
       email: body.email || "",
       city: city && city.trim() ? city : "Not Specified",
       preferredLocation: body.preferredLocation || city || "Flexible",
-      investmentBudget: investmentBudget || "₹4–6 Lakh",
+      investmentBudget: investmentBudget || DEFAULT_BUDGET,
       ownsProperty: body.ownsProperty ?? false,
       preferredStoreType: body.preferredStoreType || "Takeaway",
       timeline: body.timeline || "Immediate",

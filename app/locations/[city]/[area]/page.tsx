@@ -1,3 +1,4 @@
+import { PRICING_HEADLINE } from "@/lib/pricing";
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -341,7 +342,7 @@ export default async function LocationDetailPage({ params }: PageProps) {
               </span>
               <h3 className="text-lg font-black mt-1">Want to open a Pizza Mood in your area?</h3>
               <p className="mt-2 text-xs text-sky-50 font-medium">
-                Start your own store starting from ₹4 Lakh investment with 360° operational support.
+                Start your own store: {PRICING_HEADLINE}, with 360° operational support.
               </p>
               <Link
                 href="/franchise"

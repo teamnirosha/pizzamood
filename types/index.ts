@@ -1,3 +1,5 @@
+import type { BudgetOption } from "@/lib/pricing";
+
 export type LeadStatus =
   | "new"
   | "contacted"
@@ -7,12 +9,13 @@ export type LeadStatus =
   | "not_interested"
   | "closed";
 
+// Legacy range strings stay valid: leads already stored in data/enquiries.json use them.
 export type InvestmentBudget =
+  | BudgetOption
   | "₹4–6 Lakh"
   | "₹6–10 Lakh"
   | "₹10–15 Lakh"
-  | "₹15 Lakh+"
-  | "Need guidance";
+  | "₹15 Lakh+";
 
 export type StoreType =
   | "Takeaway"
@@ -124,12 +127,6 @@ export type Testimonial = {
   avatarUrl?: string;
 };
 
-export type InvestmentItem = {
-  category: string;
-  amount: string;
-  details: string;
-};
-
 export type SiteSettings = {
   brandName: string;
   tagline: string;
@@ -143,7 +140,6 @@ export type SiteSettings = {
   totalOutletsCount: number;
   citiesCount: number;
   customerSatisfaction: string;
-  investmentBreakdown: InvestmentItem[];
   disclaimerText: string;
   seoDefaultTitle: string;
   seoDefaultDescription: string;

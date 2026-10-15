@@ -1,5 +1,6 @@
 "use client";
 
+import { PRICING_HEADLINE } from "@/lib/pricing";
 import { useState } from "react";
 import Link from "next/link";
 import {
@@ -75,11 +76,11 @@ export default function Footer() {
             {/* Col 1: Brand info */}
             <div className="lg:col-span-2 space-y-4">
               <Link href="/" className="flex items-center">
-                <img src="/logo.svg" alt="Pizza Mood" className="h-14 w-14 object-contain" />
+                <img src="/logo.png" alt="Pizza Mood" width={56} height={56} className="h-14 w-14 object-contain" />
               </Link>
 
               <p className="text-xs font-medium text-slate-400 leading-relaxed max-w-sm">
-                Pizza Mood is India's fast-growing pizza and fast-food QSR franchise brand. Built for aspiring entrepreneurs to launch high-profit takeaway & small QSR stores starting from ₹4 Lakh investment.
+                Pizza Mood is India's fast-growing pizza and fast-food QSR franchise brand. Built for aspiring entrepreneurs to launch high-profit takeaway & small QSR stores. Choose the Kiosk or Cafe model: {PRICING_HEADLINE}.
               </p>
 
               <div className="space-y-2 text-xs font-semibold text-slate-300 pt-2">
@@ -142,7 +143,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link href="/investment" className="hover:text-white">
-                    ₹4 Lakh Investment Breakdown
+                    Kiosk & Cafe Investment Breakdown
                   </Link>
                 </li>
                 <li>
@@ -235,7 +236,7 @@ export default function Footer() {
           {/* Legal Disclaimer */}
           <div className="mt-12 border-t border-slate-800 pt-8 text-[11px] font-medium text-slate-500 leading-relaxed">
             <p>
-              <strong className="text-slate-400">Franchise Disclaimer:</strong> Investment requirements, store launch timelines and financial figures displayed on this website starting from ₹4 Lakh are indicative estimates for standard takeaway formats. Actual investment may vary depending on store format, city tier, property condition, equipment selection and local operating factors. Pizza Mood does not make or imply any legally binding guarantees regarding store revenues, customer footfall, or monthly profit margins. Store approval is subject to site viability verification by Pizza Mood brand representatives.
+              <strong className="text-slate-400">Franchise Disclaimer:</strong> Investment requirements, store launch timelines and financial figures displayed on this website ({PRICING_HEADLINE}) are indicative estimates for the standard Kiosk and Cafe formats. The 30-day go-live guarantee is subject to the terms of your franchise agreement. Actual investment may vary depending on store format, city tier, property condition, equipment selection and local operating factors. Pizza Mood does not make or imply any legally binding guarantees regarding store revenues, customer footfall, or monthly profit margins. Store approval is subject to site viability verification by Pizza Mood brand representatives.
             </p>
           </div>
 

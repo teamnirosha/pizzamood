@@ -4,7 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight, Phone, Sparkles } from "lucide-react";
+import { EXCLUSIVITY_LINE } from "@/lib/usps";
 import FranchiseModal from "./FranchiseModal";
+import { PRICING_COMPACT } from "@/lib/pricing";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -30,9 +32,9 @@ export default function Navbar() {
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <div className="hidden sm:flex items-center gap-2">
             <span className="inline-flex items-center gap-1 rounded-full bg-yellow-400 px-2 py-0.5 text-[10px] uppercase font-black text-slate-900 shadow-sm">
-              <Sparkles className="h-3 w-3" /> ₹4 Lakh Opportunity
+              <Sparkles className="h-3 w-3" /> {PRICING_COMPACT}
             </span>
-            <span className="font-bold text-white">Own a Pizza Mood Franchise in your city!</span>
+            <span className="font-bold text-white">{EXCLUSIVITY_LINE}</span>
           </div>
           <div className="w-full sm:w-auto flex items-center justify-center sm:justify-end gap-4">
             <a
@@ -45,7 +47,7 @@ export default function Navbar() {
               onClick={() => setModalOpen(true)}
               className="underline font-black text-yellow-300 hover:text-white"
             >
-              Check City Availability →
+              Reserve Your Area →
             </button>
           </div>
         </div>
@@ -60,8 +62,8 @@ export default function Navbar() {
             onClick={() => setMobileOpen(false)}
             className="group flex items-center"
           >
-            <div className="relative h-16 w-16 transition group-hover:scale-105">
-              <img src="/logo.svg" alt="Pizza Mood Logo" className="h-full w-full object-contain" />
+            <div className="relative h-16 w-16 transition group-hover:scale-105 lg:h-[72px] lg:w-[72px]">
+              <img src="/logo.png" alt="Pizza Mood Logo" width={72} height={72} className="h-full w-full object-contain" />
             </div>
           </Link>
 
