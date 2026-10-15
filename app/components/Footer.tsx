@@ -60,7 +60,7 @@ export default function Footer() {
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                 </button>
                 <a
-                  href="https://wa.me/919697000369?text=Hi%20Pizza%20Mood,%20I%20want%20to%20know%20more%20about%20starting%20a%20franchise."
+                  href="https://wa.me/919096970369?text=Hi%20Pizza%20Mood,%20I%20want%20to%20know%20more%20about%20starting%20a%20franchise."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-emerald-700"
@@ -87,7 +87,7 @@ export default function Footer() {
                 <div className="flex items-start gap-2">
                   <Phone className="h-4 w-4 text-sky-400 shrink-0 mt-0.5" />
                   <div>
-                    <a href="tel:+919697000369" className="hover:text-white block">+91 96970 00369</a>
+                    <a href="tel:+919096970369" className="hover:text-white block">+91 90969 70369</a>
                     <a href="tel:+917620173868" className="hover:text-white block">+91 76201 73868</a>
                   </div>
                 </div>
@@ -261,14 +261,14 @@ export default function Footer() {
       {/* STICKY MOBILE QUICK-ACTION BAR */}
       <div className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around border-t border-slate-200 bg-white/95 p-2.5 backdrop-blur-md md:hidden shadow-2xl">
         <a
-          href="tel:+919697000369"
+          href="tel:+919096970369"
           className="flex flex-1 flex-col items-center gap-1 py-1 text-[11px] font-bold text-slate-700 hover:text-sky-600"
         >
           <Phone className="h-4 w-4 text-sky-600" />
           <span>Call Us</span>
         </a>
         <a
-          href="https://wa.me/919697000369?text=Hi%20Pizza%20Mood,%20I%20want%20franchise%20info."
+          href="https://wa.me/919096970369?text=Hi%20Pizza%20Mood,%20I%20want%20franchise%20info."
           target="_blank"
           rel="noopener noreferrer"
           className="flex flex-1 flex-col items-center gap-1 py-1 text-[11px] font-bold text-slate-700 hover:text-emerald-600"

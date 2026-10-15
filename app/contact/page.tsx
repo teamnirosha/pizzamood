@@ -60,8 +60,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <span className="block text-[10px] font-black uppercase tracking-wider text-slate-400">Phone / WhatsApp</span>
-                    <a href="tel:+919697000369" className="text-base font-black text-slate-900 hover:text-sky-600 block">
-                      +91 96970 00369
+                    <a href="tel:+919096970369" className="text-base font-black text-slate-900 hover:text-sky-600 block">
+                      +91 90969 70369
                     </a>
                     <a href="tel:+917620173868" className="text-base font-black text-slate-900 hover:text-sky-600 block">
                       +91 76201 73868
@@ -133,7 +133,7 @@ export default function ContactPage() {
 
               <div className="pt-4 border-t border-slate-100">
                 <a
-                  href="https://wa.me/919697000369?text=Hi%20Pizza%20Mood,%20I%20want%20to%20know%20more%20about%20franchise."
+                  href="https://wa.me/919096970369?text=Hi%20Pizza%20Mood,%20I%20want%20to%20know%20more%20about%20franchise."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-600 py-3.5 text-xs font-black text-white shadow-lg shadow-emerald-600/30 hover:bg-emerald-700 transition"
