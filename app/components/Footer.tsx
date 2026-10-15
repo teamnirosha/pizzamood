@@ -236,7 +236,7 @@ export default function Footer() {
           {/* Legal Disclaimer */}
           <div className="mt-12 border-t border-slate-800 pt-8 text-[11px] font-medium text-slate-500 leading-relaxed">
             <p>
-              <strong className="text-slate-400">Franchise Disclaimer:</strong> Investment requirements, store launch timelines and financial figures displayed on this website ({PRICING_HEADLINE}) are indicative estimates for the standard Kiosk and Cafe formats. Actual investment may vary depending on store format, city tier, property condition, equipment selection and local operating factors. Pizza Mood does not make or imply any legally binding guarantees regarding store revenues, customer footfall, or monthly profit margins. Store approval is subject to site viability verification by Pizza Mood brand representatives.
+              <strong className="text-slate-400">Franchise Disclaimer:</strong> Investment requirements, store launch timelines and financial figures displayed on this website ({PRICING_HEADLINE}) are indicative estimates for the standard Kiosk and Cafe formats. The 30-day go-live guarantee is subject to the terms of your franchise agreement. Actual investment may vary depending on store format, city tier, property condition, equipment selection and local operating factors. Pizza Mood does not make or imply any legally binding guarantees regarding store revenues, customer footfall, or monthly profit margins. Store approval is subject to site viability verification by Pizza Mood brand representatives.
             </p>
           </div>
 

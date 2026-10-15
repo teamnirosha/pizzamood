@@ -15,6 +15,7 @@ import {
 import { getUTMParams, trackLeadFormStep, trackLeadFormSubmission } from "@/lib/analytics";
 import { InvestmentBudget, StoreType } from "@/types";
 import { BUDGET_OPTIONS, DEFAULT_BUDGET, PRICING_COMPACT } from "@/lib/pricing";
+import { EXCLUSIVITY_LINE, whatsappLink } from "@/lib/usps";
 
 interface FranchiseModalProps {
   isOpen: boolean;
@@ -171,9 +172,9 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
     onClose();
   };
 
-  const whatsappDirectUrl = `https://wa.me/919876543210?text=${encodeURIComponent(
+  const whatsappDirectUrl = whatsappLink(
     `Hi Pizza Mood Franchise Team, I have submitted an enquiry for ${formData.city || "my city"}. I'd like to get complete franchise details for the Kiosk and Cafe models.`
-  )}`;
+  );
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-md animate-in fade-in duration-200">
@@ -325,6 +326,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
                     onChange={(e) => setFormData({ ...formData, preferredLocation: e.target.value })}
                     className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-900 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20"
                   />
+                  <p className="mt-1.5 text-[11px] font-bold text-red-600">{EXCLUSIVITY_LINE}</p>
                 </div>
 
                 <div className="rounded-2xl border border-sky-200 bg-sky-50/60 p-4">

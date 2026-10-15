@@ -45,7 +45,7 @@ export default function TermsPage() {
           <div className="border-b border-slate-100 pb-6">
             <h2 className="text-lg font-black text-slate-900 mb-2">2. Franchise Investment Disclaimer</h2>
             <p>
-              All financial figures, investment estimates (such as "{PRICING_HEADLINE}"), equipment lists, and store setup timelines displayed on this website are indicative estimates for standard Kiosk and Cafe format stores.
+              All financial figures, investment estimates (such as "{PRICING_HEADLINE}"), equipment lists, and store setup timelines displayed on this website are indicative estimates for standard Kiosk and Cafe format stores. The 30-day go-live guarantee is subject to the terms of your franchise agreement.
             </p>
             <div className="mt-4 rounded-2xl bg-amber-50 border border-amber-200 p-4 text-xs font-semibold text-amber-900 space-y-2">
               <div className="flex items-center gap-1.5 font-bold text-amber-950">

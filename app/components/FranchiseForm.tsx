@@ -12,6 +12,7 @@ import {
 import { getUTMParams, trackLeadFormSubmission } from "@/lib/analytics";
 import { InvestmentBudget, StoreType } from "@/types";
 import { BUDGET_OPTIONS, DEFAULT_BUDGET } from "@/lib/pricing";
+import { EXCLUSIVITY_LINE } from "@/lib/usps";
 
 export default function FranchiseForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -217,6 +218,7 @@ export default function FranchiseForm() {
               onChange={(e) => setFormData({ ...formData, preferredLocation: e.target.value })}
               className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-900 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20"
             />
+            <p className="mt-1.5 text-[11px] font-bold text-red-600">{EXCLUSIVITY_LINE}</p>
           </div>
         </div>
       </div>

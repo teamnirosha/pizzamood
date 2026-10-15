@@ -31,8 +31,13 @@ const comparisons = [
   },
   {
     feature: "Store Launch Speed",
-    pizzaMood: "Target store launch in as little as 30 days*",
+    pizzaMood: "Guaranteed 30-day go-live*",
     other: "6 to 12 months long setup timelines",
+  },
+  {
+    feature: "Area Protection",
+    pizzaMood: "Only ONE Pizza Mood outlet per area",
+    other: "Territory protection is not always promised",
   },
 ];
 

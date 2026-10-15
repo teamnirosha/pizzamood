@@ -29,7 +29,7 @@ export default function HowItWorksPage() {
             Your 7-Step Journey to Owning a Pizza Mood
           </h1>
           <p className="mt-3 text-sm font-semibold text-slate-600">
-            From your initial enquiry to opening day in as little as 30 days. Here is exactly how we work together.
+            From your initial enquiry to opening day in 30 days, guaranteed. Here is exactly how we work together.
           </p>
         </div>
 

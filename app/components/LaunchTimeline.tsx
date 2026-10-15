@@ -22,7 +22,7 @@ export default function LaunchTimeline() {
             Speed to Market
           </span>
           <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
-            From Idea to Open Store in as Little as <span className="text-sky-600">30 Days*</span>
+            From Idea to Open Store in <span className="text-sky-600">30 Days*</span>, Guaranteed
           </h2>
           <p className="mt-3 text-sm font-semibold text-slate-600 leading-relaxed">
             Our structured 30-day onboarding playbook ensures your store opens without delays or budget overruns.

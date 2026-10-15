@@ -438,7 +438,7 @@ export const initialFAQs: FAQItem[] = [
     id: "faq-3",
     category: "Store & Setup",
     question: "How long does it take to open a Pizza Mood outlet?",
-    answer: "Our target launch timeline is as little as 30 days* from site finalization. The process includes site assessment (Days 1–3), store design & setup (Days 8–15), equipment installation (Days 16–22), staff training (Days 23–26), and trial run leading to grand launch on Day 30."
+    answer: "We guarantee a 30-day go-live* from site finalization. The process includes site assessment (Days 1–3), store design & setup (Days 8–15), equipment installation (Days 16–22), staff training (Days 23–26), and trial run leading to grand launch on Day 30."
   },
   {
     id: "faq-4",

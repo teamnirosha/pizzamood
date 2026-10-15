@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight, Phone, Sparkles } from "lucide-react";
+import { EXCLUSIVITY_LINE } from "@/lib/usps";
 import FranchiseModal from "./FranchiseModal";
 import { PRICING_COMPACT } from "@/lib/pricing";
 
@@ -33,7 +34,7 @@ export default function Navbar() {
             <span className="inline-flex items-center gap-1 rounded-full bg-yellow-400 px-2 py-0.5 text-[10px] uppercase font-black text-slate-900 shadow-sm">
               <Sparkles className="h-3 w-3" /> {PRICING_COMPACT}
             </span>
-            <span className="font-bold text-white">Own a Pizza Mood Franchise in your city!</span>
+            <span className="font-bold text-white">{EXCLUSIVITY_LINE}</span>
           </div>
           <div className="w-full sm:w-auto flex items-center justify-center sm:justify-end gap-4">
             <a
@@ -46,7 +47,7 @@ export default function Navbar() {
               onClick={() => setModalOpen(true)}
               className="underline font-black text-yellow-300 hover:text-white"
             >
-              Check City Availability →
+              Reserve Your Area →
             </button>
           </div>
         </div>
