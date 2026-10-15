@@ -1,3 +1,5 @@
+import { getSupabase } from "./supabase";
+import { fromRow, toRow, type LeadRow } from "./leadRows";
 import { DEFAULT_BUDGET } from "./pricing";
 import { promises as fs } from "fs";
 import path from "path";
@@ -92,19 +94,11 @@ export async function deleteLocation(id: string): Promise<boolean> {
 }
 
 // --- LEADS DB ---
-export async function getLeads(): Promise<Lead[]> {
-  if (!inMemoryLeads) {
-    inMemoryLeads = await readJsonFile<Lead[]>(LEADS_FILE, initialLeads);
-  }
-  return inMemoryLeads;
-}
+// Uses Supabase when configured; otherwise the local file / in-memory fallback (dev only; not persistent on Vercel).
+const LEADS_TABLE = "leads";
 
-export async function saveLead(lead: Partial<Lead>): Promise<Lead> {
-  const leads = await getLeads();
-  const existingIndex = lead.id ? leads.findIndex((l) => l.id === lead.id) : -1;
-  const existing = existingIndex >= 0 ? leads[existingIndex] : null;
-
-  const newLead: Lead = {
+function mergeLead(lead: Partial<Lead>, existing: Lead | null): Lead {
+  return {
     id: lead.id || existing?.id || `PM-${Date.now().toString().slice(-6)}`,
     name: lead.name || existing?.name || "Anonymous",
     phone: lead.phone || existing?.phone || "",
@@ -124,6 +118,48 @@ export async function saveLead(lead: Partial<Lead>): Promise<Lead> {
     createdAt: lead.createdAt || existing?.createdAt || new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
+}
+
+async function fetchLeadById(id: string): Promise<Lead | null> {
+  const sb = getSupabase();
+  if (!sb) return null;
+  const { data, error } = await sb.from(LEADS_TABLE).select("*").eq("id", id).maybeSingle();
+  if (error) throw error;
+  return data ? fromRow(data as LeadRow) : null;
+}
+
+async function upsertLead(lead: Lead) {
+  const sb = getSupabase();
+  if (!sb) return;
+  const { error } = await sb.from(LEADS_TABLE).upsert(toRow(lead));
+  if (error) throw error;
+}
+
+export async function getLeads(): Promise<Lead[]> {
+  const sb = getSupabase();
+  if (sb) {
+    const { data, error } = await sb.from(LEADS_TABLE).select("*").order("created_at", { ascending: false }).limit(5000);
+    if (error) throw error;
+    return (data as LeadRow[]).map(fromRow);
+  }
+  if (!inMemoryLeads) {
+    inMemoryLeads = await readJsonFile<Lead[]>(LEADS_FILE, initialLeads);
+  }
+  return inMemoryLeads;
+}
+
+export async function saveLead(lead: Partial<Lead>): Promise<Lead> {
+  if (getSupabase()) {
+    const existing = lead.id ? await fetchLeadById(lead.id) : null;
+    const merged = mergeLead(lead, existing);
+    await upsertLead(merged);
+    return merged;
+  }
+
+  const leads = await getLeads();
+  const existingIndex = lead.id ? leads.findIndex((l) => l.id === lead.id) : -1;
+  const existing = existingIndex >= 0 ? leads[existingIndex] : null;
+  const newLead = mergeLead(lead, existing);
 
   if (existingIndex >= 0) {
     leads[existingIndex] = newLead;
@@ -137,17 +173,28 @@ export async function saveLead(lead: Partial<Lead>): Promise<Lead> {
 }
 
 export async function updateLeadStatus(id: string, status: Lead["status"], note?: string): Promise<Lead | null> {
+  const apply = (target: Lead): Lead => {
+    target.status = status;
+    target.updatedAt = new Date().toISOString();
+    if (note) {
+      target.notes = [...(target.notes || []), `[${new Date().toLocaleDateString()}] ${note}`];
+    }
+    return target;
+  };
+
+  if (getSupabase()) {
+    const existing = await fetchLeadById(id);
+    if (!existing) return null;
+    const updated = apply(existing);
+    await upsertLead(updated);
+    return updated;
+  }
+
   const leads = await getLeads();
   const leadIndex = leads.findIndex((l) => l.id === id);
   if (leadIndex === -1) return null;
 
-  const target = leads[leadIndex];
-  target.status = status;
-  target.updatedAt = new Date().toISOString();
-  if (note) {
-    target.notes = [...(target.notes || []), `[${new Date().toLocaleDateString()}] ${note}`];
-  }
-
+  const target = apply(leads[leadIndex]);
   leads[leadIndex] = target;
   inMemoryLeads = [...leads];
   await writeJsonFile(LEADS_FILE, inMemoryLeads);

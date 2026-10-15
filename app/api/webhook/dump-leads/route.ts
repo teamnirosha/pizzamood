@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import { getLeads } from "@/lib/db";
 import { dumpAllLeadsToN8n } from "@/lib/webhook";
+import { requireAdmin } from "@/lib/adminAuth";
 
-export async function POST() {
+export async function POST(request: Request) {
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
   try {
     const leads = await getLeads();
     const success = await dumpAllLeadsToN8n(leads);

@@ -9,14 +9,24 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === "Go4thsas") {
-      document.cookie = "pm_admin_auth=true; path=/; max-age=86400";
-      router.push("/admin");
-      router.refresh();
-    } else {
-      setError("Invalid admin password. Please try again.");
+    setError("");
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        router.push("/admin");
+        router.refresh();
+      } else {
+        setError(data.message || "Invalid admin password. Please try again.");
+      }
+    } catch {
+      setError("Network error. Please try again.");
     }
   };
 

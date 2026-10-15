@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getLocations, saveLocation, deleteLocation } from "@/lib/db";
+import { requireAdmin } from "@/lib/adminAuth";
 
 export async function GET(
   request: Request,
@@ -31,6 +32,8 @@ export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
   try {
     const { id } = await params;
     const body = await request.json();
@@ -69,6 +72,8 @@ export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
   try {
     const { id } = await params;
     await deleteLocation(id);

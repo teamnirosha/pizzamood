@@ -17,8 +17,8 @@ export default function AdminHeader({
 }: AdminHeaderProps) {
   const router = useRouter();
 
-  const handleLogout = () => {
-    document.cookie = "pm_admin_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+  const handleLogout = async () => {
+    await fetch("/api/admin/logout", { method: "POST" });
     router.push("/admin/login");
     router.refresh();
   };
