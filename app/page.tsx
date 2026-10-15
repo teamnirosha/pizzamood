@@ -27,6 +27,7 @@ export async function generateMetadata() {
       siteName: "Pizza Mood Franchise",
       locale: "en_IN",
       type: "website",
+      images: [{ url: "/logo.png", width: 512, height: 512, alt: "Pizza Mood" }],
     },
   };
 }

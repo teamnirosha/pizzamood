@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { baseUrl } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,14 +17,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(baseUrl),
   title: `Pizza Mood Franchise | ${PRICING_HEADLINE}`,
   description: "Own a high-profit Pizza Mood QSR outlet in your city. Complete 360° operational support, store setup in 30 days, location assistance and fresh raw materials.",
+  openGraph: { images: [{ url: "/logo.png", width: 512, height: 512, alt: "Pizza Mood" }] },
   icons: {
     icon: [
-      { url: "/logo.svg", type: "image/svg+xml" },
+      { url: "/logo.png", type: "image/png" },
       { url: "/favicon.ico" },
     ],
-    shortcut: "/logo.svg",
+    shortcut: "/logo.png",
     apple: "/apple-icon.png",
   },
 };

@@ -76,7 +76,7 @@ export default function Footer() {
             {/* Col 1: Brand info */}
             <div className="lg:col-span-2 space-y-4">
               <Link href="/" className="flex items-center">
-                <img src="/logo.svg" alt="Pizza Mood" className="h-14 w-14 object-contain" />
+                <img src="/logo.png" alt="Pizza Mood" width={56} height={56} className="h-14 w-14 object-contain" />
               </Link>
 
               <p className="text-xs font-medium text-slate-400 leading-relaxed max-w-sm">

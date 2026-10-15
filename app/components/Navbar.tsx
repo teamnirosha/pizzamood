@@ -62,8 +62,8 @@ export default function Navbar() {
             onClick={() => setMobileOpen(false)}
             className="group flex items-center"
           >
-            <div className="relative h-16 w-16 transition group-hover:scale-105">
-              <img src="/logo.svg" alt="Pizza Mood Logo" className="h-full w-full object-contain" />
+            <div className="relative h-16 w-16 transition group-hover:scale-105 lg:h-[72px] lg:w-[72px]">
+              <img src="/logo.png" alt="Pizza Mood Logo" width={72} height={72} className="h-full w-full object-contain" />
             </div>
           </Link>
 
