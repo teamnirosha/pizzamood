@@ -6,6 +6,7 @@ import FranchiseInvestmentSection from "../components/FranchiseInvestmentSection
 import LaunchTimeline from "../components/LaunchTimeline";
 import SupportSection from "../components/SupportSection";
 import HomeFAQ from "../components/HomeFAQ";
+import UspTicker from "../components/UspTicker";
 
 export const metadata: Metadata = {
   title: "Own a Pizza Mood Franchise | High Profit QSR Opportunity in India",
@@ -31,6 +32,7 @@ export default async function FranchisePage() {
           </p>
         </div>
       </section>
+      <div className="mx-auto max-w-5xl px-4 pt-6"><UspTicker /></div>
 
       {/* Main Sections */}
       <FranchiseInvestmentSection />

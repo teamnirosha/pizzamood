@@ -1,5 +1,6 @@
 import { getLocations, getFAQs, getTestimonials, getSiteSettings } from "@/lib/db";
 import HeroSection from "./components/HeroSection";
+import UspSection from "./components/UspSection";
 import WhyPizzaMood from "./components/WhyPizzaMood";
 import InvestmentSection from "./components/InvestmentSection";
 import LaunchTimeline from "./components/LaunchTimeline";
@@ -53,6 +54,7 @@ export default async function Home() {
 
       {/* 01 HERO SECTION */}
       <HeroSection />
+      <UspSection />
 
       {/* 02 WHY PIZZA MOOD (OPERATING SYSTEM) */}
       <WhyPizzaMood />

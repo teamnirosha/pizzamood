@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { getLocations } from "@/lib/db";
 import LocationMap from "../components/LocationMap";
+import UspTicker from "../components/UspTicker";
 
 export const metadata: Metadata = {
   title: "Pizza Mood Outlets Near You | Store Locations, Timings & Contact",
@@ -13,6 +14,7 @@ export default async function LocationsPage() {
   return (
     <div className="bg-slate-50 min-h-screen py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <UspTicker />
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">

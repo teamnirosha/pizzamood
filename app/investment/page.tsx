@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import InvestmentSection from "../components/InvestmentSection";
 import PricingCards from "@/app/components/PricingCards";
+import UspTicker from "@/app/components/UspTicker";
 import { PRICING_HEADLINE } from "@/lib/pricing";
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export default async function InvestmentPage() {
           <div className="mx-auto mt-6 max-w-xl"><PricingCards /></div>
         </div>
       </section>
+      <div className="mx-auto max-w-5xl px-4 pt-6"><UspTicker /></div>
 
       <InvestmentSection />
     </div>
