@@ -1,4 +1,3 @@
-// @ts-nocheck  (imports ../lib/pricing.ts with extension so plain `node` can run it; excluded from Next type-check)
 import assert from "node:assert/strict";
 import { MODELS, MODEL_BY_ID, BUDGET_OPTIONS, PRICING_HEADLINE } from "../lib/pricing.ts";
 
