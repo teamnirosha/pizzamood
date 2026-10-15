@@ -18,6 +18,8 @@ export type InvestmentBudget =
   | "₹15 Lakh+";
 
 export type StoreType =
+  | "Cafe"
+  | "Kiosk"
   | "Takeaway"
   | "Small QSR"
   | "High Street"

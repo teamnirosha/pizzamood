@@ -11,10 +11,12 @@ import {
   Building2,
   Sparkles,
   PhoneCall,
+  Coffee,
+  Store,
 } from "lucide-react";
 import { getUTMParams, trackLeadFormStep, trackLeadFormSubmission } from "@/lib/analytics";
 import { InvestmentBudget, StoreType } from "@/types";
-import { BUDGET_OPTIONS, DEFAULT_BUDGET, PRICING_COMPACT } from "@/lib/pricing";
+import { DEFAULT_BUDGET, budgetForStore, PRICING_COMPACT } from "@/lib/pricing";
 import { EXCLUSIVITY_LINE, whatsappLink } from "@/lib/usps";
 
 interface FranchiseModalProps {
@@ -39,7 +41,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
     preferredLocation: "",
     investmentBudget: DEFAULT_BUDGET as InvestmentBudget,
     ownsProperty: false,
-    preferredStoreType: "Takeaway" as StoreType,
+    preferredStoreType: "Cafe" as StoreType,
     timeline: "Within 30 days",
     message: "",
   });
@@ -65,7 +67,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
       case 2:
         return "Location Choice";
       case 3:
-        return "Investment & Property";
+        return "Store & Property";
       case 4:
         return "Timeline & Requirements";
       case 5:
@@ -81,6 +83,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
       const payload = {
         id: overrideId || leadId || undefined,
         ...formData,
+        investmentBudget: budgetForStore(formData.preferredStoreType),
         whatsapp: formData.whatsapp || formData.phone,
         source: utms,
       };
@@ -157,7 +160,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
       const finalLead = await saveOrUpdateLead(leadId);
       setIsSuccess(true);
       setStep(5);
-      trackLeadFormSubmission(finalLead?.id || leadId || "PM-NEW", formData.city || "Not Specified", formData.investmentBudget);
+      trackLeadFormSubmission(finalLead?.id || leadId || "PM-NEW", formData.city || "Not Specified", budgetForStore(formData.preferredStoreType));
     } catch (err) {
       setErrorMsg("Network error. Please check your internet connection.");
     } finally {
@@ -173,7 +176,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
   };
 
   const whatsappDirectUrl = whatsappLink(
-    `Hi Pizza Mood Franchise Team, I have submitted an enquiry for ${formData.city || "my city"}. I'd like to get complete franchise details for the Kiosk and Cafe models.`
+    `Hi Pizza Mood Franchise Team, I have submitted an enquiry for ${formData.city || "my city"}. I'd like to get complete franchise details for the ${formData.preferredStoreType} format.`
   );
 
   return (
@@ -346,47 +349,107 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
 
           {/* STEP 3 */}
           {step === 3 && (
-            <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
+            <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
               <h3 className="text-lg font-extrabold text-slate-900">
-                03. Investment Budget & Store Preferences
+                03. Store Format & Property Details
               </h3>
 
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-700 mb-2">
-                  Select Investment Budget Range
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2.5">
+                  Select Preferred Store Format <span className="text-red-500">*</span>
                 </label>
-                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
-                  {(
-                    [...BUDGET_OPTIONS] as InvestmentBudget[]
-                  ).map((b) => (
-                    <button
-                      key={b}
-                      type="button"
-                      onClick={() => setFormData({ ...formData, investmentBudget: b })}
-                      className={`flex items-center justify-between rounded-xl border p-3 text-left transition ${
-                        formData.investmentBudget === b
-                          ? "border-sky-600 bg-sky-50 text-sky-700 font-bold ring-2 ring-sky-500/20"
-                          : "border-slate-200 hover:border-slate-300 text-slate-700 font-medium"
-                      }`}
-                    >
-                      <span className="text-xs">{b}</span>
-                      {formData.investmentBudget === b && (
-                        <CheckCircle2 className="h-4 w-4 text-sky-600 shrink-0" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Cafe Option */}
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, preferredStoreType: "Cafe" })}
+                    className={`group relative flex flex-col justify-between rounded-2xl p-4.5 text-left border-2 transition-all duration-200 ${
+                      formData.preferredStoreType === "Cafe"
+                        ? "border-sky-500 bg-sky-50/80 shadow-md ring-2 ring-sky-500/20"
+                        : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/50"
+                    }`}
+                  >
+                    <div className="flex items-start justify-between w-full">
+                      <div className="flex items-center gap-3">
+                        <div className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-colors ${
+                          formData.preferredStoreType === "Cafe"
+                            ? "bg-sky-500 text-white shadow-md shadow-sky-500/30"
+                            : "bg-slate-100 text-slate-600 group-hover:bg-sky-100 group-hover:text-sky-600"
+                        }`}>
+                          <Coffee className="h-6 w-6" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h4 className="text-base font-black text-slate-900">Cafe</h4>
+                            <span className="rounded-full bg-sky-100 px-2 py-0.5 text-[10px] font-extrabold text-sky-700">
+                              Popular
+                            </span>
+                          </div>
+                          <p className="text-xs font-medium text-slate-500 mt-0.5">Dine-in & Takeaway Experience</p>
+                        </div>
+                      </div>
+                      {formData.preferredStoreType === "Cafe" && (
+                        <CheckCircle2 className="h-5 w-5 text-sky-600 shrink-0 mt-0.5" />
                       )}
-                    </button>
-                  ))}
+                    </div>
+
+                    <div className="mt-4 flex items-center justify-between pt-3 border-t border-slate-200/70 text-xs">
+                      <span className="font-bold text-slate-700">300 – 600 sq.ft</span>
+                      <span className="font-semibold text-slate-500">Seating + Kitchen</span>
+                    </div>
+                  </button>
+
+                  {/* Kiosk Option */}
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, preferredStoreType: "Kiosk" })}
+                    className={`group relative flex flex-col justify-between rounded-2xl p-4.5 text-left border-2 transition-all duration-200 ${
+                      formData.preferredStoreType === "Kiosk"
+                        ? "border-sky-500 bg-sky-50/80 shadow-md ring-2 ring-sky-500/20"
+                        : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/50"
+                    }`}
+                  >
+                    <div className="flex items-start justify-between w-full">
+                      <div className="flex items-center gap-3">
+                        <div className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-colors ${
+                          formData.preferredStoreType === "Kiosk"
+                            ? "bg-sky-500 text-white shadow-md shadow-sky-500/30"
+                            : "bg-slate-100 text-slate-600 group-hover:bg-sky-100 group-hover:text-sky-600"
+                        }`}>
+                          <Store className="h-6 w-6" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h4 className="text-base font-black text-slate-900">Kiosk</h4>
+                            <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-extrabold text-amber-700">
+                              Compact
+                            </span>
+                          </div>
+                          <p className="text-xs font-medium text-slate-500 mt-0.5">Express Takeaway & Food Court</p>
+                        </div>
+                      </div>
+                      {formData.preferredStoreType === "Kiosk" && (
+                        <CheckCircle2 className="h-5 w-5 text-sky-600 shrink-0 mt-0.5" />
+                      )}
+                    </div>
+
+                    <div className="mt-4 flex items-center justify-between pt-3 border-t border-slate-200/70 text-xs">
+                      <span className="font-bold text-slate-700">100 – 250 sq.ft</span>
+                      <span className="font-semibold text-slate-500">Express Counter</span>
+                    </div>
+                  </button>
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase text-slate-700 mb-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
                   Do you own or have commercial property ready?
                 </label>
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
                     onClick={() => setFormData({ ...formData, ownsProperty: true })}
-                    className={`rounded-xl border p-3 text-center text-xs font-bold transition ${
+                    className={`rounded-xl border p-3.5 text-center text-xs font-bold transition ${
                       formData.ownsProperty
                         ? "border-sky-600 bg-sky-50 text-sky-700 ring-2 ring-sky-500/20"
                         : "border-slate-200 text-slate-700 hover:border-slate-300"
@@ -397,7 +460,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
                   <button
                     type="button"
                     onClick={() => setFormData({ ...formData, ownsProperty: false })}
-                    className={`rounded-xl border p-3 text-center text-xs font-bold transition ${
+                    className={`rounded-xl border p-3.5 text-center text-xs font-bold transition ${
                       !formData.ownsProperty
                         ? "border-sky-600 bg-sky-50 text-sky-700 ring-2 ring-sky-500/20"
                         : "border-slate-200 text-slate-700 hover:border-slate-300"
@@ -405,28 +468,6 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
                   >
                     No, looking for rental site
                   </button>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold uppercase text-slate-700 mb-2">
-                  Preferred Store Format
-                </label>
-                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-                  {(["Takeaway", "Small QSR", "High Street", "Food Court"] as StoreType[]).map((t) => (
-                    <button
-                      key={t}
-                      type="button"
-                      onClick={() => setFormData({ ...formData, preferredStoreType: t })}
-                      className={`rounded-xl border p-2.5 text-center text-xs font-bold transition ${
-                        formData.preferredStoreType === t
-                          ? "border-sky-600 bg-sky-50 text-sky-700 ring-2 ring-sky-500/20"
-                          : "border-slate-200 text-slate-700 hover:border-slate-300"
-                      }`}
-                    >
-                      {t}
-                    </button>
-                  ))}
                 </div>
               </div>
             </div>

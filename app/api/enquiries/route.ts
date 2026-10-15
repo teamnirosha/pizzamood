@@ -45,7 +45,7 @@ export async function POST(request: Request) {
       preferredLocation: body.preferredLocation || city || "Flexible",
       investmentBudget: investmentBudget || DEFAULT_BUDGET,
       ownsProperty: body.ownsProperty ?? false,
-      preferredStoreType: body.preferredStoreType || "Takeaway",
+      preferredStoreType: body.preferredStoreType || "Cafe",
       timeline: body.timeline || "Immediate",
       message: body.message || "",
       status: "new",

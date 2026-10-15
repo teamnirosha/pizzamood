@@ -60,7 +60,7 @@ export default function Footer() {
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                 </button>
                 <a
-                  href="https://wa.me/919096970369?text=Hi%20Pizza%20Mood,%20I%20want%20to%20know%20more%20about%20starting%20a%20franchise."
+                  href="https://wa.me/919697000369?text=Hi%20Pizza%20Mood,%20I%20want%20to%20know%20more%20about%20starting%20a%20franchise."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-emerald-700"
@@ -72,9 +72,9 @@ export default function Footer() {
           </div>
 
           {/* Main Footer Links */}
-          <div className="mt-16 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="mt-16 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {/* Col 1: Brand info */}
-            <div className="lg:col-span-2 space-y-4">
+            <div className="lg:col-span-1 sm:col-span-2 space-y-4">
               <Link href="/" className="flex items-center">
                 <img src="/logo.png" alt="Pizza Mood" width={56} height={56} className="h-14 w-14 object-contain" />
               </Link>
@@ -87,8 +87,8 @@ export default function Footer() {
                 <div className="flex items-start gap-2">
                   <Phone className="h-4 w-4 text-sky-400 shrink-0 mt-0.5" />
                   <div>
-                    <a href="tel:+919096970369" className="hover:text-white block">+91 90969 70369</a>
-                    <a href="tel:+918390909027" className="hover:text-white block">+91 83909 09027</a>
+                    <a href="tel:+919697000369" className="hover:text-white block">+91 96970 00369</a>
+                    <a href="tel:+917620173868" className="hover:text-white block">+91 76201 73868</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
@@ -203,20 +203,20 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Col 4: Corporate & Portal */}
+            {/* Col 4: Corporate & Information */}
             <div>
               <h3 className="text-xs font-black uppercase tracking-wider text-yellow-400">
-                Company & Portal
+                Company & Info
               </h3>
               <ul className="mt-4 space-y-2.5 text-xs font-semibold text-slate-400">
                 <li>
-                  <Link href="/gallery" className="hover:text-white">
-                    Photo Gallery
+                  <Link href="/story" className="hover:text-white">
+                    Brand Story
                   </Link>
                 </li>
                 <li>
-                  <Link href="/admin" className="hover:text-white flex items-center gap-1.5 text-slate-300 font-bold">
-                    <Lock className="h-3.5 w-3.5 text-amber-400" /> Admin Portal
+                  <Link href="/gallery" className="hover:text-white">
+                    Photo Gallery
                   </Link>
                 </li>
                 <li>
@@ -241,15 +241,15 @@ export default function Footer() {
           </div>
 
           {/* Bottom Bar */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-between border-t border-slate-900 pt-6 text-xs text-slate-500">
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-900 pt-6 text-xs text-slate-400">
             <p>© {new Date().getFullYear()} Pizza Mood India. All rights reserved.</p>
-            <div className="mt-3 sm:mt-0 text-slate-950 select-none">
-              Designed and developed by{" "}
+            <div className="flex items-center gap-1.5 text-xs text-slate-400">
+              <span>Designed and Developed by</span>
               <a
-                href="https://nirosha.org"
+                href="https://nirosha.org/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-950 hover:text-slate-950"
+                className="font-bold text-sky-400 hover:text-yellow-400 transition-colors underline decoration-sky-400/40 hover:decoration-yellow-400 underline-offset-4"
               >
                 Team Nirosha
               </a>
@@ -261,14 +261,14 @@ export default function Footer() {
       {/* STICKY MOBILE QUICK-ACTION BAR */}
       <div className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around border-t border-slate-200 bg-white/95 p-2.5 backdrop-blur-md md:hidden shadow-2xl">
         <a
-          href="tel:+919096970369"
+          href="tel:+919697000369"
           className="flex flex-1 flex-col items-center gap-1 py-1 text-[11px] font-bold text-slate-700 hover:text-sky-600"
         >
           <Phone className="h-4 w-4 text-sky-600" />
           <span>Call Us</span>
         </a>
         <a
-          href="https://wa.me/919096970369?text=Hi%20Pizza%20Mood,%20I%20want%20franchise%20info."
+          href="https://wa.me/919697000369?text=Hi%20Pizza%20Mood,%20I%20want%20franchise%20info."
           target="_blank"
           rel="noopener noreferrer"
           className="flex flex-1 flex-col items-center gap-1 py-1 text-[11px] font-bold text-slate-700 hover:text-emerald-600"

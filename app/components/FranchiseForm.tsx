@@ -11,8 +11,8 @@ import {
 } from "lucide-react";
 import { getUTMParams, trackLeadFormSubmission } from "@/lib/analytics";
 import { InvestmentBudget, StoreType } from "@/types";
-import { BUDGET_OPTIONS, DEFAULT_BUDGET } from "@/lib/pricing";
-import { EXCLUSIVITY_LINE } from "@/lib/usps";
+import { DEFAULT_BUDGET, budgetForStore } from "@/lib/pricing";
+import { EXCLUSIVITY_LINE, whatsappLink } from "@/lib/usps";
 
 export default function FranchiseForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,7 +28,7 @@ export default function FranchiseForm() {
     preferredLocation: "",
     investmentBudget: DEFAULT_BUDGET as InvestmentBudget,
     ownsProperty: false,
-    preferredStoreType: "Takeaway" as StoreType,
+    preferredStoreType: "Cafe" as StoreType,
     timeline: "Within 30 days",
     message: "",
   });
@@ -56,6 +56,7 @@ export default function FranchiseForm() {
       const utms = getUTMParams();
       const payload = {
         ...formData,
+        investmentBudget: budgetForStore(formData.preferredStoreType),
         whatsapp: formData.whatsapp || formData.phone,
         source: utms,
       };
@@ -69,7 +70,7 @@ export default function FranchiseForm() {
       const data = await res.json();
       if (res.ok && data.success) {
         setIsSuccess(true);
-        trackLeadFormSubmission(data.lead?.id || "PM-NEW", formData.city, formData.investmentBudget);
+        trackLeadFormSubmission(data.lead?.id || "PM-NEW", formData.city, budgetForStore(formData.preferredStoreType));
       } else {
         setErrorMsg(data.message || "Failed to submit enquiry. Please try again.");
       }
@@ -80,9 +81,9 @@ export default function FranchiseForm() {
     }
   };
 
-  const whatsappDirectUrl = `https://wa.me/919096970369?text=${encodeURIComponent(
-    `Hi Pizza Mood Franchise Team, I have submitted an enquiry for ${formData.city || "my city"}. I'd like to get complete franchise details for the Kiosk and Cafe models.`
-  )}`;
+  const whatsappDirectUrl = whatsappLink(
+    `Hi Pizza Mood Franchise Team, I have submitted an enquiry for ${formData.city || "my city"}. I'd like to get complete franchise details for the ${formData.preferredStoreType} format.`
+  );
 
   if (isSuccess) {
     return (
@@ -223,72 +224,41 @@ export default function FranchiseForm() {
         </div>
       </div>
 
-      {/* Investment & Store Preference */}
+      {/* Store Preference & Timeline */}
       <div className="border-t border-slate-100 pt-5">
         <h3 className="text-xs font-black uppercase tracking-wider text-sky-600 mb-3">
-          3. Investment & Preferences
+          3. Store Format & Timeline
         </h3>
         
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-bold uppercase text-slate-700 mb-2">
-              Investment Budget Range
+            <label className="block text-xs font-bold uppercase text-slate-700 mb-1">
+              Store Format <span className="text-red-500">*</span>
             </label>
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-              {(
-                [...BUDGET_OPTIONS] as InvestmentBudget[]
-              ).map((b) => (
-                <button
-                  key={b}
-                  type="button"
-                  onClick={() => setFormData({ ...formData, investmentBudget: b })}
-                  className={`flex items-center justify-between rounded-xl border p-2.5 text-left transition ${
-                    formData.investmentBudget === b
-                      ? "border-sky-600 bg-sky-50 text-sky-700 font-bold ring-2 ring-sky-500/20"
-                      : "border-slate-200 hover:border-slate-300 text-slate-700 font-medium"
-                  }`}
-                >
-                  <span className="text-xs">{b}</span>
-                  {formData.investmentBudget === b && (
-                    <CheckCircle2 className="h-3.5 w-3.5 text-sky-600 shrink-0" />
-                  )}
-                </button>
-              ))}
-            </div>
+            <select
+              value={formData.preferredStoreType}
+              onChange={(e) => setFormData({ ...formData, preferredStoreType: e.target.value as StoreType })}
+              className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-900 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20"
+            >
+              <option value="Cafe">Cafe (Dine-in & Takeaway)</option>
+              <option value="Kiosk">Kiosk (Express & Food Court)</option>
+            </select>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-bold uppercase text-slate-700 mb-1">
-                Store Format
-              </label>
-              <select
-                value={formData.preferredStoreType}
-                onChange={(e) => setFormData({ ...formData, preferredStoreType: e.target.value as StoreType })}
-                className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-900 focus:border-sky-500 focus:outline-none"
-              >
-                <option value="Takeaway">Takeaway Outlet</option>
-                <option value="Small QSR">Small QSR Dine-in</option>
-                <option value="High Street">High Street Store</option>
-                <option value="Food Court">Food Court Kiosk</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold uppercase text-slate-700 mb-1">
-                Planned Launch Timeline
-              </label>
-              <select
-                value={formData.timeline}
-                onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
-                className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-900 focus:border-sky-500 focus:outline-none"
-              >
-                <option value="Immediate">Immediate (Ready to start)</option>
-                <option value="Within 30 days">Within 30 days</option>
-                <option value="1–3 months">1–3 months</option>
-                <option value="Just exploring">Just exploring</option>
-              </select>
-            </div>
+          <div>
+            <label className="block text-xs font-bold uppercase text-slate-700 mb-1">
+              Planned Launch Timeline
+            </label>
+            <select
+              value={formData.timeline}
+              onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
+              className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-900 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20"
+            >
+              <option value="Immediate">Immediate (Ready to start)</option>
+              <option value="Within 30 days">Within 30 days</option>
+              <option value="1–3 months">1–3 months</option>
+              <option value="Just exploring">Just exploring</option>
+            </select>
           </div>
         </div>
       </div>

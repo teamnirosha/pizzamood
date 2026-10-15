@@ -1,4 +1,4 @@
-import { PRICING_HEADLINE } from "@/lib/pricing";
+import { MODEL_BY_ID, PRICING_HEADLINE } from "@/lib/pricing";
 
 export interface InvestmentItemData {
   id: string;
@@ -39,19 +39,30 @@ export interface FranchiseInvestmentConfig {
 }
 
 export const franchiseInvestmentConfig: FranchiseInvestmentConfig = {
-  badgeText: "LOW ENTRY BARRIER",
+  badgeText: "FLEXIBLE STORE FORMATS",
   mainHeadingLine1: PRICING_HEADLINE,
   mainHeadingLine2: "Build Something of Your Own.",
-  description: "Join Pizza Mood – a proven QSR franchise model with low setup costs, high demand and strong brand support. Be part of a growing food brand and bring happiness to your city.",
+  description: `Choose between our compact ${MODEL_BY_ID.kiosk.lakh} Kiosk format (no interior setup costs) or our turnkey ${MODEL_BY_ID.cafe.lakh} Full Cafe format (all inclusive with complete interiors & grand launch).`,
   primaryCtaText: "Get Complete Investment Details →",
-  secondaryCtaText: "Watch How It Works",
-  secondaryCtaSubtext: "2 min video",
+  secondaryCtaText: "What Franchise Owners Say",
+  secondaryCtaSubtext: "Hear partner stories",
   cardTitle: "Setup Expenses",
-  cardSubtitle: "A clear and transparent investment plan",
+  cardSubtitle: "Transparent investment breakdown by store format",
   totalLabel: "Total Expenses",
   termsText: "T & C Apply",
   cardQuoteText: "Invest in a brand that serves happiness and grows with you.",
 };
+
+// Kiosk (no interiors) and Cafe (with interiors and opening ceremony) come from lib/pricing.ts.
+export const kioskInvestmentItemsData: InvestmentItemData[] = MODEL_BY_ID.kiosk.items;
+export const cafeInvestmentItemsData: InvestmentItemData[] = MODEL_BY_ID.cafe.items;
+
+// Default fallback export
+export const investmentItemsData: InvestmentItemData[] = cafeInvestmentItemsData;
+
+export const calculatedKioskTotal = MODEL_BY_ID.kiosk.total;
+export const calculatedCafeTotal = MODEL_BY_ID.cafe.total;
+export const calculatedTotalInvestment = calculatedCafeTotal;
 
 export const benefitItemsData: BenefitItemData[] = [
   {

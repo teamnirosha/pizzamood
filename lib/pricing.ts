@@ -12,25 +12,32 @@ export type PricingItem = {
 const inr = (n: number) => `₹ ${n.toLocaleString("en-IN")}`;
 const lakh = (n: number) => `₹${n / 100000} Lakh`;
 
-// amounts: [franchise fee, kitchen setup, interiors/CCTV/billing, opening ceremony]
-const build = (id: ModelId, label: string, amounts: number[]) => {
-  const [fee, kitchen, interiors, opening] = amounts;
-  const items: PricingItem[] = [
-    { id: `${id}-1`, name: "Franchise Fees", amount: fee, formattedAmount: inr(fee), notes: "18% GST Applicable on Franchise Fees", iconName: "Handshake" },
-    { id: `${id}-2`, name: "Kitchen Setup & Equipment", amount: kitchen, formattedAmount: inr(kitchen), notes: "Includes commercial pizza oven, refrigeration & prep stations", iconName: "Utensils" },
-    { id: `${id}-3`, name: "Interiors, CCTV & Billing set", amount: interiors, formattedAmount: inr(interiors), notes: "Standardized front desk counter, illuminated LED signage & cloud POS setup", iconName: "Sofa" },
-    { id: `${id}-4`, name: "1st day opening ceremony", amount: opening, formattedAmount: inr(opening), notes: "Including decorations & whole management by Pizza Mood", iconName: "PartyPopper" },
-  ];
+type ItemDef = [name: string, amount: number, notes: string, iconName: PricingItem["iconName"]];
+
+const FEE: ItemDef = ["Franchise Fees", 400000, "18% GST Applicable on Franchise Fees", "Handshake"];
+const KITCHEN: ItemDef = ["Kitchen Setup & Equipment", 300000, "Includes commercial pizza oven, refrigeration & prep stations", "Utensils"];
+const INTERIORS: ItemDef = ["Interiors, CCTV & Billing set", 400000, "Standardized front desk counter, illuminated LED signage & cloud POS setup", "Sofa"];
+const OPENING: ItemDef = ["1st day opening ceremony", 100000, "Including decorations & whole management by Pizza Mood", "PartyPopper"];
+
+const build = (id: ModelId, label: string, defs: ItemDef[]) => {
+  const items: PricingItem[] = defs.map(([name, amount, notes, iconName], i) => ({
+    id: `${id}-${i + 1}`,
+    name,
+    amount,
+    formattedAmount: inr(amount),
+    notes,
+    iconName,
+  }));
   const total = items.reduce((s, i) => s + i.amount, 0);
   return { id, label, total, lakh: lakh(total), formattedTotal: inr(total), items };
 };
 
 export type PricingModel = ReturnType<typeof build>;
 
-// Kiosk line items are proposed (scaled from the Cafe table); owner to confirm.
+// Kiosk has no interiors or opening ceremony; Cafe includes both.
 export const MODEL_BY_ID: Record<ModelId, PricingModel> = {
-  kiosk: build("kiosk", "Kiosk", [250000, 200000, 200000, 50000]),
-  cafe: build("cafe", "Cafe", [400000, 300000, 400000, 100000]),
+  kiosk: build("kiosk", "Kiosk", [FEE, KITCHEN]),
+  cafe: build("cafe", "Cafe", [FEE, KITCHEN, INTERIORS, OPENING]),
 };
 export const MODELS: PricingModel[] = [MODEL_BY_ID.kiosk, MODEL_BY_ID.cafe];
 
@@ -40,3 +47,7 @@ export const PRICING_COMPACT = MODELS.map((m) => `${m.label} ₹${m.total / 1000
 export const BUDGET_OPTIONS = ["Kiosk – ₹7 Lakh", "Cafe – ₹12 Lakh", "Need guidance"] as const;
 export type BudgetOption = (typeof BUDGET_OPTIONS)[number];
 export const DEFAULT_BUDGET: BudgetOption = "Need guidance";
+
+// Maps the store format picked in the enquiry form to the budget string stored on the lead.
+export const budgetForStore = (storeType?: string): BudgetOption =>
+  storeType === "Kiosk" ? BUDGET_OPTIONS[0] : storeType === "Cafe" ? BUDGET_OPTIONS[1] : DEFAULT_BUDGET;

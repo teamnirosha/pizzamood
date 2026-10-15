@@ -38,10 +38,10 @@ export default function Navbar() {
           </div>
           <div className="w-full sm:w-auto flex items-center justify-center sm:justify-end gap-4">
             <a
-              href="tel:+919096970369"
+              href="tel:+919697000369"
               className="flex items-center gap-1 hover:underline text-white font-bold"
             >
-              <Phone className="h-3 w-3" /> +91 90969 70369
+              <Phone className="h-3 w-3" /> +91 96970 00369
             </a>
             <button
               onClick={() => setModalOpen(true)}

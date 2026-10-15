@@ -3,11 +3,11 @@ import InvestmentSection from "../components/InvestmentSection";
 import PricingCards from "@/app/components/PricingCards";
 import UspTicker from "@/app/components/UspTicker";
 import FranchiseJsonLd from "@/app/components/FranchiseJsonLd";
-import { PRICING_HEADLINE } from "@/lib/pricing";
+import { MODEL_BY_ID, PRICING_HEADLINE } from "@/lib/pricing";
 
 export const metadata: Metadata = {
   title: `Pizza Mood Franchise Cost & Investment Breakdown | ${PRICING_HEADLINE}`,
-  description: "Detailed itemized cost structure for starting a Pizza Mood franchise. Transparent setup capital breakdown for kitchen equipment, franchise fee, inventory & marketing.",
+  description: `Detailed itemized cost structure for starting a Pizza Mood franchise. Transparent setup capital breakdown for the Kiosk format (${MODEL_BY_ID.kiosk.lakh}) and the Cafe format (${MODEL_BY_ID.cafe.lakh}).`,
 };
 
 export default async function InvestmentPage() {

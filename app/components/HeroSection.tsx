@@ -25,7 +25,7 @@ export default function HeroSection() {
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center">
-          
+
           {/* Left Column: Headlines & Badges */}
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-4 py-1.5 text-xs font-black text-red-700 shadow-sm">
@@ -82,7 +82,7 @@ export default function HeroSection() {
           {/* Right Column: High Quality Food Visuals */}
           <div className="lg:col-span-5 relative">
             <div className="relative mx-auto max-w-md lg:max-w-none">
-              
+
               {/* Main Banner Image Container */}
               <div className="relative overflow-hidden rounded-3xl bg-slate-900 shadow-2xl shadow-sky-900/20 border-4 border-yellow-400">
                 <img
