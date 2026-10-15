@@ -1,3 +1,4 @@
+import { PRICING_HEADLINE } from "@/lib/pricing";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -15,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Pizza Mood Franchise | Start Your Pizza Business from ₹4 Lakh",
+  title: `Pizza Mood Franchise | ${PRICING_HEADLINE}`,
   description: "Own a high-profit Pizza Mood QSR outlet in your city. Complete 360° operational support, store setup in 30 days, location assistance and fresh raw materials.",
   icons: {
     icon: [

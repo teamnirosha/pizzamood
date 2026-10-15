@@ -1,4 +1,4 @@
-import { PRICING_HEADLINE } from "@/lib/pricing";
+import { PRICING_HEADLINE, MODEL_BY_ID } from "@/lib/pricing";
 import { OutletLocation, Lead, FAQItem, Testimonial, SiteSettings } from "@/types";
 
 export const initialSiteSettings: SiteSettings = {
@@ -15,7 +15,7 @@ export const initialSiteSettings: SiteSettings = {
   citiesCount: 4,
   customerSatisfaction: "98.4%",
   disclaimerText: "*Investment requirements may vary based on store format, location size, city tier, site readiness and local cost factors. Figures provided are indicative starting estimates for a standard takeaway QSR format. Contact Pizza Mood for customized location assessment.",
-  seoDefaultTitle: "Pizza Mood Franchise | Start Your Pizza Business from ₹4 Lakh",
+  seoDefaultTitle: `Pizza Mood Franchise | ${PRICING_HEADLINE}`,
   seoDefaultDescription: "Own a high-profit Pizza Mood outlet in your city with 360° operational support, location selection assistance, staff training and store setup in 30 days.",
 };
 
@@ -217,7 +217,7 @@ export const initialLocations: OutletLocation[] = [
     googleMapsUrl: "https://maps.google.com/?q=18.4682,73.7845",
     osmUrl: "https://www.openstreetmap.org/?mlat=18.4682&mlon=73.7845#map=16/18.4682/73.7845",
     shortDescription: "Cozy QSR outlet on NDA Road, Shivane serving fresh pizzas.",
-    description: "Pizza Mood Shivane brings our signature ₹4 Lakh franchise model in action near NDA Road, serving Ingale Colony & Uttam Nagar.",
+    description: "Pizza Mood Shivane brings our signature franchise model in action near NDA Road, serving Ingale Colony & Uttam Nagar.",
     status: "active",
     hours: [
       { day: "Monday", isClosed: false, openingTime: "11:00 AM", closingTime: "11:00 PM" },
@@ -426,13 +426,13 @@ export const initialFAQs: FAQItem[] = [
     id: "faq-1",
     category: "Investment & Cost",
     question: "How much does a Pizza Mood franchise cost?",
-    answer: "A standard Pizza Mood franchise requires an investment starting from ₹4 Lakh. This indicative setup cost covers brand franchise rights, essential commercial kitchen equipment, store exterior branding, initial raw material inventory, staff uniform, and launch marketing support."
+    answer: `A Pizza Mood franchise comes in two models: ${PRICING_HEADLINE} (total investment). This indicative setup cost covers brand franchise rights, essential commercial kitchen equipment, store exterior branding, initial raw material inventory, staff uniform, and launch marketing support.`
   },
   {
     id: "faq-2",
     category: "Investment & Cost",
-    question: "Can I really start a Pizza Mood franchise with ₹4 Lakh?",
-    answer: "Yes! Our compact Takeaway & Cloud QSR model has been specifically engineered to eliminate unnecessary expensive fluff. With optimized space requirements starting at 120–250 sq. ft., aspiring entrepreneurs can launch a fully operational store with a ₹4 Lakh setup capital."
+    question: `Can I really start a Pizza Mood franchise with ${MODEL_BY_ID.kiosk.lakh}?`,
+    answer: `Yes! Our compact Kiosk model has been specifically engineered to eliminate unnecessary expensive fluff. With optimized space requirements starting at 120–250 sq. ft., aspiring entrepreneurs can launch a fully operational store with ${MODEL_BY_ID.kiosk.lakh} setup capital. The Cafe model is ${MODEL_BY_ID.cafe.lakh}.`
   },
   {
     id: "faq-3",
@@ -489,7 +489,7 @@ export const initialTestimonials: Testimonial[] = [
     role: "Franchise Partner",
     location: "Andheri West, Mumbai",
     investmentYear: "2025",
-    content: "The low investment barrier of ₹4 Lakh was the main reason I chose Pizza Mood over high-cost franchises. Their supply chain delivers fresh dough and sauces reliably, and the customer repeat rate in Adarsh Nagar has been fantastic.",
+    content: "The low investment barrier was the main reason I chose Pizza Mood over high-cost franchises. Their supply chain delivers fresh dough and sauces reliably, and the customer repeat rate in Adarsh Nagar has been fantastic.",
     rating: 5,
     avatarUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
   },
