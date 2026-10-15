@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getLocations, saveLocation } from "@/lib/db";
+import { requireAdmin } from "@/lib/adminAuth";
 
 export async function GET(request: Request) {
   try {
@@ -41,6 +42,8 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
   try {
     const body = await request.json();
     if (!body.name || !body.city || !body.area) {

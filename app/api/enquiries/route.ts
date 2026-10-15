@@ -2,8 +2,11 @@ import { DEFAULT_BUDGET } from "@/lib/pricing";
 import { NextResponse } from "next/server";
 import { getLeads, saveLead } from "@/lib/db";
 import { sendLeadToN8n } from "@/lib/webhook";
+import { requireAdmin } from "@/lib/adminAuth";
 
-export async function GET() {
+export async function GET(request: Request) {
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
   try {
     const leads = await getLeads();
     return NextResponse.json({

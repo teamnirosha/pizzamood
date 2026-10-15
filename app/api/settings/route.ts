@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSiteSettings, updateSiteSettings } from "@/lib/db";
+import { requireAdmin } from "@/lib/adminAuth";
 
 export async function GET() {
   try {
@@ -15,6 +16,8 @@ export async function GET() {
 }
 
 export async function PUT(request: Request) {
+  const denied = await requireAdmin(request);
+  if (denied) return denied;
   try {
     const body = await request.json();
     const updated = await updateSiteSettings(body);
