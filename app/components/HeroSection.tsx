@@ -6,11 +6,13 @@ import {
   Sparkles,
   Zap,
   TrendingUp,
-  CheckCircle,
+  MessageCircle,
 } from "lucide-react";
 import FranchiseModal from "./FranchiseModal";
 import PricingCards from "./PricingCards";
 import { PRICING_HEADLINE } from "@/lib/pricing";
+import UspChecklist from "./UspChecklist";
+import { EXCLUSIVITY_LINE, FRANCHISE_PHONE_DISPLAY, FRANCHISE_PHONE_TEL, whatsappLink } from "@/lib/usps";
 
 export default function HeroSection() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -26,80 +28,55 @@ export default function HeroSection() {
           
           {/* Left Column: Headlines & Badges */}
           <div className="lg:col-span-7 space-y-6">
-            
-            {/* Top Tagline Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 py-1.5 text-xs font-black text-sky-700 shadow-sm">
+            <div className="inline-flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-4 py-1.5 text-xs font-black text-red-700 shadow-sm">
               <Sparkles className="h-4 w-4 text-amber-500" />
-              <span>INDIA'S HIGH-PROFIT QSR FRANCHISE OPPORTUNITY</span>
+              <span>{EXCLUSIVITY_LINE}</span>
             </div>
 
-            {/* Main Headline */}
             <h1 className="text-4xl font-black tracking-tight text-slate-900 sm:text-5xl lg:text-6xl leading-[1.1]">
-              Your Pizza Business <br />
+              Open Your Pizza Mood <br />
+              in{" "}
               <span className="bg-gradient-to-r from-sky-600 via-sky-500 to-yellow-500 bg-clip-text text-transparent">
-                Starts Here.
+                30 Days. Guaranteed.
               </span>
             </h1>
 
-            {/* Supporting Copy */}
             <p className="text-base font-semibold text-slate-600 sm:text-lg leading-relaxed max-w-2xl">
-              Start your own Pizza Mood franchise:{" "}
-              <strong className="text-slate-900 underline decoration-yellow-400 decoration-4">
-                {PRICING_HEADLINE}
-              </strong>{" "}
-              — complete with location selection assistance, kitchen equipment, staff training, fresh raw materials supply, and ongoing business guidance.
+              Own a Pizza Mood outlet for{" "}
+              <strong className="text-slate-900 underline decoration-yellow-400 decoration-4">{PRICING_HEADLINE}</strong>.
+              We handle the setup, supplies and marketing. You just run it.
             </p>
 
             <PricingCards />
 
-            {/* 2 Bold Franchise Opportunity Badges */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-2">
-              <div className="rounded-2xl border border-amber-100 bg-white p-4 shadow-xl shadow-amber-500/10 transition hover:-translate-y-1">
-                <div className="text-2xl font-black text-amber-600 sm:text-3xl">30 Days</div>
-                <div className="mt-1 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
-                  Target Store Launch
-                </div>
-              </div>
+            <UspChecklist />
 
-              <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xl shadow-slate-900/5 transition hover:-translate-y-1">
-                <div className="text-2xl font-black text-slate-900 sm:text-3xl">360°</div>
-                <div className="mt-1 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
-                  Business Support
-                </div>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-4 pt-4">
+            <div className="flex flex-wrap items-center gap-4 pt-2">
               <button
                 onClick={() => setModalOpen(true)}
                 className="group flex items-center gap-2.5 rounded-full bg-sky-500 border-2 border-yellow-400 px-8 py-4 text-sm font-black uppercase tracking-wider text-white shadow-xl shadow-sky-500/30 transition hover:-translate-y-0.5 hover:bg-sky-600 active:translate-y-0"
               >
-                Start Your Franchise
+                Get Free Franchise Details
                 <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
               </button>
 
               <a
-                href="#opportunity"
-                className="flex items-center gap-2 rounded-full border border-slate-300 bg-white px-7 py-4 text-sm font-extrabold text-slate-800 shadow-sm transition hover:bg-slate-50"
+                href={whatsappLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 rounded-full bg-emerald-500 px-7 py-4 text-sm font-black text-white shadow-xl shadow-emerald-500/30 transition hover:bg-emerald-600"
               >
-                Explore the Opportunity
+                <MessageCircle className="h-4 w-4" /> Chat on WhatsApp
               </a>
             </div>
 
-            {/* Trust bullet features */}
-            <div className="flex flex-wrap items-center gap-6 pt-2 text-xs font-bold text-slate-600">
-              <span className="flex items-center gap-1.5">
-                <CheckCircle className="h-4 w-4 text-emerald-600" /> Zero Royalty Option Available
-              </span>
-              <span className="flex items-center gap-1.5">
-                <CheckCircle className="h-4 w-4 text-emerald-600" /> High Margin Product Ecosystem
-              </span>
-              <span className="flex items-center gap-1.5">
-                <CheckCircle className="h-4 w-4 text-emerald-600" /> No Prior Cooking Skill Needed
-              </span>
-            </div>
-
+            <p className="text-xs font-bold text-slate-500">
+              Or call{" "}
+              <a href={`tel:${FRANCHISE_PHONE_TEL}`} className="font-black text-slate-900 underline">
+                {FRANCHISE_PHONE_DISPLAY}
+              </a>
+              . Our team replies within 24 hours.
+            </p>
           </div>
 
           {/* Right Column: High Quality Food Visuals */}
@@ -155,7 +132,7 @@ export default function HeroSection() {
                     <Zap className="h-5 w-5" />
                   </div>
                   <div>
-                    <div className="text-xs font-black text-white">Target 30-Day Opening</div>
+                    <div className="text-xs font-black text-white">Guaranteed 30-Day Opening</div>
                     <div className="text-[10px] font-semibold text-yellow-400">Location to Grand Launch</div>
                   </div>
                 </div>
