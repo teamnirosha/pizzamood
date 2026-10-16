@@ -151,3 +151,42 @@
   background: #007bb5;
 }
 
+
+@keyframes letter-flip {
+  from { opacity: 0; transform: perspective(400px) rotateX(-90deg); }
+  to { opacity: 1; transform: perspective(400px) rotateX(0); }
+}
+.letter-flip {
+  display: inline-block;
+  transform-origin: 50% 100%;
+  animation: letter-flip 0.5s ease-out both;
+}
+@keyframes letter-out {
+  from { opacity: 1; transform: perspective(400px) rotateX(0); }
+  to { opacity: 0; transform: perspective(400px) rotateX(90deg); }
+}
+.letter-out {
+  display: inline-block;
+  transform-origin: 50% 0%;
+  animation: letter-out 0.35s ease-in both;
+}
+@keyframes ken-burns {
+  from { transform: scale(1.18) translate(1.5%, 1%); }
+  to { transform: scale(1) translate(0, 0); }
+}
+.hero-slide {
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+.hero-slide.active {
+  opacity: 1;
+  animation: ken-burns 5s ease-out both;
+}
+@keyframes caption-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-caption { animation: caption-up 0.6s 0.3s ease-out both; }
+@media (prefers-reduced-motion: reduce) {
+  .letter-flip, .letter-out, .hero-slide.active, .hero-caption { animation: none; }
+}
