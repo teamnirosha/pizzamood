@@ -57,10 +57,12 @@ export async function POST(request: Request) {
       source: body.source || {},
     });
 
-    // Trigger n8n Webhook forward asynchronously
-    sendLeadToN8n(newLead).catch((err) =>
-      console.error("n8n webhook background error:", err)
-    );
+    // The modal saves after every step; notify n8n only for the finished enquiry, not each partial save.
+    if (body.complete === true) {
+      sendLeadToN8n(newLead).catch((err) =>
+        console.error("n8n webhook background error:", err)
+      );
+    }
 
     return NextResponse.json(
       {

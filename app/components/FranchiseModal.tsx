@@ -75,7 +75,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
     }
   };
 
-  const saveOrUpdateLead = async (overrideId?: string | null) => {
+  const saveOrUpdateLead = async (overrideId?: string | null, complete = false) => {
     try {
       const utms = getUTMParams();
       const payload = {
@@ -84,6 +84,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
         investmentBudget: budgetForStore(formData.preferredStoreType),
         phone: formData.whatsapp,
         source: utms,
+        complete,
       };
 
       const res = await fetch("/api/enquiries", {
@@ -155,7 +156,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
     setErrorMsg("");
 
     try {
-      const finalLead = await saveOrUpdateLead(leadId);
+      const finalLead = await saveOrUpdateLead(leadId, true);
       setIsSuccess(true);
       setStep(5);
       trackLeadFormSubmission(finalLead?.id || leadId || "PM-NEW", formData.city || "Not Specified", budgetForStore(formData.preferredStoreType));

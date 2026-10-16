@@ -57,6 +57,7 @@ export default function FranchiseForm() {
         investmentBudget: budgetForStore(formData.preferredStoreType),
         phone: formData.whatsapp,
         source: utms,
+        complete: true,
       };
 
       const res = await fetch("/api/enquiries", {
