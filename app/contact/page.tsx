@@ -63,9 +63,6 @@ export default function ContactPage() {
                     <a href="tel:+919096970369" className="text-base font-black text-slate-900 hover:text-sky-600 block">
                       +91 90969 70369
                     </a>
-                    <a href="tel:+917620173868" className="text-base font-black text-slate-900 hover:text-sky-600 block">
-                      +91 76201 73868
-                    </a>
                   </div>
                 </div>
 

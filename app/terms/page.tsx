@@ -105,7 +105,7 @@ export default function TermsPage() {
               <p><strong>Pizza Mood India Corporate Desk</strong></p>
               <p>Address: Mauli Krupa Complex, Karve Nagar, Pune, Maharashtra 411052</p>
               <p>Email: <a href="mailto:info@pizzamood.in" className="text-sky-600 hover:underline">info@pizzamood.in</a> | <a href="mailto:pizzamoodho@gmail.com" className="text-slate-500 hover:underline">pizzamoodho@gmail.com</a></p>
-              <p>Helpline: +91 90969 70369 / +91 76201 73868</p>
+              <p>Helpline: +91 90969 70369</p>
             </div>
           </div>
 

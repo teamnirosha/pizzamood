@@ -14,7 +14,7 @@ const lakh = (n: number) => `₹${n / 100000} Lakh`;
 
 type ItemDef = [name: string, amount: number, notes: string, iconName: PricingItem["iconName"]];
 
-const FEE: ItemDef = ["Franchise Fees", 400000, "18% GST Applicable on Franchise Fees", "Handshake"];
+const FEE: ItemDef = ["Franchise Fees", 400000, "Taxes additional", "Handshake"];
 const KITCHEN: ItemDef = ["Kitchen Setup & Equipment", 300000, "Includes commercial pizza oven, refrigeration & prep stations", "Utensils"];
 const INTERIORS: ItemDef = ["Interiors, CCTV & Billing set", 300000, "Standardized front desk counter, illuminated LED signage & cloud POS setup", "Sofa"];
 const OPENING: ItemDef = ["1st day opening ceremony", 100000, "Including decorations & whole management by Pizza Mood", "PartyPopper"];
