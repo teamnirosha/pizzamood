@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Save, Sparkles, MapPin } from "lucide-react";
+import MenuPicker from "../../components/MenuPicker";
+import type { MenuCategoryId, StoreModel } from "@/lib/menu";
 
 export default function NewLocationPage() {
   const router = useRouter();
@@ -27,6 +29,8 @@ export default function NewLocationPage() {
     status: "active",
     seoTitle: "",
     seoDescription: "",
+    model: "cafe" as StoreModel,
+    menuCategories: ["pizza"] as MenuCategoryId[],
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -208,6 +212,12 @@ export default function NewLocationPage() {
               </div>
             </div>
           </div>
+
+          <MenuPicker
+            model={formData.model}
+            menuCategories={formData.menuCategories}
+            onChange={(v) => setFormData({ ...formData, ...v })}
+          />
 
           {/* Local SEO Overrides */}
           <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6 space-y-4">

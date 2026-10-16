@@ -87,7 +87,8 @@ export async function POST(request: Request) {
         { day: "Sunday", isClosed: false, openingTime: "11:00 AM", closingTime: "11:30 PM" },
       ],
       images: body.images || [{ url: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1000&q=80", alt: body.name }],
-      popularProducts: body.popularProducts || [],
+      model: body.model === "kiosk" ? "kiosk" : "cafe",
+      menuCategories: body.menuCategories?.length ? body.menuCategories : ["pizza"],
       amenities: body.amenities || ["Takeaway", "Home Delivery", "Contactless Payment"],
       nearbyLandmarks: body.nearbyLandmarks || [],
       seo: body.seo || {

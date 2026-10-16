@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Save } from "lucide-react";
 import { OutletLocation } from "@/types";
+import MenuPicker from "../../components/MenuPicker";
 
 export default function EditLocationPage() {
   const router = useRouter();
@@ -197,6 +198,12 @@ export default function EditLocationPage() {
               </div>
             </div>
           </div>
+
+          <MenuPicker
+            model={formData.model}
+            menuCategories={formData.menuCategories}
+            onChange={(v) => setFormData({ ...formData, ...v })}
+          />
 
           {/* Local SEO */}
           <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6 space-y-4">

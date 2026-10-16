@@ -12,6 +12,7 @@ import {
   Sparkles,
   ShoppingBag,
 } from "lucide-react";
+import { menuItems, menuPhrase } from "@/lib/menu";
 import { getLocationBySlug, getLocations } from "@/lib/db";
 import { generateRestaurantSchema, generateBreadcrumbSchema, generateFAQSchema, baseUrl } from "@/lib/seo";
 
@@ -76,6 +77,10 @@ export default async function LocationDetailPage({ params }: PageProps) {
   const allLocations = await getLocations();
   const nearbyOutlets = allLocations.filter((l) => l.id !== location.id).slice(0, 3);
 
+  const items = menuItems(location);
+  const phrase = menuPhrase(location);
+  const extras = items.filter((c) => c.id !== "pizza").map((c) => c.label);
+
   const restaurantSchema = generateRestaurantSchema(location);
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
@@ -91,17 +96,33 @@ export default async function LocationDetailPage({ params }: PageProps) {
       question: `Where is Pizza Mood ${location.area} located?`,
       answer: `Pizza Mood ${location.area} is located at ${location.address}. Nearby landmarks include ${location.nearbyLandmarks.join(", ")}.`,
     },
-    {
-      id: `faq-${location.id}-2`,
-      category: "General" as const,
-      question: `What are the opening hours of Pizza Mood ${location.area}?`,
-      answer: `Pizza Mood ${location.area} is open daily from ${location.hours[0]?.openingTime || "11:00 AM"} to ${location.hours[0]?.closingTime || "11:00 PM"}.`,
-    },
+    ...(location.hours.length
+      ? [
+          {
+            id: `faq-${location.id}-2`,
+            category: "General" as const,
+            question: `What are the opening hours of Pizza Mood ${location.area}?`,
+            answer: `Pizza Mood ${location.area} is open daily from ${location.hours[0].openingTime} to ${location.hours[0].closingTime}.`,
+          },
+        ]
+      : []),
     {
       id: `faq-${location.id}-3`,
       category: "General" as const,
-      question: `Does Pizza Mood ${location.area} offer online delivery and takeaway?`,
-      answer: `Yes! You can place takeaway orders directly at our counter or call us at ${location.phone} for home delivery. We are also listed on popular food delivery aggregators.`,
+      question: `Can I order pizza, burgers and momos from Pizza Mood ${location.area}?`,
+      answer: `Yes. Dine in or take away at the counter${location.phone ? `, or call or WhatsApp ${location.phone}` : ""} to order ${phrase}.`,
+    },
+    {
+      id: `faq-${location.id}-4`,
+      category: "General" as const,
+      question: `Which is the best pizza place in ${location.area}, ${location.city}?`,
+      answer: `Pizza Mood ${location.area} serves ${phrase} in ${location.area}. Find us near ${location.nearbyLandmarks[0] || location.area}.`,
+    },
+    {
+      id: `faq-${location.id}-5`,
+      category: "General" as const,
+      question: `What is on the menu at Pizza Mood ${location.area}?`,
+      answer: `${items.map((c) => c.name).join(", ")}.`,
     },
   ];
 
@@ -154,7 +175,12 @@ export default async function LocationDetailPage({ params }: PageProps) {
 
               {/* Dynamic H1 targeting local SEO */}
               <h1 className="text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl text-white leading-tight">
-                Best Pizza Store in {location.area}, {location.city}
+                Best Pizza in {location.area}, {location.city}
+                {extras.length > 0 && (
+                  <span className="block text-sky-400 text-2xl sm:text-3xl lg:text-4xl mt-1">
+                    {extras.slice(0, 3).join(", ")} too
+                  </span>
+                )}
               </h1>
 
               <p className="text-xs sm:text-sm font-medium text-slate-300 leading-relaxed max-w-2xl">
@@ -162,21 +188,25 @@ export default async function LocationDetailPage({ params }: PageProps) {
               </p>
 
               <div className="flex flex-wrap items-center gap-3 pt-2">
-                <a
-                  href={`tel:${location.phone}`}
-                  className="flex items-center gap-2 rounded-2xl bg-sky-500 border border-yellow-400 px-6 py-3 text-xs font-black text-white shadow-lg shadow-sky-500/30 hover:bg-sky-600 transition"
-                >
-                  <Phone className="h-4 w-4" /> Call Store ({location.phone})
-                </a>
+                {location.phone && (
+                  <>
+                    <a
+                      href={`tel:${location.phone}`}
+                      className="flex items-center gap-2 rounded-2xl bg-sky-500 border border-yellow-400 px-6 py-3 text-xs font-black text-white shadow-lg shadow-sky-500/30 hover:bg-sky-600 transition"
+                    >
+                      <Phone className="h-4 w-4" /> Call Store ({location.phone})
+                    </a>
 
-                <a
-                  href={whatsappOrderUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3 text-xs font-black text-white shadow-lg shadow-emerald-600/30 hover:bg-emerald-700 transition"
-                >
-                  <MessageSquare className="h-4 w-4" /> WhatsApp Order
-                </a>
+                    <a
+                      href={whatsappOrderUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3 text-xs font-black text-white shadow-lg shadow-emerald-600/30 hover:bg-emerald-700 transition"
+                    >
+                      <MessageSquare className="h-4 w-4" /> WhatsApp Order
+                    </a>
+                  </>
+                )}
 
                 <a
                   href={location.googleMapsUrl}
@@ -215,32 +245,27 @@ export default async function LocationDetailPage({ params }: PageProps) {
           <div className="lg:col-span-8 space-y-8">
 
             {/* Popular Products in this Outlet */}
-            {location.popularProducts && location.popularProducts.length > 0 && (
+            {items.length > 0 && (
               <div id="popular-menu" className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <span className="text-xs font-black uppercase text-sky-600 tracking-wider">Top Favorites</span>
-                    <h2 className="text-2xl font-black text-slate-900">Popular Pizzas & Sides</h2>
+                    <h2 className="text-2xl font-black text-slate-900">{items.map((c) => c.label).join(", ")} Menu</h2>
                   </div>
                   <ShoppingBag className="h-6 w-6 text-sky-600" />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {location.popularProducts.map((prod, idx) => (
+                  {items.map((prod, idx) => (
                     <div key={idx} className="flex gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-4 transition hover:border-sky-200">
-                      {prod.image && (
-                        <img src={prod.image} alt={prod.name} className="h-20 w-20 rounded-xl object-cover shrink-0" />
-                      )}
+                      <img src={prod.image} alt={`${prod.name} in ${location.area}`} className="h-20 w-20 rounded-xl object-cover shrink-0" />
                       <div>
                         <div className="flex items-center justify-between gap-2">
                           <h4 className="text-sm font-black text-slate-900">{prod.name}</h4>
-                          <span className="text-xs font-extrabold text-sky-600 shrink-0">{prod.price}</span>
                         </div>
-                        {prod.badge && (
-                          <span className="inline-block mt-1 rounded-full bg-yellow-400 px-2 py-0.5 text-[9px] font-black text-slate-900">
-                            {prod.badge}
-                          </span>
-                        )}
+                        <span className="inline-block mt-1 rounded-full bg-yellow-400 px-2 py-0.5 text-[9px] font-black text-slate-900">
+                          {prod.badge}
+                        </span>
                         <p className="mt-1 text-[11px] font-medium text-slate-500 line-clamp-2">{prod.description}</p>
                       </div>
                     </div>
@@ -296,14 +321,17 @@ export default async function LocationDetailPage({ params }: PageProps) {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3">
-                  <Phone className="h-5 w-5 text-sky-600 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="block text-[10px] font-black uppercase text-slate-400">Phone Number</span>
-                    <a href={`tel:${location.phone}`} className="text-slate-900 hover:text-sky-600">{location.phone}</a>
+                {location.phone && (
+                  <div className="flex items-start gap-3">
+                    <Phone className="h-5 w-5 text-sky-600 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="block text-[10px] font-black uppercase text-slate-400">Phone Number</span>
+                      <a href={`tel:${location.phone}`} className="text-slate-900 hover:text-sky-600">{location.phone}</a>
+                    </div>
                   </div>
-                </div>
+                )}
 
+                {location.hours.length > 0 && (
                 <div className="flex items-start gap-3">
                   <Clock className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
                   <div className="w-full">
@@ -320,7 +348,15 @@ export default async function LocationDetailPage({ params }: PageProps) {
                     </div>
                   </div>
                 </div>
+                )}
               </div>
+
+              <iframe
+                title={`Map of ${location.name}`}
+                src={`https://www.google.com/maps?q=${location.latitude},${location.longitude}&z=16&output=embed`}
+                loading="lazy"
+                className="h-48 w-full rounded-2xl border border-slate-200"
+              />
 
               {/* Action Buttons */}
               <div className="pt-2 space-y-2">

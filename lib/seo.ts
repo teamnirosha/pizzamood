@@ -1,4 +1,5 @@
 import { MODELS } from "@/lib/pricing";
+import { menuItems } from "@/lib/menu";
 import { USPS, SLOGAN, FRANCHISE_PHONE_TEL } from "@/lib/usps";
 import { OutletLocation, FAQItem, SiteSettings } from "@/types";
 
@@ -41,7 +42,7 @@ export function generateOrganizationSchema(settings: SiteSettings) {
     },
     sameAs: [
       "https://facebook.com/pizzamood11",
-      "https://instagram.com/pizzamoodpune",
+      "https://instagram.com/pizzamoodofficial",
     ],
   };
 }
@@ -65,31 +66,37 @@ export function generateWebSiteSchema() {
 }
 
 export function generateRestaurantSchema(location: OutletLocation) {
-  const openingHoursSpecs = location.hours.map((h) => ({
-    "@type": "OpeningHoursSpecification",
-    dayOfWeek: `https://schema.org/${h.day}`,
-    opens: h.isClosed ? undefined : convert12To24(h.openingTime),
-    closes: h.isClosed ? undefined : convert12To24(h.closingTime),
-  }));
+  const pageUrl = `${baseUrl}/locations/${location.slug}`;
+  const items = menuItems(location);
+  const openingHoursSpecs = location.hours
+    .filter((h) => !h.isClosed)
+    .map((h) => ({
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: `https://schema.org/${h.day}`,
+      opens: convert12To24(h.openingTime),
+      closes: convert12To24(h.closingTime),
+    }));
 
   return {
     "@context": "https://schema.org",
-    "@type": "Restaurant",
-    "@id": `${baseUrl}/locations/${location.slug}/#restaurant`,
+    "@type": location.model === "cafe" ? ["Restaurant", "CafeOrCoffeeShop"] : ["Restaurant", "FastFoodRestaurant"],
+    "@id": `${pageUrl}/#restaurant`,
     name: location.name,
+    description: location.description,
     image: location.images.map((img) => img.url),
-    url: `${baseUrl}/locations/${location.slug}`,
-    telephone: location.phone,
-    servesCuisine: ["Pizza", "Fast Food", "Italian-American", "Sides"],
-    priceRange: "₹₹ (₹150 - ₹500)",
+    url: pageUrl,
+    telephone: location.phone || undefined,
+    servesCuisine: [...items.map((c) => c.label), "Fast Food"],
+    priceRange: "₹₹",
     address: {
       "@type": "PostalAddress",
       streetAddress: location.address,
-      addressLocality: location.area,
-      addressRegion: location.city,
+      addressLocality: location.city,
+      addressRegion: location.state,
       postalCode: location.postalCode,
       addressCountry: "IN",
     },
+    areaServed: { "@type": "Place", name: `${location.area}, ${location.city}` },
     geo: {
       "@type": "GeoCoordinates",
       latitude: location.latitude,
@@ -97,10 +104,23 @@ export function generateRestaurantSchema(location: OutletLocation) {
     },
     openingHoursSpecification: openingHoursSpecs,
     hasMap: location.googleMapsUrl,
-    menu: `${baseUrl}/locations/${location.slug}#popular-menu`,
-    parentOrganization: {
-      "@id": `${baseUrl}/#organization`,
+    hasMenu: {
+      "@type": "Menu",
+      url: `${pageUrl}#popular-menu`,
+      hasMenuSection: [
+        {
+          "@type": "MenuSection",
+          name: "Menu",
+          hasMenuItem: items.map((c) => ({
+            "@type": "MenuItem",
+            name: c.name,
+            description: c.description,
+          })),
+        },
+      ],
     },
+    sameAs: [location.googleMapsUrl, "https://instagram.com/pizzamoodofficial", "https://facebook.com/pizzamood11"],
+    parentOrganization: { "@id": `${baseUrl}/#organization` },
   };
 }
 

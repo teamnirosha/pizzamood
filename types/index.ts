@@ -89,13 +89,8 @@ export type OutletLocation = {
     url: string;
     alt: string;
   }[];
-  popularProducts: {
-    name: string;
-    price: string;
-    description: string;
-    badge?: string;
-    image?: string;
-  }[];
+  model: "kiosk" | "cafe";
+  menuCategories: import("@/lib/menu").MenuCategoryId[];
   amenities: string[];
   nearbyLandmarks: string[];
   seo: {

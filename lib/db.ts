@@ -55,7 +55,16 @@ async function writeJsonFile<T>(filePath: string, data: T): Promise<boolean> {
 }
 
 // --- LOCATIONS DB ---
+// Uses Supabase (jsonb `locations` table, see supabase/locations.sql) when configured; otherwise the file / in-memory fallback.
+const LOCATIONS_TABLE = "locations";
+
 export async function getLocations(): Promise<OutletLocation[]> {
+  const sb = getSupabase();
+  if (sb) {
+    const { data, error } = await sb.from(LOCATIONS_TABLE).select("data").order("created_at", { ascending: false });
+    if (!error) return (data as { data: OutletLocation }[]).map((r) => r.data);
+    console.error("[db] locations read failed, using fallback data:", error.message);
+  }
   if (!inMemoryLocations) {
     inMemoryLocations = await readJsonFile<OutletLocation[]>(LOCATIONS_FILE, initialLocations);
   }
@@ -73,6 +82,15 @@ export async function getLocationBySlug(slug: string): Promise<OutletLocation | 
 }
 
 export async function saveLocation(location: OutletLocation): Promise<OutletLocation> {
+  const sb = getSupabase();
+  if (sb) {
+    const saved = { ...location, updatedAt: new Date().toISOString(), createdAt: location.createdAt || new Date().toISOString() };
+    const { error } = await sb
+      .from(LOCATIONS_TABLE)
+      .upsert({ id: saved.id, slug: saved.slug, data: saved, created_at: saved.createdAt });
+    if (error) throw error;
+    return saved;
+  }
   const locations = await getLocations();
   const index = locations.findIndex((l) => l.id === location.id);
   if (index >= 0) {
@@ -86,9 +104,14 @@ export async function saveLocation(location: OutletLocation): Promise<OutletLoca
 }
 
 export async function deleteLocation(id: string): Promise<boolean> {
+  const sb = getSupabase();
+  if (sb) {
+    const { error } = await sb.from(LOCATIONS_TABLE).delete().eq("id", id);
+    if (error) throw error;
+    return true;
+  }
   const locations = await getLocations();
-  const filtered = locations.filter((l) => l.id !== id);
-  inMemoryLocations = filtered;
+  inMemoryLocations = locations.filter((l) => l.id !== id);
   await writeJsonFile(LOCATIONS_FILE, inMemoryLocations);
   return true;
 }
