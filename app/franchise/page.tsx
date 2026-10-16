@@ -8,6 +8,8 @@ import SupportSection from "../components/SupportSection";
 import HomeFAQ from "../components/HomeFAQ";
 import UspTicker from "../components/UspTicker";
 import FranchiseJsonLd from "../components/FranchiseJsonLd";
+import Link from "next/link";
+import { FRANCHISE_PAGES } from "@/lib/franchisePages";
 
 export const metadata: Metadata = {
   title: "Own a Pizza Mood Franchise | High Profit QSR Opportunity in India",
@@ -42,6 +44,16 @@ export default async function FranchisePage() {
       <LaunchTimeline />
       <SupportSection />
       <HomeFAQ faqs={faqs} />
+      <nav aria-label="Franchise guides" className="mx-auto max-w-5xl px-4 py-10">
+        <h2 className="text-lg font-black text-slate-900">Franchise guides</h2>
+        <ul className="mt-3 flex flex-wrap gap-3">
+          {FRANCHISE_PAGES.map((p) => (
+            <li key={p.slug}>
+              <Link href={`/franchise/${p.slug}`} className="text-sm font-bold text-sky-700 hover:underline">{p.kicker}</Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   );
 }

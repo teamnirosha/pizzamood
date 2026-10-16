@@ -136,6 +136,21 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
+                  <Link href="/franchise/pune" className="hover:text-white">
+                    Franchise in Pune
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/franchise/under-10-lakhs" className="hover:text-white">
+                    Franchise Under ₹10 Lakhs
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/franchise/cost-in-india" className="hover:text-white">
+                    Franchise Cost Guide
+                  </Link>
+                </li>
+                <li>
                   <Link href="/how-it-works" className="hover:text-white">
                     7-Step Launch Process
                   </Link>
