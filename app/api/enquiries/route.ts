@@ -58,10 +58,9 @@ export async function POST(request: Request) {
     });
 
     // The modal saves after every step; notify n8n only for the finished enquiry, not each partial save.
+    // Awaited: on serverless hosts an un-awaited request can be cut off once the response is sent. sendLeadToN8n never throws.
     if (body.complete === true) {
-      sendLeadToN8n(newLead).catch((err) =>
-        console.error("n8n webhook background error:", err)
-      );
+      await sendLeadToN8n(newLead);
     }
 
     return NextResponse.json(
