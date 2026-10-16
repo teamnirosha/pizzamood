@@ -1,11 +1,13 @@
 import { Metadata } from "next";
 import { getLocations } from "@/lib/db";
 import LocationMap from "../components/LocationMap";
+import Link from "next/link";
+import { generateLocationListSchema } from "@/lib/seo";
 import UspTicker from "../components/UspTicker";
 
 export const metadata: Metadata = {
   title: "Pizza Mood Outlets Near You | Store Locations, Timings & Contact",
-  description: "Find your nearest Pizza Mood pizza store. Explore outlet locations in Pune, Mumbai, Thane & more with store hours, directions, numbers & food delivery options.",
+  description: "Find your nearest Pizza Mood: pizza, burgers, momos and cafe outlets across Pune with timings, directions and phone numbers.",
 };
 
 export default async function LocationsPage() {
@@ -31,6 +33,23 @@ export default async function LocationsPage() {
 
         {/* Interactive OpenStreetMap */}
         <LocationMap locations={locations} />
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(generateLocationListSchema("Pizza Mood outlets", locations)) }}
+        />
+        <nav aria-label="All Pizza Mood outlets" className="mt-12">
+          <h2 className="text-xl font-black text-slate-900">Pizza Mood Outlets in Pune</h2>
+          <ul className="mt-4 grid grid-cols-2 gap-2 text-sm font-bold text-sky-700 sm:grid-cols-3 lg:grid-cols-4">
+            {locations.map((l) => (
+              <li key={l.id}>
+                <Link href={`/locations/${l.slug}`} className="hover:underline">
+                  Pizza in {l.area}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
       </div>
     </div>

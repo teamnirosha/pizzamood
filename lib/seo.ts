@@ -121,6 +121,7 @@ export function generateRestaurantSchema(location: OutletLocation) {
     },
     sameAs: [location.googleMapsUrl, "https://instagram.com/pizzamoodofficial", "https://facebook.com/pizzamood11"],
     parentOrganization: { "@id": `${baseUrl}/#organization` },
+    isPartOf: { "@id": `${baseUrl}/#website` },
   };
 }
 
@@ -179,4 +180,27 @@ export function generateUspListSchema() {
       description: u.line,
     })),
   };
+}
+
+export function generateLocationListSchema(name: string, locations: OutletLocation[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name,
+    itemListElement: locations.map((l, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `${baseUrl}/locations/${l.slug}`,
+      name: l.name,
+    })),
+  };
+}
+
+// Haversine distance in km; used to link each store page to its nearest sibling stores.
+export function distanceKm(a: OutletLocation, b: OutletLocation) {
+  const rad = (d: number) => (d * Math.PI) / 180;
+  const h =
+    Math.sin(rad(b.latitude - a.latitude) / 2) ** 2 +
+    Math.cos(rad(a.latitude)) * Math.cos(rad(b.latitude)) * Math.sin(rad(b.longitude - a.longitude) / 2) ** 2;
+  return 12742 * Math.asin(Math.sqrt(h));
 }

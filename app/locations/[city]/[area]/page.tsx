@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { menuItems, menuPhrase } from "@/lib/menu";
 import { getLocationBySlug, getLocations } from "@/lib/db";
-import { generateRestaurantSchema, generateBreadcrumbSchema, generateFAQSchema, baseUrl } from "@/lib/seo";
+import { generateRestaurantSchema, generateBreadcrumbSchema, generateFAQSchema, distanceKm, baseUrl } from "@/lib/seo";
 
 interface PageProps {
   params: Promise<{
@@ -53,6 +53,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     alternates: {
       canonical: `${baseUrl}/locations/${location.slug}`,
     },
+    robots: { index: location.status !== "inactive", follow: true },
+    other: {
+      "geo.region": "IN-MH",
+      "geo.placename": `${location.area}, ${location.city}`,
+      "geo.position": `${location.latitude};${location.longitude}`,
+      ICBM: `${location.latitude}, ${location.longitude}`,
+    },
     openGraph: {
       title,
       description,
@@ -75,7 +82,10 @@ export default async function LocationDetailPage({ params }: PageProps) {
   }
 
   const allLocations = await getLocations();
-  const nearbyOutlets = allLocations.filter((l) => l.id !== location.id).slice(0, 3);
+  const nearbyOutlets = allLocations
+    .filter((l) => l.id !== location.id && l.status === "active")
+    .sort((a, b) => distanceKm(location, a) - distanceKm(location, b))
+    .slice(0, 3);
 
   const items = menuItems(location);
   const phrase = menuPhrase(location);
@@ -85,7 +95,7 @@ export default async function LocationDetailPage({ params }: PageProps) {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
     { name: "Locations", url: "/locations" },
-    { name: location.city, url: `/locations?city=${location.city}` },
+    { name: location.city, url: `/locations/${location.city.toLowerCase()}` },
     { name: location.area, url: `/locations/${location.slug}` },
   ]);
 
@@ -111,6 +121,12 @@ export default async function LocationDetailPage({ params }: PageProps) {
       category: "General" as const,
       question: `Can I order pizza, burgers and momos from Pizza Mood ${location.area}?`,
       answer: `Yes. Dine in or take away at the counter${location.phone ? `, or call or WhatsApp ${location.phone}` : ""} to order ${phrase}.`,
+    },
+    {
+      id: `faq-${location.id}-6`,
+      category: "General" as const,
+      question: `Does Pizza Mood ${location.area} offer pizza takeaway?`,
+      answer: `Yes. Pick up fresh ${phrase} for takeaway from Pizza Mood ${location.area}${location.nearbyLandmarks[0] ? `, near ${location.nearbyLandmarks[0]}` : ""}${location.phone ? `. Call ${location.phone} ahead to have it ready` : ""}.`,
     },
     {
       id: `faq-${location.id}-4`,
@@ -156,7 +172,7 @@ export default async function LocationDetailPage({ params }: PageProps) {
             <ChevronRight className="h-3.5 w-3.5 text-slate-400 shrink-0" />
             <Link href="/locations" className="hover:text-sky-600">Locations</Link>
             <ChevronRight className="h-3.5 w-3.5 text-slate-400 shrink-0" />
-            <span className="text-slate-700">{location.city}</span>
+            <Link href={`/locations/${location.city.toLowerCase()}`} className="text-slate-700 hover:text-sky-600">{location.city}</Link>
             <ChevronRight className="h-3.5 w-3.5 text-slate-400 shrink-0" />
             <span className="text-sky-600 font-extrabold">{location.area}</span>
           </nav>
@@ -395,15 +411,15 @@ export default async function LocationDetailPage({ params }: PageProps) {
         {/* Nearby Outlets */}
         {nearbyOutlets.length > 0 && (
           <div className="mt-16 border-t border-slate-200 pt-12">
-            <h3 className="text-xl font-black text-slate-900 mb-6">Nearby Pizza Mood Outlets</h3>
+            <h2 className="text-xl font-black text-slate-900 mb-6">Pizza Mood Outlets Near {location.area}</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {nearbyOutlets.map((nob) => (
                 <div key={nob.id} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm hover:shadow-md transition">
                   <span className="text-xs font-black text-sky-600 uppercase">{nob.city}</span>
                   <h4 className="text-base font-extrabold text-slate-900 mt-1">{nob.name}</h4>
                   <p className="text-xs text-slate-500 mt-1 line-clamp-1">{nob.address}</p>
-                  <Link href={`/locations/${nob.slug}`} className="mt-3 inline-block text-xs font-bold text-sky-600 hover:underline">
-                    View Store →
+                  <Link href={`/locations/${nob.slug}`} title={`Pizza in ${nob.area}`} className="mt-3 inline-block text-xs font-bold text-sky-600 hover:underline">
+                    Pizza in {nob.area} →
                   </Link>
                 </div>
               ))}
