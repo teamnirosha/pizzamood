@@ -22,7 +22,11 @@ export const metadata: Metadata = {
   title: `Pizza Mood Franchise | ${PRICING_HEADLINE}`,
   description: "Own a high-profit Pizza Mood QSR outlet in your city. Complete 360° operational support, store setup in 30 days, location assistance and fresh raw materials.",
   // Search Console HTML-tag token (only needed if the property is not verified by DNS).
-  verification: { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GSC_VERIFICATION,
+    // Bing Webmaster Tools meta token (not needed if the site is imported from Search Console).
+    ...(process.env.NEXT_PUBLIC_BING_VERIFICATION && { other: { "msvalidate.01": process.env.NEXT_PUBLIC_BING_VERIFICATION } }),
+  },
   openGraph: { images: [{ url: "/logo.png", width: 512, height: 512, alt: "Pizza Mood" }] },
   icons: {
     icon: [
