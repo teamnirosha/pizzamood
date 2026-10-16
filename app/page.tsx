@@ -7,6 +7,7 @@ import LaunchTimeline from "./components/LaunchTimeline";
 import SupportSection from "./components/SupportSection";
 import ComparisonSection from "./components/ComparisonSection";
 import OutletShowcase from "./components/OutletShowcase";
+import { SHOW_TESTIMONIALS } from "@/lib/flags";
 import TestimonialSection from "./components/TestimonialSection";
 import HomeFAQ from "./components/HomeFAQ";
 import LocationMap from "./components/LocationMap";
@@ -35,7 +36,7 @@ export async function generateMetadata() {
 export default async function Home() {
   const locations = await getLocations();
   const faqs = await getFAQs();
-  const testimonials = await getTestimonials();
+  const testimonials = SHOW_TESTIMONIALS ? await getTestimonials() : [];
   const settings = await getSiteSettings();
 
   const orgSchema = generateOrganizationSchema(settings);
@@ -99,7 +100,7 @@ export default async function Home() {
       </section>
 
       {/* 09 FRANCHISE TESTIMONIALS */}
-      <TestimonialSection testimonials={testimonials} />
+      {SHOW_TESTIMONIALS && <TestimonialSection testimonials={testimonials} />}
 
       {/* 10 FAQ SECTION */}
       <HomeFAQ faqs={faqs} />

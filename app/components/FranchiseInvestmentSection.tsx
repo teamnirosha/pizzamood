@@ -13,6 +13,7 @@ import {
 } from "@/app/data/franchiseInvestmentData";
 
 import { MODEL_BY_ID } from "@/lib/pricing";
+import { SHOW_TESTIMONIALS } from "@/lib/flags";
 import { BenefitItem } from "./franchise-investment/BenefitItem";
 import { InvestmentTable } from "./franchise-investment/InvestmentTable";
 
@@ -279,6 +280,7 @@ export default function FranchiseInvestmentSection() {
               </motion.button>
 
               {/* Secondary Testimonials / Video Button */}
+              {SHOW_TESTIMONIALS && (
               <button
                 onClick={() => {
                   const testimonialEl = document.getElementById("testimonials");
@@ -302,6 +304,7 @@ export default function FranchiseInvestmentSection() {
                   </span>
                 </div>
               </button>
+              )}
             </div>
 
             {/* Handwritten Decorative Text - Good Food Good Mood */}
