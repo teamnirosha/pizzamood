@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Script from "next/script";
 import { baseUrl } from "@/lib/seo";
 
 const geistSans = Geist({
@@ -20,6 +21,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: `Pizza Mood Franchise | ${PRICING_HEADLINE}`,
   description: "Own a high-profit Pizza Mood QSR outlet in your city. Complete 360° operational support, store setup in 30 days, location assistance and fresh raw materials.",
+  // Search Console HTML-tag token (only needed if the property is not verified by DNS).
+  verification: { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION },
   openGraph: { images: [{ url: "/logo.png", width: 512, height: 512, alt: "Pizza Mood" }] },
   icons: {
     icon: [
@@ -34,6 +37,8 @@ export const metadata: Metadata = {
 import SmoothScroll from "./components/SmoothScroll";
 import WhatsAppBubble from "./components/WhatsAppBubble";
 
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
@@ -47,6 +52,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
         </SmoothScroll>
         <WhatsAppBubble />
+        {GA_ID && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+            <Script id="ga4" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','${GA_ID}');`}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );
