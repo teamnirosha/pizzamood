@@ -3,7 +3,7 @@ import { menuItems } from "@/lib/menu";
 import { USPS, SLOGAN, FRANCHISE_PHONE_TEL } from "@/lib/usps";
 import { OutletLocation, FAQItem, SiteSettings } from "@/types";
 
-export const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://pizzamood.in";
+export const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.pizzamood.in";
 
 export function generateOrganizationSchema(settings: SiteSettings) {
   return {

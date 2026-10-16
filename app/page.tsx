@@ -11,7 +11,7 @@ import { SHOW_TESTIMONIALS } from "@/lib/flags";
 import TestimonialSection from "./components/TestimonialSection";
 import HomeFAQ from "./components/HomeFAQ";
 import LocationMap from "./components/LocationMap";
-import { generateOrganizationSchema, generateWebSiteSchema, generateUspListSchema } from "@/lib/seo";
+import { generateOrganizationSchema, generateWebSiteSchema, generateUspListSchema, baseUrl } from "@/lib/seo";
 
 export async function generateMetadata() {
   const settings = await getSiteSettings();
@@ -19,12 +19,12 @@ export async function generateMetadata() {
     title: settings.seoDefaultTitle,
     description: settings.seoDefaultDescription,
     alternates: {
-      canonical: "https://pizzamood.in",
+      canonical: baseUrl,
     },
     openGraph: {
       title: settings.seoDefaultTitle,
       description: settings.seoDefaultDescription,
-      url: "https://pizzamood.in",
+      url: baseUrl,
       siteName: "Pizza Mood Franchise",
       locale: "en_IN",
       type: "website",
