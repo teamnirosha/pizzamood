@@ -34,9 +34,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
 
   const [formData, setFormData] = useState({
     name: "",
-    phone: "",
     whatsapp: "",
-    email: "",
     city: defaultCity,
     preferredLocation: "",
     investmentBudget: DEFAULT_BUDGET as InvestmentBudget,
@@ -84,7 +82,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
         id: overrideId || leadId || undefined,
         ...formData,
         investmentBudget: budgetForStore(formData.preferredStoreType),
-        whatsapp: formData.whatsapp || formData.phone,
+        phone: formData.whatsapp,
         source: utms,
       };
 
@@ -112,8 +110,8 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
         setErrorMsg("Please enter your full name.");
         return;
       }
-      if (!formData.phone.trim() || formData.phone.length < 10) {
-        setErrorMsg("Please enter a valid 10-digit mobile number.");
+      if (formData.whatsapp.replace(/\D/g, "").length < 10) {
+        setErrorMsg("Please enter a valid 10-digit WhatsApp number.");
         return;
       }
 
@@ -256,40 +254,14 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
 
                 <div>
                   <label className="block text-xs font-bold uppercase text-slate-700">
-                    Mobile Number <span className="text-red-500">*</span>
+                    WhatsApp Number <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="tel"
                     required
-                    placeholder="10-digit mobile number"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-900 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold uppercase text-slate-700">
-                    WhatsApp Number (Optional)
-                  </label>
-                  <input
-                    type="tel"
-                    placeholder="Same as mobile if blank"
+                    placeholder="10-digit WhatsApp number"
                     value={formData.whatsapp}
                     onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                    className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-900 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold uppercase text-slate-700">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="name@domain.com"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-900 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20"
                   />
                 </div>
