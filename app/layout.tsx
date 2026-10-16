@@ -37,7 +37,8 @@ export const metadata: Metadata = {
 import SmoothScroll from "./components/SmoothScroll";
 import WhatsAppBubble from "./components/WhatsAppBubble";
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+// The Measurement ID is public. Production-only default keeps local dev out of the data.
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? (process.env.NODE_ENV === "production" ? "G-ZK134KYTVR" : undefined);
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
