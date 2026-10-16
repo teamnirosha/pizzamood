@@ -556,7 +556,7 @@ export const initialLeads: Lead[] = [
     email: "mehta.sanjay@example.com",
     city: "Mumbai",
     preferredLocation: "Malad West",
-    investmentBudget: "Cafe – ₹12 Lakh",
+    investmentBudget: "Cafe – ₹11 Lakh",
     ownsProperty: false,
     preferredStoreType: "Small QSR",
     timeline: "1–3 months",

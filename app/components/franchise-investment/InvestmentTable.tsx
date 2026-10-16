@@ -140,7 +140,7 @@ export const InvestmentTable: React.FC<InvestmentTableProps> = ({
           {/* Mobile Header Banner */}
           <div className="bg-[#FFF8D6] dark:bg-amber-950/40 p-3 flex items-center justify-between border-b border-amber-200">
             <span className="font-black text-xs uppercase tracking-wider text-[#101A35]">
-              {isKiosk ? "₹7L Kiosk Breakdown" : "₹12L Cafe Breakdown"}
+              {isKiosk ? `${MODEL_BY_ID.kiosk.lakh} Kiosk Breakdown` : `${MODEL_BY_ID.cafe.lakh} Cafe Breakdown`}
             </span>
             <span className="text-[11px] font-bold text-amber-800 dark:text-amber-300">
               {isKiosk ? "Takeaway Format" : "Full Dine-in Format"}
@@ -210,7 +210,7 @@ export const InvestmentTable: React.FC<InvestmentTableProps> = ({
         <div>
           {isKiosk ? (
             <span>
-              <strong>Kiosk Model ({MODEL_BY_ID.kiosk.lakh}):</strong> Ideal for compact 120-250 sq. ft. takeaway counters. Does <strong>not include interior setup costs (₹4L)</strong> or opening ceremony. Perfect for low initial capital investment.
+              <strong>Kiosk Model ({MODEL_BY_ID.kiosk.lakh}):</strong> Ideal for compact 120-250 sq. ft. takeaway counters. Does <strong>not include interior setup costs (₹{MODEL_BY_ID.cafe.items[2].amount / 100000}L)</strong> or opening ceremony. Perfect for low initial capital investment.
             </span>
           ) : (
             <span>

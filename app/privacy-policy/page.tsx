@@ -50,7 +50,7 @@ export default function PrivacyPolicyPage() {
             <ul className="mt-3 list-disc pl-5 space-y-1.5 font-medium text-slate-600">
               <li><strong>Contact Information:</strong> Full name, phone number, WhatsApp number, and email address.</li>
               <li><strong>Franchise Intent Data:</strong> Target city, preferred area/location, property ownership status, preferred store format (Takeaway, Small QSR, etc.), and planned launch timeline.</li>
-              <li><strong>Financial Preferences:</strong> Self-selected investment budget range (e.g., Kiosk – ₹7 Lakh, Cafe – ₹12 Lakh).</li>
+              <li><strong>Financial Preferences:</strong> Self-selected investment budget range (e.g., Kiosk – ₹7 Lakh, Cafe – ₹11 Lakh).</li>
               <li><strong>Technical & Analytics Data:</strong> IP address, browser type, referral source (UTM parameters), page views, and device identifier collected automatically via anonymized site analytics.</li>
             </ul>
           </div>

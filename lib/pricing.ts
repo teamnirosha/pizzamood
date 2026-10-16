@@ -16,7 +16,7 @@ type ItemDef = [name: string, amount: number, notes: string, iconName: PricingIt
 
 const FEE: ItemDef = ["Franchise Fees", 400000, "18% GST Applicable on Franchise Fees", "Handshake"];
 const KITCHEN: ItemDef = ["Kitchen Setup & Equipment", 300000, "Includes commercial pizza oven, refrigeration & prep stations", "Utensils"];
-const INTERIORS: ItemDef = ["Interiors, CCTV & Billing set", 400000, "Standardized front desk counter, illuminated LED signage & cloud POS setup", "Sofa"];
+const INTERIORS: ItemDef = ["Interiors, CCTV & Billing set", 300000, "Standardized front desk counter, illuminated LED signage & cloud POS setup", "Sofa"];
 const OPENING: ItemDef = ["1st day opening ceremony", 100000, "Including decorations & whole management by Pizza Mood", "PartyPopper"];
 
 const build = (id: ModelId, label: string, defs: ItemDef[]) => {
@@ -44,7 +44,7 @@ export const MODELS: PricingModel[] = [MODEL_BY_ID.kiosk, MODEL_BY_ID.cafe];
 export const PRICING_HEADLINE = MODELS.map((m) => `${m.label} ${m.lakh}`).join(" · ");
 export const PRICING_COMPACT = MODELS.map((m) => `${m.label} ₹${m.total / 100000}L`).join(" · ");
 
-export const BUDGET_OPTIONS = ["Kiosk – ₹7 Lakh", "Cafe – ₹12 Lakh", "Need guidance"] as const;
+export const BUDGET_OPTIONS = ["Kiosk – ₹7 Lakh", "Cafe – ₹11 Lakh", "Need guidance"] as const;
 export type BudgetOption = (typeof BUDGET_OPTIONS)[number];
 export const DEFAULT_BUDGET: BudgetOption = "Need guidance";
 

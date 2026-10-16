@@ -15,7 +15,8 @@ export type InvestmentBudget =
   | "₹4–6 Lakh"
   | "₹6–10 Lakh"
   | "₹10–15 Lakh"
-  | "₹15 Lakh+";
+  | "₹15 Lakh+"
+  | "Cafe – ₹12 Lakh";
 
 export type StoreType =
   | "Cafe"
