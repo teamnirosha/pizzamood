@@ -2,6 +2,7 @@ import { MetadataRoute } from "next";
 import { getLocations } from "@/lib/db";
 import { baseUrl } from "@/lib/seo";
 import { FRANCHISE_PAGES } from "@/lib/franchisePages";
+import { FRANCHISE_AREAS, isAreaTaken } from "@/lib/areas";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const locations = await getLocations();
@@ -45,5 +46,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
   }));
 
-  return [...staticPages, ...franchisePages, ...cityPages, ...locationPages];
+  const areaPages = FRANCHISE_AREAS.filter((a) => !isAreaTaken(a, locations)).map((a) => ({
+    url: `${baseUrl}/franchise/pune/${a.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...franchisePages, ...areaPages, ...cityPages, ...locationPages];
 }

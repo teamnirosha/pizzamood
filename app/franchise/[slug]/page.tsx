@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { MessageCircle, MapPin } from "lucide-react";
 import { getLocations } from "@/lib/db";
 import { FRANCHISE_PAGES, getFranchisePage } from "@/lib/franchisePages";
+import { FRANCHISE_AREAS, isAreaTaken } from "@/lib/areas";
 import { generateBreadcrumbSchema, generateFAQSchema, baseUrl } from "@/lib/seo";
 import { EXCLUSIVITY_LINE, FRANCHISE_PHONE_DISPLAY, FRANCHISE_PHONE_TEL, whatsappLink } from "@/lib/usps";
 import EnquiryButton from "../../components/EnquiryButton";
@@ -37,7 +38,8 @@ export default async function FranchiseLandingPage({ params }: PageProps) {
   const page = getFranchisePage((await params).slug);
   if (!page) notFound();
 
-  const stores = page.showStores ? (await getLocations()).filter((l) => l.status === "active") : [];
+  const allStores = page.showStores ? await getLocations() : [];
+  const stores = allStores.filter((l) => l.status === "active");
   const related = page.related.map(getFranchisePage).filter((p) => !!p);
 
   const breadcrumb = generateBreadcrumbSchema([
@@ -127,6 +129,21 @@ export default async function FranchiseLandingPage({ params }: PageProps) {
                 <li key={s.id}>
                   <Link href={`/locations/${s.slug}`} className="flex items-center gap-1.5 rounded-xl border border-slate-200 px-3 py-2 text-sm font-bold text-slate-800 hover:border-sky-300">
                     <MapPin className="h-4 w-4 text-sky-600" /> {s.area}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {page.showStores && (
+          <section>
+            <h2 className="text-2xl font-black text-slate-900">Areas open for a new outlet</h2>
+            <ul className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
+              {FRANCHISE_AREAS.filter((a) => !isAreaTaken(a, allStores)).map((a) => (
+                <li key={a.slug}>
+                  <Link href={`/franchise/pune/${a.slug}`} className="block rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-bold text-slate-800 hover:border-emerald-400">
+                    {a.name} <span className="text-xs text-emerald-700">· available</span>
                   </Link>
                 </li>
               ))}
