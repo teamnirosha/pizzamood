@@ -91,12 +91,12 @@ export default function ContactPage() {
                   <div>
                     <span className="block text-[10px] font-black uppercase tracking-wider text-slate-400">Instagram Handle</span>
                     <a
-                      href="https://instagram.com/pizzamoodpune"
+                      href="https://instagram.com/pizzamoodofficial"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm font-black text-slate-900 hover:text-pink-600"
                     >
-                      @pizzamoodpune
+                      @pizzamoodofficial
                     </a>
                   </div>
                 </div>

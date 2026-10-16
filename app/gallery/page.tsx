@@ -18,8 +18,8 @@ const galleryCategories = [
   {
     title: "Franchise Outlets & Stores",
     images: [
-      { url: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80", title: "Pizza Mood Kharadi Store Front" },
-      { url: "https://images.unsplash.com/photo-1590947132387-155cc02f3212?auto=format&fit=crop&w=1000&q=80", title: "Andheri Takeaway Counter" },
+      { url: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80", title: "Pizza Mood Store Front" },
+      { url: "https://images.unsplash.com/photo-1590947132387-155cc02f3212?auto=format&fit=crop&w=1000&q=80", title: "Takeaway Counter" },
       { url: "https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?auto=format&fit=crop&w=1000&q=80", title: "Viman Nagar Student Seating" },
     ],
   },

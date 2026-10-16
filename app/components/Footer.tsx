@@ -107,12 +107,12 @@ export default function Footer() {
               {/* Social Links */}
               <div className="flex items-center gap-3 pt-2">
                 <a
-                  href="https://instagram.com/pizzamoodpune"
+                  href="https://instagram.com/pizzamoodofficial"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1.5 rounded-xl bg-slate-900 border border-slate-800 px-3 py-1.5 text-xs font-bold text-pink-400 hover:bg-slate-800 transition"
                 >
-                  <InstagramIcon className="h-3.5 w-3.5" /> @pizzamoodpune
+                  <InstagramIcon className="h-3.5 w-3.5" /> @pizzamoodofficial
                 </a>
                 <a
                   href="https://facebook.com/pizzamood11"
@@ -171,33 +171,8 @@ export default function Footer() {
               </h3>
               <ul className="mt-4 space-y-2.5 text-xs font-semibold text-slate-400">
                 <li>
-                  <Link href="/locations/pune/kharadi" className="hover:text-white">
-                    Pizza Mood Kharadi, Pune
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/locations/pune/viman-nagar" className="hover:text-white">
-                    Pizza Mood Viman Nagar, Pune
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/locations/pune/hadapsar" className="hover:text-white">
-                    Pizza Mood Hadapsar, Pune
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/locations/mumbai/andheri-west" className="hover:text-white">
-                    Pizza Mood Andheri West, Mumbai
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/locations/mumbai/thane-west" className="hover:text-white">
-                    Pizza Mood Thane West, Mumbai
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/locations" className="text-sky-400 font-bold hover:text-sky-300">
-                    Explore All Outlets →
+                  <Link href="/locations/pune/bavdhan" className="hover:text-white">
+                    Pizza Mood Bavdhan, Pune
                   </Link>
                 </li>
               </ul>
