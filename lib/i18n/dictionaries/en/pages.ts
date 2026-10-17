@@ -76,7 +76,7 @@ export const pages = {
     kioskFormat: "Takeaway Kiosk Format.",
     cafeFormat: "Full Cafe Format.",
     description: "Choose between our compact {kioskLakh} Kiosk format (no interior setup costs) or our turnkey {cafeLakh} Full Cafe format (all inclusive with complete interiors & grand launch).",
-    cta: "Get Complete Investment Details →",
+    cta: "Get Complete Investment Details",
     testimonials: "What Franchise Owners Say",
     testimonialsSub: "Hear partner stories",
     goodFood: ["Good Food", "Good Mood"],

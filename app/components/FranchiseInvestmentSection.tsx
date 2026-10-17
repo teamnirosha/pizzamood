@@ -10,6 +10,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { benefitItemsData } from "@/app/data/franchiseInvestmentData";
 import { fill, lakhOf, pricingVars } from "@/app/data/i18nHelpers";
 import { useLocale } from "./LocaleProvider";
+import FranchiseModal from "./FranchiseModal";
 
 import { MODEL_BY_ID } from "@/lib/pricing";
 import { SHOW_TESTIMONIALS } from "@/lib/flags";
@@ -31,6 +32,7 @@ export default function FranchiseInvestmentSection() {
 
   const [counterStarted, setCounterStarted] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [enquiryOpen, setEnquiryOpen] = useState(false);
   const [activeModel, setActiveModel] = useState<"kiosk" | "cafe">("kiosk");
 
   // Motion values for subtle 3D card tilt & cursor parallax
@@ -269,11 +271,7 @@ export default function FranchiseInvestmentSection() {
               <motion.button
                 whileHover={{ scale: 1.02, translateY: -2 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => {
-                  const modalBtn = document.getElementById("open-franchise-modal");
-                  if (modalBtn) modalBtn.click();
-                  else window.location.href = "#franchise-form";
-                }}
+                onClick={() => setEnquiryOpen(true)}
                 className="group relative inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3.5 rounded-full bg-[#FFD21C] hover:bg-[#facc15] text-[#101A35] font-extrabold text-xs sm:text-sm md:text-base shadow-md shadow-amber-300/40 hover:shadow-amber-300/60 transition-all duration-200 cursor-pointer w-full sm:w-auto text-center"
               >
                 <span className="whitespace-normal">{c.cta}</span>
@@ -396,6 +394,8 @@ export default function FranchiseInvestmentSection() {
 
         </div>
       </div>
+
+      <FranchiseModal isOpen={enquiryOpen} onClose={() => setEnquiryOpen(false)} />
 
       {/* Video Modal Trigger */}
       {isVideoModalOpen && (
