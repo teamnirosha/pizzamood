@@ -38,14 +38,6 @@ export const metadata: Metadata = {
     ...(process.env.NEXT_PUBLIC_BING_VERIFICATION && { other: { "msvalidate.01": process.env.NEXT_PUBLIC_BING_VERIFICATION } }),
   },
   openGraph: { images: [{ url: "/logo.png", width: 512, height: 512, alt: "Pizza Mood" }] },
-  icons: {
-    icon: [
-      { url: "/logo.png", type: "image/png" },
-      { url: "/favicon.ico" },
-    ],
-    shortcut: "/logo.png",
-    apple: "/apple-icon.png",
-  },
 };
 
 import SmoothScroll from "@/app/components/SmoothScroll";
