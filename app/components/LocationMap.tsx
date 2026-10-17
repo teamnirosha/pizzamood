@@ -418,6 +418,7 @@ export default function LocationMap({
           {/* Filters & Near Me */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <select
+              aria-label={m.city}
               value={selectedCity}
               onChange={(e) => {
                 setSelectedCity(e.target.value);
@@ -558,13 +559,15 @@ export default function LocationMap({
                   </p>
 
                   <div className="mt-2.5 flex flex-wrap items-center gap-3 text-[11px] font-bold text-slate-500 pt-2 border-t border-slate-100">
-                    <a
-                      href={`tel:${loc.phone}`}
-                      onClick={(e) => e.stopPropagation()}
-                      className="flex items-center gap-1 text-sky-600 hover:text-sky-700 hover:underline"
-                    >
-                      <Phone className="h-3.5 w-3.5" /> {loc.phone}
-                    </a>
+                    {loc.phone && (
+                      <a
+                        href={`tel:${loc.phone}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="flex items-center gap-1 text-sky-600 hover:text-sky-700 hover:underline"
+                      >
+                        <Phone className="h-3.5 w-3.5" /> {loc.phone}
+                      </a>
+                    )}
                     <span className="flex items-center gap-1">
                       <Clock className="h-3.5 w-3.5 text-amber-500" /> {loc.hours[0]?.openingTime || "11 AM"} - {loc.hours[0]?.closingTime || "11 PM"}
                     </span>

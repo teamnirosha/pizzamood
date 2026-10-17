@@ -75,10 +75,12 @@ export default function OutletShowcase({ locations }: OutletShowcaseProps) {
                     <Clock className="h-4 w-4 text-amber-500 shrink-0" />
                     <span>{loc.hours[0]?.openingTime} - {loc.hours[0]?.closingTime}</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Phone className="h-4 w-4 text-sky-500 shrink-0" />
-                    <a href={`tel:${loc.phone}`} className="hover:underline">{loc.phone}</a>
-                  </div>
+                  {loc.phone && (
+                    <div className="flex items-center gap-2">
+                      <Phone className="h-4 w-4 text-sky-500 shrink-0" />
+                      <a href={`tel:${loc.phone}`} className="hover:underline">{loc.phone}</a>
+                    </div>
+                  )}
                 </div>
 
                 {/* CTAs */}

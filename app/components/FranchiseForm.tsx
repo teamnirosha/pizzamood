@@ -226,6 +226,7 @@ export default function FranchiseForm() {
               {f.storeFormat} <span className="text-red-500">*</span>
             </label>
             <select
+              aria-label={f.storeFormat}
               value={formData.preferredStoreType}
               onChange={(e) => setFormData({ ...formData, preferredStoreType: e.target.value as StoreType })}
               className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-900 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20"
@@ -240,6 +241,7 @@ export default function FranchiseForm() {
               {f.timelineLabel}
             </label>
             <select
+              aria-label={f.timelineLabel}
               value={formData.timeline}
               onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
               className="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-900 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20"
