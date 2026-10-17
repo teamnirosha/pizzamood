@@ -2,25 +2,28 @@
 
 import { Star, Quote } from "lucide-react";
 import { Testimonial } from "@/types";
+import { useLocale } from "./LocaleProvider";
 
 interface TestimonialSectionProps {
   testimonials: Testimonial[];
 }
 
 export default function TestimonialSection({ testimonials }: TestimonialSectionProps) {
+  const { t: dict } = useLocale();
+  const s = dict.home.testimonials;
   return (
     <section id="testimonials" className="py-20 bg-white scroll-mt-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         <div className="text-center max-w-3xl mx-auto">
           <span className="inline-block rounded-full bg-emerald-100 px-3.5 py-1 text-xs font-black uppercase tracking-wider text-emerald-800">
-            Franchise Partner Stories
+            {s.badge}
           </span>
           <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
-            Hear From Pizza Mood Franchisees
+            {s.title}
           </h2>
           <p className="mt-3 text-sm font-semibold text-slate-600">
-            Real experiences from entrepreneurs who launched their pizza business with Pizza Mood.
+            {s.sub}
           </p>
         </div>
 

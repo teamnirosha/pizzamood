@@ -1,8 +1,10 @@
 "use client";
 
-import { PRICING_HEADLINE } from "@/lib/pricing";
+import { pricingHeadline } from "@/lib/pricing";
+import { fmt } from "@/lib/fmt";
+import { useLocale } from "./LocaleProvider";
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/LocalizedLink";
 import {
   Phone,
   MessageSquare,
@@ -12,7 +14,9 @@ import {
   ShieldCheck,
   Lock,
 } from "lucide-react";
+import { whatsappLink } from "@/lib/usps";
 import FranchiseModal from "./FranchiseModal";
+import { SHOW_GALLERY } from "@/lib/flags";
 
 function InstagramIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
@@ -34,6 +38,9 @@ function FacebookIcon({ className = "h-4 w-4" }: { className?: string }) {
 
 export default function Footer() {
   const [modalOpen, setModalOpen] = useState(false);
+  const { lang, t } = useLocale();
+  const f = t.shell.footer;
+  const pricing = pricingHeadline(lang);
 
   return (
     <>
@@ -43,29 +50,29 @@ export default function Footer() {
           <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-sky-600 via-sky-500 to-yellow-500 p-8 sm:p-12 shadow-2xl">
             <div className="relative z-10 max-w-2xl">
               <span className="inline-block rounded-full bg-yellow-400 px-3.5 py-1 text-xs font-black uppercase tracking-wider text-slate-900 shadow-sm">
-                Franchise Opportunity
+                {f.badge}
               </span>
               <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl text-white">
-                Ready to Start Your Pizza Mood Franchise?
+                {f.heading}
               </h2>
               <p className="mt-2 text-sm font-medium text-sky-50 sm:text-base">
-                Tell us where you want to open your outlet and our franchise team will guide you through site selection, setup, and store launch.
+                {f.intro}
               </p>
               <div className="mt-6 flex flex-wrap gap-4">
                 <button
                   onClick={() => setModalOpen(true)}
                   className="group flex items-center gap-2 rounded-2xl bg-white px-6 py-3.5 text-sm font-black text-sky-600 shadow-xl transition hover:bg-slate-100"
                 >
-                  Start Your Franchise Now
+                  {f.startBtn}
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                 </button>
                 <a
-                  href="https://wa.me/919096970369?text=Hi%20Pizza%20Mood,%20I%20want%20to%20know%20more%20about%20starting%20a%20franchise."
+                  href={whatsappLink(f.waText)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-emerald-700"
                 >
-                  <MessageSquare className="h-4 w-4" /> WhatsApp Franchise Team
+                  <MessageSquare className="h-4 w-4" /> {f.whatsappBtn}
                 </a>
               </div>
             </div>
@@ -76,11 +83,11 @@ export default function Footer() {
             {/* Col 1: Brand info */}
             <div className="lg:col-span-1 sm:col-span-2 space-y-4">
               <Link href="/" className="flex items-center">
-                <img src="/logo.png" alt="Pizza Mood" width={56} height={56} className="h-14 w-14 object-contain" />
+                <img src="/logo.png" alt={f.logoAlt} width={56} height={56} className="h-14 w-14 object-contain" />
               </Link>
 
               <p className="text-xs font-medium text-slate-400 leading-relaxed max-w-sm">
-                Pizza Mood is India's fast-growing pizza and fast-food QSR franchise brand. Built for aspiring entrepreneurs to launch high-profit takeaway & small QSR stores. Choose the Kiosk or Cafe model: {PRICING_HEADLINE}.
+                {fmt(f.about, { pricing })}
               </p>
 
               <div className="space-y-2 text-xs font-semibold text-slate-300 pt-2">
@@ -99,7 +106,7 @@ export default function Footer() {
                 </div>
                 <div className="flex items-start gap-2">
                   <MapPin className="h-4 w-4 text-sky-400 shrink-0 mt-0.5" />
-                  <span>HQ: Mauli Krupa Complex, Karve Nagar, Pune, Maharashtra 411052</span>
+                  <span>{f.hq}</span>
                 </div>
               </div>
 
@@ -127,52 +134,52 @@ export default function Footer() {
             {/* Col 2: Navigation */}
             <div>
               <h3 className="text-xs font-black uppercase tracking-wider text-yellow-400">
-                Franchise Hub
+                {f.hubTitle}
               </h3>
               <ul className="mt-4 space-y-2.5 text-xs font-semibold text-slate-400">
                 <li>
                   <Link href="/franchise" className="hover:text-white">
-                    Franchise Overview
+                    {f.overview}
                   </Link>
                 </li>
                 <li>
                   <Link href="/franchise/pune" className="hover:text-white">
-                    Franchise in Pune
+                    {f.pune}
                   </Link>
                 </li>
                 <li>
                   <Link href="/franchise/under-10-lakhs" className="hover:text-white">
-                    Franchise Under ₹10 Lakhs
+                    {f.under10}
                   </Link>
                 </li>
                 <li>
                   <Link href="/franchise/cost-in-india" className="hover:text-white">
-                    Franchise Cost Guide
+                    {f.costGuide}
                   </Link>
                 </li>
                 <li>
                   <Link href="/how-it-works" className="hover:text-white">
-                    7-Step Launch Process
+                    {f.process}
                   </Link>
                 </li>
                 <li>
                   <Link href="/investment" className="hover:text-white">
-                    Kiosk & Cafe Investment Breakdown
+                    {f.investment}
                   </Link>
                 </li>
                 <li>
                   <Link href="/support" className="hover:text-white">
-                    360° Operational Support
+                    {f.support}
                   </Link>
                 </li>
                 <li>
                   <Link href="/faq" className="hover:text-white">
-                    Franchise FAQs
+                    {f.faq}
                   </Link>
                 </li>
                 <li>
                   <Link href="/contact" className="hover:text-white">
-                    Franchise Enquiry Form
+                    {f.enquiry}
                   </Link>
                 </li>
               </ul>
@@ -181,12 +188,12 @@ export default function Footer() {
             {/* Col 3: Outlets & SEO */}
             <div>
               <h3 className="text-xs font-black uppercase tracking-wider text-yellow-400">
-                Popular Outlets
+                {f.outletsTitle}
               </h3>
               <ul className="mt-4 space-y-2.5 text-xs font-semibold text-slate-400">
                 <li>
                   <Link href="/locations/pune/bavdhan" className="hover:text-white">
-                    Pizza Mood Bavdhan, Pune
+                    {f.bavdhan}
                   </Link>
                 </li>
               </ul>
@@ -195,27 +202,29 @@ export default function Footer() {
             {/* Col 4: Corporate & Information */}
             <div>
               <h3 className="text-xs font-black uppercase tracking-wider text-yellow-400">
-                Company & Info
+                {f.companyTitle}
               </h3>
               <ul className="mt-4 space-y-2.5 text-xs font-semibold text-slate-400">
                 <li>
                   <Link href="/story" className="hover:text-white">
-                    Brand Story
+                    {f.story}
                   </Link>
                 </li>
-                <li>
-                  <Link href="/gallery" className="hover:text-white">
-                    Photo Gallery
-                  </Link>
-                </li>
+                {SHOW_GALLERY && (
+                  <li>
+                    <Link href="/gallery" className="hover:text-white">
+                      {f.gallery}
+                    </Link>
+                  </li>
+                )}
                 <li>
                   <Link href="/privacy-policy" className="hover:text-white">
-                    Privacy Policy
+                    {f.privacy}
                   </Link>
                 </li>
                 <li>
                   <Link href="/terms" className="hover:text-white">
-                    Terms & Conditions
+                    {f.terms}
                   </Link>
                 </li>
               </ul>
@@ -225,15 +234,15 @@ export default function Footer() {
           {/* Legal Disclaimer */}
           <div className="mt-12 border-t border-slate-800 pt-8 text-[11px] font-medium text-slate-500 leading-relaxed">
             <p>
-              <strong className="text-slate-400">Franchise Disclaimer:</strong> Investment requirements, store launch timelines and financial figures displayed on this website ({PRICING_HEADLINE}) are indicative estimates for the standard Kiosk and Cafe formats. The 30-day go-live guarantee is subject to the terms of your franchise agreement. Actual investment may vary depending on store format, city tier, property condition, equipment selection and local operating factors. Pizza Mood does not make or imply any legally binding guarantees regarding store revenues, customer footfall, or monthly profit margins. Store approval is subject to site viability verification by Pizza Mood brand representatives.
+              <strong className="text-slate-400">{f.disclaimerLabel}</strong> {fmt(f.disclaimer, { pricing })}
             </p>
           </div>
 
           {/* Bottom Bar */}
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-900 pt-6 text-xs text-slate-400">
-            <p>© {new Date().getFullYear()} Pizza Mood India. All rights reserved.</p>
+            <p>{fmt(f.copyright, { year: new Date().getFullYear() })}</p>
             <div className="flex items-center gap-1.5 text-xs text-slate-400">
-              <span>Designed and Developed by</span>
+              <span>{f.designedBy}</span>
               <a
                 href="https://nirosha.org/"
                 target="_blank"
@@ -254,22 +263,22 @@ export default function Footer() {
           className="flex flex-1 flex-col items-center gap-1 py-1 text-[11px] font-bold text-slate-700 hover:text-sky-600"
         >
           <Phone className="h-4 w-4 text-sky-600" />
-          <span>Call Us</span>
+          <span>{f.callUs}</span>
         </a>
         <a
-          href="https://wa.me/919096970369?text=Hi%20Pizza%20Mood,%20I%20want%20franchise%20info."
+          href={whatsappLink(f.waTextShort)}
           target="_blank"
           rel="noopener noreferrer"
           className="flex flex-1 flex-col items-center gap-1 py-1 text-[11px] font-bold text-slate-700 hover:text-emerald-600"
         >
           <MessageSquare className="h-4 w-4 text-emerald-600" />
-          <span>WhatsApp</span>
+          <span>{f.whatsapp}</span>
         </a>
         <button
           onClick={() => setModalOpen(true)}
           className="flex flex-[1.5] items-center justify-center gap-1.5 rounded-xl bg-sky-500 border border-yellow-400 py-2.5 text-xs font-black text-white shadow-md shadow-sky-500/30"
         >
-          <span>Enquire Now</span>
+          <span>{f.enquireNow}</span>
           <ArrowRight className="h-3.5 w-3.5" />
         </button>
       </div>

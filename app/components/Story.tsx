@@ -1,5 +1,8 @@
-import Link from "next/link";
+"use client";
+
+import Link from "@/app/components/LocalizedLink";
 import Image from "next/image";
+import { useLocale } from "./LocaleProvider";
 import {
   ArrowRight,
   Check,
@@ -8,6 +11,7 @@ import {
 } from "lucide-react";
 
 const PizzalootStory = () => {
+  const c = useLocale().t.pages.story;
   return (
     <section className="overflow-hidden bg-white py-20 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -16,7 +20,7 @@ const PizzalootStory = () => {
         <div className="mb-12 text-center">
           <div className="inline-flex items-center gap-2 rounded-full bg-red-50 px-4 py-2 text-xs font-bold uppercase tracking-wider text-red-500">
             <Sparkles size={14} />
-            The Pizzaloot Story
+            {c.label}
           </div>
         </div>
 
@@ -37,7 +41,7 @@ const PizzalootStory = () => {
               <div className="relative aspect-[4/3]">
                 <Image
                   src="/images/pizzaloot-story.jpg"
-                  alt="Fresh Pizzaloot pizza"
+                  alt={c.imgAlt}
                   fill
                   className="object-cover transition duration-500 hover:scale-105"
                 />
@@ -59,11 +63,11 @@ const PizzalootStory = () => {
 
                 <div>
                   <p className="text-lg font-extrabold text-gray-900">
-                    Made With Love
+                    {c.madeWithLove}
                   </p>
 
                   <p className="text-xs text-gray-500">
-                    From our kitchen to you
+                    {c.madeWithLoveSub}
                   </p>
                 </div>
 
@@ -76,112 +80,45 @@ const PizzalootStory = () => {
           <div>
 
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-red-500">
-              More Than Just Pizza
+              {c.kicker}
             </p>
 
             <h2 className="mt-4 text-4xl font-black leading-tight tracking-tight text-gray-950 sm:text-5xl">
-              Good food brings
-              <span className="text-red-500"> people together.</span>
+              {c.h2a}
+              <span className="text-red-500">{c.h2b}</span>
             </h2>
 
             <div className="mt-6 space-y-5 text-base leading-7 text-gray-600">
-              <p>
-                Pizzaloot started with one simple idea — make great pizza
-                easy to enjoy. No complicated choices, no waiting forever,
-                just delicious food made for sharing.
-              </p>
+              <p>{c.p1}</p>
 
-              <p>
-                We prepare every pizza with carefully selected ingredients,
-                generous toppings and a whole lot of attention. Whether
-                you're ordering for yourself, your family or a group of
-                friends, there's always something worth sharing.
-              </p>
+              <p>{c.p2}</p>
 
-              <p>
-                From our kitchen to your doorstep, we're focused on one
-                thing: making every order feel like a little celebration.
-              </p>
+              <p>{c.p3}</p>
             </div>
 
             {/* ================= VALUES ================= */}
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
 
-              <div className="flex items-start gap-3">
-                <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-green-50">
-                  <Check
-                    size={15}
-                    className="text-green-600"
-                  />
+              {c.values.map((v) => (
+                <div key={v.title} className="flex items-start gap-3">
+                  <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-green-50">
+                    <Check
+                      size={15}
+                      className="text-green-600"
+                    />
+                  </div>
+
+                  <div>
+                    <h3 className="text-sm font-bold text-gray-900">
+                      {v.title}
+                    </h3>
+
+                    <p className="mt-1 text-xs leading-5 text-gray-500">
+                      {v.text}
+                    </p>
+                  </div>
                 </div>
-
-                <div>
-                  <h3 className="text-sm font-bold text-gray-900">
-                    Fresh Ingredients
-                  </h3>
-
-                  <p className="mt-1 text-xs leading-5 text-gray-500">
-                    Quality ingredients in every bite.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-green-50">
-                  <Check
-                    size={15}
-                    className="text-green-600"
-                  />
-                </div>
-
-                <div>
-                  <h3 className="text-sm font-bold text-gray-900">
-                    Made To Order
-                  </h3>
-
-                  <p className="mt-1 text-xs leading-5 text-gray-500">
-                    Prepared fresh when you order.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-green-50">
-                  <Check
-                    size={15}
-                    className="text-green-600"
-                  />
-                </div>
-
-                <div>
-                  <h3 className="text-sm font-bold text-gray-900">
-                    Quick Delivery
-                  </h3>
-
-                  <p className="mt-1 text-xs leading-5 text-gray-500">
-                    Hot food delivered to your door.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-green-50">
-                  <Check
-                    size={15}
-                    className="text-green-600"
-                  />
-                </div>
-
-                <div>
-                  <h3 className="text-sm font-bold text-gray-900">
-                    Easy Ordering
-                  </h3>
-
-                  <p className="mt-1 text-xs leading-5 text-gray-500">
-                    Your favorite pizza in a few clicks.
-                  </p>
-                </div>
-              </div>
+              ))}
 
             </div>
 
@@ -192,7 +129,7 @@ const PizzalootStory = () => {
                 href="/about"
                 className="group inline-flex items-center gap-2 rounded-full bg-gray-950 px-7 py-3.5 text-sm font-bold text-white transition duration-200 hover:bg-red-500"
               >
-                Discover Our Story
+                {c.cta}
 
                 <ArrowRight
                   size={18}
@@ -214,7 +151,7 @@ const PizzalootStory = () => {
             </p>
 
             <p className="mt-1 text-xs font-semibold text-gray-500">
-              Pizza Varieties
+              {c.stats[0]}
             </p>
           </div>
 
@@ -224,7 +161,7 @@ const PizzalootStory = () => {
             </p>
 
             <p className="mt-1 text-xs font-semibold text-gray-500">
-              Happy Customers
+              {c.stats[1]}
             </p>
           </div>
 
@@ -234,7 +171,7 @@ const PizzalootStory = () => {
             </p>
 
             <p className="mt-1 text-xs font-semibold text-gray-500">
-              Min Delivery
+              {c.stats[2]}
             </p>
           </div>
 
@@ -244,7 +181,7 @@ const PizzalootStory = () => {
             </p>
 
             <p className="mt-1 text-xs font-semibold text-gray-500">
-              Customer Rating
+              {c.stats[3]}
             </p>
           </div>
 

@@ -1,3 +1,5 @@
+import type { Locale } from "@/lib/i18n";
+
 export type ModelId = "kiosk" | "cafe";
 
 export type PricingItem = {
@@ -43,6 +45,13 @@ export const MODELS: PricingModel[] = [MODEL_BY_ID.kiosk, MODEL_BY_ID.cafe];
 
 export const PRICING_HEADLINE = MODELS.map((m) => `${m.label} ${m.lakh}`).join(" · ");
 export const PRICING_COMPACT = MODELS.map((m) => `${m.label} ₹${m.total / 100000}L`).join(" · ");
+
+const MODEL_LABEL_MR: Record<ModelId, string> = { kiosk: "किओस्क", cafe: "कॅफे" };
+export const modelLabel = (id: ModelId, lang: Locale) => (lang === "en" ? MODEL_BY_ID[id].label : MODEL_LABEL_MR[id]);
+export const pricingHeadline = (lang: Locale) =>
+  lang === "en" ? PRICING_HEADLINE : MODELS.map((m) => `${MODEL_LABEL_MR[m.id]} ₹${m.total / 100000} लाख`).join(" · ");
+export const pricingCompact = (lang: Locale) =>
+  lang === "en" ? PRICING_COMPACT : MODELS.map((m) => `${MODEL_LABEL_MR[m.id]} ₹${m.total / 100000}L`).join(" · ");
 
 export const BUDGET_OPTIONS = ["Kiosk – ₹7 Lakh", "Cafe – ₹11 Lakh", "Need guidance"] as const;
 export type BudgetOption = (typeof BUDGET_OPTIONS)[number];

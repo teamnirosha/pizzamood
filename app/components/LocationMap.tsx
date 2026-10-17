@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useState, useRef, useCallback } from "react";
-import Link from "next/link";
+import Link from "@/app/components/LocalizedLink";
 import { Search, Navigation, Phone, Clock, ArrowRight, ShieldAlert, X, MapPin, Plus, Minus, RotateCcw } from "lucide-react";
 import type * as LeafletType from "leaflet";
 import { OutletLocation } from "@/types";
+import { localePath } from "@/lib/i18n";
+import { useLocale } from "./LocaleProvider";
+import { fill, place } from "./homeI18n";
 
 interface LocationMapProps {
   locations: OutletLocation[];
@@ -17,6 +20,9 @@ export default function LocationMap({
   onSelectLocation,
   selectedLocationId,
 }: LocationMapProps) {
+  const { lang, t } = useLocale();
+  const m = t.home.map;
+  const { popupOpen, popupView, youAreHere, yourLocation, geoUnsupported, geoFailed } = m;
   const mapWrapperRef = useRef<HTMLDivElement>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const leafletMapRef = useRef<LeafletType.Map | null>(null);
@@ -52,14 +58,12 @@ export default function LocationMap({
   };
 
   const cities = ["All", ...Array.from(new Set(locations.map((l) => l.city)))];
+  const locName = (loc: OutletLocation) => loc.name.replace(loc.area, place(t, loc.area));
 
   const filteredLocations = locations.filter((loc) => {
     const matchesCity = selectedCity === "All" || loc.city === selectedCity;
-    const matchesSearch =
-      loc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      loc.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      loc.area.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      loc.address.toLowerCase().includes(searchQuery.toLowerCase());
+    const q = searchQuery.toLowerCase();
+    const matchesSearch = [loc.name, loc.city, loc.area, loc.address, locName(loc), place(t, loc.city)].some((v) => v.toLowerCase().includes(q));
     return matchesCity && matchesSearch;
   });
 
@@ -213,15 +217,15 @@ export default function LocationMap({
           <div style="min-width: 220px; max-width: 260px; font-family: system-ui, -apple-system, sans-serif; padding: 4px;">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
               <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #009ad8; letter-spacing: 0.05em;">Pizza Mood</span>
-              <span style="background: #ecfdf5; color: #047857; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 9999px;">● Open Now</span>
+              <span style="background: #ecfdf5; color: #047857; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 9999px;">${popupOpen}</span>
             </div>
-            <h4 style="margin: 2px 0 4px 0; font-size: 14px; font-weight: 900; color: #0f172a; line-height: 1.2;">${loc.name}</h4>
+            <h4 style="margin: 2px 0 4px 0; font-size: 14px; font-weight: 900; color: #0f172a; line-height: 1.2;">${locName(loc)}</h4>
             <p style="margin: 0 0 6px 0; font-size: 11px; color: #4b5563; font-weight: 500; line-height: 1.3;">${loc.address}</p>
             <div style="display: flex; gap: 6px; margin-bottom: 8px; font-size: 10px; font-weight: 700; color: #475569;">
               <span>🕒 ${loc.hours[0]?.openingTime || "11 AM"} - ${loc.hours[0]?.closingTime || "11 PM"}</span>
             </div>
-            <a href="/locations/${loc.slug}" style="display: block; width: 100%; text-align: center; background: #009ad8; border: 1.5px solid #ead800; color: white; padding: 7px 0; border-radius: 8px; font-size: 11px; font-weight: 800; text-decoration: none; box-shadow: 0 4px 8px -2px rgba(0, 154, 216, 0.4);">
-              View Store & Menu &rarr;
+            <a href="${localePath(lang, `/locations/${loc.slug}`)}" style="display: block; width: 100%; text-align: center; background: #009ad8; border: 1.5px solid #ead800; color: white; padding: 7px 0; border-radius: 8px; font-size: 11px; font-weight: 800; text-decoration: none; box-shadow: 0 4px 8px -2px rgba(0, 154, 216, 0.4);">
+              ${popupView}
             </a>
           </div>
         `;
@@ -245,7 +249,7 @@ export default function LocationMap({
     return () => {
       isMounted = false;
     };
-  }, [filteredLocations, selectedLocId, focusLocation, locations]);
+  }, [filteredLocations, selectedLocId, focusLocation, locations, lang, popupOpen, popupView]);
 
   // Touch gesture listener on map container for two-finger drag handling
   useEffect(() => {
@@ -312,7 +316,7 @@ export default function LocationMap({
   // Find Pizza Mood Near Me handler
   const handleNearMe = () => {
     if (!navigator.geolocation) {
-      setGeoError("Geolocation is not supported by your browser.");
+      setGeoError(geoUnsupported);
       return;
     }
 
@@ -335,7 +339,7 @@ export default function LocationMap({
 
         const userIcon = L.divIcon({
           className: "user-location-marker-wrapper",
-          html: `<div class="user-location-pin" title="Your Location"></div>`,
+          html: `<div class="user-location-pin" title="${yourLocation}"></div>`,
           iconSize: [22, 22],
           iconAnchor: [11, 11],
         });
@@ -343,7 +347,7 @@ export default function LocationMap({
         const uMarker = L.marker([latitude, longitude], { icon: userIcon })
           .addTo(map)
           .bindPopup(
-            `<div style="font-family: system-ui, sans-serif; font-size: 11px; font-weight: 800; color: #1e3a8a; padding: 2px;">📍 You Are Here</div>`
+            `<div style="font-family: system-ui, sans-serif; font-size: 11px; font-weight: 800; color: #1e3a8a; padding: 2px;">${youAreHere}</div>`
           );
         userMarkerRef.current = uMarker;
 
@@ -375,7 +379,7 @@ export default function LocationMap({
       },
       () => {
         setIsLocating(false);
-        setGeoError("Unable to retrieve your location. Please select a store from the list.");
+        setGeoError(geoFailed);
       },
       { enableHighAccuracy: true, timeout: 8000 }
     );
@@ -394,7 +398,7 @@ export default function LocationMap({
             <Search className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
             <input
               type="text"
-              placeholder="Search area, city or store (e.g. Kharadi, Pune, Warje)..."
+              placeholder={m.searchPlaceholder}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full rounded-xl sm:rounded-2xl border border-slate-300 bg-white pl-9 pr-8 py-2 text-xs sm:text-sm font-semibold text-slate-900 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20 shadow-2xs"
@@ -404,7 +408,7 @@ export default function LocationMap({
                 type="button"
                 onClick={() => setSearchQuery("")}
                 className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 p-0.5 cursor-pointer"
-                aria-label="Clear search"
+                aria-label={m.clearSearch}
               >
                 <X className="h-3.5 w-3.5" />
               </button>
@@ -423,7 +427,7 @@ export default function LocationMap({
             >
               {cities.map((c) => (
                 <option key={c} value={c}>
-                  City: {c}
+                  {m.city}: {c === "All" ? m.all : place(t, c)}
                 </option>
               ))}
             </select>
@@ -435,7 +439,7 @@ export default function LocationMap({
               className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-xl sm:rounded-2xl bg-sky-500 border border-yellow-400 px-4 py-2 text-xs font-black text-white shadow-md shadow-sky-500/20 transition hover:bg-sky-600 active:scale-95 disabled:opacity-50 cursor-pointer text-center"
             >
               <Navigation className={`h-3.5 w-3.5 shrink-0 ${isLocating ? "animate-spin" : ""}`} />
-              <span className="whitespace-nowrap">{isLocating ? "Locating..." : "Find Near Me"}</span>
+              <span className="whitespace-nowrap">{isLocating ? m.locating : m.findNearMe}</span>
             </button>
           </div>
         </div>
@@ -459,8 +463,8 @@ export default function LocationMap({
             type="button"
             onClick={handleZoomIn}
             className="w-8 h-8 rounded-lg bg-white/95 text-slate-800 hover:bg-sky-50 hover:text-sky-600 flex items-center justify-center border border-slate-200 shadow-sm transition active:scale-95 cursor-pointer"
-            title="Zoom In"
-            aria-label="Zoom In"
+            title={m.zoomIn}
+            aria-label={m.zoomIn}
           >
             <Plus className="w-4 h-4" />
           </button>
@@ -468,8 +472,8 @@ export default function LocationMap({
             type="button"
             onClick={handleZoomOut}
             className="w-8 h-8 rounded-lg bg-white/95 text-slate-800 hover:bg-sky-50 hover:text-sky-600 flex items-center justify-center border border-slate-200 shadow-sm transition active:scale-95 cursor-pointer"
-            title="Zoom Out"
-            aria-label="Zoom Out"
+            title={m.zoomOut}
+            aria-label={m.zoomOut}
           >
             <Minus className="w-4 h-4" />
           </button>
@@ -477,8 +481,8 @@ export default function LocationMap({
             type="button"
             onClick={handleResetView}
             className="w-8 h-8 rounded-lg bg-white/95 text-slate-800 hover:bg-yellow-50 hover:text-amber-600 flex items-center justify-center border border-slate-200 shadow-sm transition active:scale-95 cursor-pointer"
-            title="Fit All Outlets"
-            aria-label="Fit All Outlets"
+            title={m.fitAll}
+            aria-label={m.fitAll}
           >
             <RotateCcw className="w-3.5 h-3.5" />
           </button>
@@ -489,7 +493,7 @@ export default function LocationMap({
           <div className="pointer-events-none absolute inset-0 z-[500] flex items-center justify-center bg-black/40 backdrop-blur-[1px] transition-opacity duration-200">
             <div className="flex items-center gap-2 rounded-2xl bg-white px-4 py-2.5 text-xs font-black text-slate-900 shadow-2xl border-2 border-yellow-400 animate-in fade-in zoom-in duration-150">
               <span className="text-base">✌️</span>
-              <span>Use two fingers to move & zoom the map</span>
+              <span>{m.gesture}</span>
             </div>
           </div>
         )}
@@ -499,11 +503,11 @@ export default function LocationMap({
       <div className="bg-slate-50 border-b border-slate-200 px-4 py-3 flex items-center justify-between shrink-0 z-20 shadow-2xs">
         <p className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
           <MapPin className="h-3.5 w-3.5 text-sky-500 shrink-0" />
-          <span>SHOWING {filteredLocations.length} PIZZA MOOD FRANCHISE OUTLETS</span>
+          <span>{fill(m.showing, { n: filteredLocations.length })}</span>
         </p>
         {filteredLocations.length > 2 && (
           <span className="text-[10px] font-extrabold text-sky-700 bg-sky-100/80 px-2.5 py-0.5 rounded-full border border-sky-200">
-            Scroll list ↓
+            {m.scrollList}
           </span>
         )}
       </div>
@@ -534,17 +538,17 @@ export default function LocationMap({
                     <div className="flex items-center gap-2 min-w-0">
                       <span className="text-lg shrink-0">🍕</span>
                       <h4 className="text-sm font-black text-slate-900 truncate leading-snug">
-                        {loc.name}
+                        {locName(loc)}
                       </h4>
                     </div>
                     <div className="flex items-center gap-1 shrink-0">
                       {isSelected && (
                         <span className="rounded-full bg-yellow-400/40 px-2 py-0.5 text-[9px] font-extrabold text-amber-900">
-                          Active
+                          {m.active}
                         </span>
                       )}
                       <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] font-extrabold text-emerald-700">
-                        Open Now
+                        {m.openNow}
                       </span>
                     </div>
                   </div>
@@ -577,14 +581,14 @@ export default function LocationMap({
                     }}
                     className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-slate-100 hover:bg-sky-50 hover:text-sky-700 py-2 px-3 text-xs font-extrabold text-slate-700 transition active:scale-95 cursor-pointer"
                   >
-                    <Navigation className="h-3.5 w-3.5 text-sky-500" /> Focus on Map
+                    <Navigation className="h-3.5 w-3.5 text-sky-500" /> {m.focusOnMap}
                   </button>
                   <Link
                     href={`/locations/${loc.slug}`}
                     onClick={(e) => e.stopPropagation()}
                     className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-sky-500 hover:bg-sky-600 py-2 px-3 text-xs font-extrabold text-white transition shadow-xs text-center active:scale-95"
                   >
-                    View Store <ArrowRight className="h-3.5 w-3.5" />
+                    {m.viewStore} <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
               </div>
@@ -594,7 +598,7 @@ export default function LocationMap({
 
         {filteredLocations.length === 0 && (
           <div className="py-12 text-center text-xs sm:text-sm font-semibold text-slate-500">
-            No outlets found matching "{searchQuery}".
+            {fill(m.noResults, { q: searchQuery })}
           </div>
         )}
       </div>

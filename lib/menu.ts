@@ -1,4 +1,5 @@
 import type { OutletLocation } from "@/types";
+import type { Locale } from "@/lib/i18n";
 
 const img = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=600&q=80`;
 
@@ -14,12 +15,27 @@ export const MENU_CATEGORIES = [
 export type MenuCategoryId = (typeof MENU_CATEGORIES)[number]["id"];
 export type StoreModel = "kiosk" | "cafe";
 
-export function menuItems(loc: Pick<OutletLocation, "menuCategories">) {
-  return MENU_CATEGORIES.filter((c) => loc.menuCategories.includes(c.id));
+const MENU_MR: Record<MenuCategoryId, { label: string; name: string; description: string; badge: string }> = {
+  pizza: { label: "पिझ्झा", name: "चीज बर्स्ट पिझ्झा", description: "100% मोझरेला आणि वितळणाऱ्या चीज-बर्स्ट क्रस्टसह हाताने बनवलेला पिझ्झा.", badge: "बेस्टसेलर" },
+  burgers: { label: "बर्गर", name: "लोडेड बर्गर", description: "ताज्या भाज्या आणि खास सॉससह रसाळ डबल-पॅटी बर्गर.", badge: "सर्वांचा आवडता" },
+  momos: { label: "मोमोज", name: "स्टीम्ड आणि तंदुरी मोमोज", description: "मऊ स्टीम्ड मोमोज आणि स्मोकी तंदुरी मोमोज, तिखट चटणीसह.", badge: "स्ट्रीट क्लासिक" },
+  "cold-coffee": { label: "कोल्ड कॉफी", name: "कोल्ड कॉफी", description: "घट्ट, क्रीमी थंड कॉफी.", badge: "कॅफे फेव्हरेट" },
+  shakes: { label: "शेक्स", name: "थिक शेक्स", description: "ओरिओ आणि चॉकलेट थिक शेक्स, थंडगार सर्व्ह केले जातात.", badge: "नक्की ट्राय करा" },
+  fries: { label: "फ्राईज", name: "क्रिस्पी फ्राईज", description: "पेरी-पेरी मसाल्यात घोळलेले सोनेरी फ्राईज.", badge: "स्नॅक हिट" },
+};
+
+// Category with label/name/description/badge in the given language (English default).
+export const localizedCategory = (c: (typeof MENU_CATEGORIES)[number], lang: Locale = "en") =>
+  lang === "mr" ? { ...c, ...MENU_MR[c.id] } : c;
+
+export function menuItems(loc: Pick<OutletLocation, "menuCategories">, lang: Locale = "en") {
+  return MENU_CATEGORIES.filter((c) => loc.menuCategories.includes(c.id)).map((c) => localizedCategory(c, lang));
 }
 
 // "Pizza, Burgers and Momos" for copy and FAQs
-export function menuPhrase(loc: Pick<OutletLocation, "menuCategories">) {
-  const labels = menuItems(loc).map((c) => c.label.toLowerCase());
-  return labels.length > 1 ? `${labels.slice(0, -1).join(", ")} and ${labels.at(-1)}` : labels[0] || "pizza";
+export function menuPhrase(loc: Pick<OutletLocation, "menuCategories">, lang: Locale = "en") {
+  const mr = lang === "mr";
+  const labels = menuItems(loc, lang).map((c) => (mr ? c.label : c.label.toLowerCase()));
+  const and = mr ? " आणि " : " and ";
+  return labels.length > 1 ? `${labels.slice(0, -1).join(", ")}${and}${labels.at(-1)}` : labels[0] || (mr ? "पिझ्झा" : "pizza");
 }

@@ -1,27 +1,61 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/LocalizedLink";
+import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight, Phone, Sparkles } from "lucide-react";
-import { EXCLUSIVITY_LINE } from "@/lib/usps";
+import { exclusivityLine } from "@/lib/usps";
 import FranchiseModal from "./FranchiseModal";
-import { PRICING_COMPACT } from "@/lib/pricing";
+import { SHOW_GALLERY } from "@/lib/flags";
+import { pricingCompact } from "@/lib/pricing";
+import { localePath, stripLocale, type Locale } from "@/lib/i18n";
+import { useLocale } from "./LocaleProvider";
 
-const navItems = [
-  { label: "Home", href: "/" },
-  { label: "Franchise", href: "/franchise" },
-  { label: "How It Works", href: "/how-it-works" },
-  { label: "Investment", href: "/investment" },
-  { label: "Support", href: "/support" },
-  { label: "Locations", href: "/locations" },
-  { label: "Gallery", href: "/gallery" },
-  { label: "FAQ", href: "/faq" },
-  { label: "Contact", href: "/contact" },
+const ALL_NAV = [
+  { key: "home", href: "/" },
+  { key: "franchise", href: "/franchise" },
+  { key: "howItWorks", href: "/how-it-works" },
+  { key: "investment", href: "/investment" },
+  { key: "support", href: "/support" },
+  { key: "locations", href: "/locations" },
+  { key: "gallery", href: "/gallery" },
+  { key: "faq", href: "/faq" },
+  { key: "contact", href: "/contact" },
+] as const;
+
+const NAV = ALL_NAV.filter((n) => n.key !== "gallery" || SHOW_GALLERY);
+
+const LANGS: { code: Locale; label: string }[] = [
+  { code: "mr", label: "मराठी" },
+  { code: "en", label: "EN" },
 ];
 
+function LanguageSwitcher({ path }: { path: string }) {
+  const { lang, t } = useLocale();
+  return (
+    <div role="group" aria-label={t.nav.language} className="flex items-center rounded-full border border-slate-200 bg-slate-50 p-0.5 text-xs font-extrabold">
+      {LANGS.map((l) => (
+        <NextLink
+          key={l.code}
+          href={localePath(l.code, path)}
+          hrefLang={l.code}
+          lang={l.code}
+          aria-current={l.code === lang ? "true" : undefined}
+          className={`rounded-full px-3 py-1.5 transition ${l.code === lang ? "bg-sky-500 text-white shadow" : "text-slate-600 hover:text-slate-900"}`}
+        >
+          {l.label}
+        </NextLink>
+      ))}
+    </div>
+  );
+}
+
 export default function Navbar() {
-  const pathname = usePathname();
+  const { lang, t } = useLocale();
+  const rawPath = usePathname();
+  const path = stripLocale(rawPath);
+  const navItems = NAV.map((n) => ({ ...n, label: t.nav[n.key] }));
   const [mobileOpen, setMobileOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -32,9 +66,9 @@ export default function Navbar() {
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <div className="hidden sm:flex items-center gap-2">
             <span className="inline-flex items-center gap-1 rounded-full bg-yellow-400 px-2 py-0.5 text-[10px] uppercase font-black text-slate-900 shadow-sm">
-              <Sparkles className="h-3 w-3" /> {PRICING_COMPACT}
+              <Sparkles className="h-3 w-3" /> {pricingCompact(lang)}
             </span>
-            <span className="font-bold text-white">{EXCLUSIVITY_LINE}</span>
+            <span className="font-bold text-white">{exclusivityLine(lang)}</span>
           </div>
           <div className="w-full sm:w-auto flex items-center justify-center sm:justify-end gap-4">
             <a
@@ -47,7 +81,7 @@ export default function Navbar() {
               onClick={() => setModalOpen(true)}
               className="underline font-black text-yellow-300 hover:text-white"
             >
-              Reserve Your Area →
+              {t.nav.reserveArea}
             </button>
           </div>
         </div>
@@ -70,10 +104,10 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <nav className="hidden xl:flex items-center gap-1">
             {navItems.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive = path === item.href;
               return (
                 <Link
-                  key={item.label}
+                  key={item.key}
                   href={item.href}
                   className={`rounded-full px-3.5 py-2 text-xs font-extrabold transition ${
                     isActive
@@ -89,24 +123,28 @@ export default function Navbar() {
 
           {/* Primary CTA */}
           <div className="hidden xl:flex items-center gap-3">
+            <LanguageSwitcher path={path} />
             <button
               onClick={() => setModalOpen(true)}
               className="group flex items-center gap-2 rounded-full bg-sky-500 border-2 border-yellow-400 px-6 py-2.5 text-xs font-black uppercase tracking-wider text-white shadow-lg shadow-sky-500/30 transition hover:-translate-y-0.5 hover:bg-sky-600 active:translate-y-0"
             >
-              Start Your Franchise
+              {t.nav.startFranchise}
               <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile: language switcher stays visible next to the menu button */}
+          <div className="flex items-center gap-2 xl:hidden">
+          <LanguageSwitcher path={path} />
           <button
             type="button"
             onClick={() => setMobileOpen(!mobileOpen)}
             className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-800 transition hover:border-sky-300 hover:text-sky-600 xl:hidden"
-            aria-label="Toggle menu"
+            aria-label={t.nav.toggleMenu}
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
+          </div>
         </div>
 
         {/* Mobile Navigation Drawer */}
@@ -114,10 +152,10 @@ export default function Navbar() {
           <div className="border-t border-slate-100 bg-white px-5 py-6 xl:hidden animate-in fade-in slide-in-from-top-2 duration-200">
             <nav className="flex flex-col gap-2">
               {navItems.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive = path === item.href;
                 return (
                   <Link
-                    key={item.label}
+                    key={item.key}
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
                     className={`rounded-xl px-4 py-3 text-sm font-extrabold transition ${
@@ -137,7 +175,7 @@ export default function Navbar() {
                 }}
                 className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-sky-500 py-3.5 text-sm font-black text-white shadow-lg shadow-sky-500/30"
               >
-                Start Your Pizza Mood Franchise
+                {t.nav.startFranchiseLong}
               </button>
             </nav>
           </div>

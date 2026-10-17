@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Handshake, CookingPot, Armchair, PartyPopper } from "lucide-react";
+import { useLocale } from "../LocaleProvider";
 import { InvestmentItemData } from "@/app/data/franchiseInvestmentData";
 
 interface InvestmentRowProps {
@@ -18,6 +19,7 @@ const iconMap = {
 
 export const InvestmentRow: React.FC<InvestmentRowProps> = ({ data, index }) => {
   const IconComponent = iconMap[data.iconName] || Handshake;
+  const item = useLocale().t.pages.invest.items[data.iconName];
   const isEven = index % 2 === 0;
 
   return (
@@ -33,7 +35,7 @@ export const InvestmentRow: React.FC<InvestmentRowProps> = ({ data, index }) => 
             <IconComponent className="w-5 h-5 transition-transform duration-200" />
           </div>
           <span className="font-bold text-xs sm:text-sm text-[#101A35] dark:text-white group-hover:text-[#079FE8] transition-colors leading-snug">
-            {data.name}
+            {item.name}
           </span>
         </div>
       </td>
@@ -48,7 +50,7 @@ export const InvestmentRow: React.FC<InvestmentRowProps> = ({ data, index }) => 
       {/* COLUMN 3: NOTES (43%) */}
       <td className="w-[43%] py-4 px-3 sm:px-5 align-middle border-b border-sky-100/70 dark:border-slate-800 border-l border-sky-50 dark:border-slate-800/50">
         <span className="text-xs sm:text-[13px] font-medium text-slate-600 dark:text-slate-400 leading-relaxed block">
-          {data.notes}
+          {item.notes}
         </span>
       </td>
     </tr>

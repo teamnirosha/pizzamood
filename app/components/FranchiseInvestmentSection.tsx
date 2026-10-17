@@ -7,10 +7,9 @@ import { ArrowRight, Play, Calculator, Sparkles, Quote } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import {
-  franchiseInvestmentConfig,
-  benefitItemsData,
-} from "@/app/data/franchiseInvestmentData";
+import { benefitItemsData } from "@/app/data/franchiseInvestmentData";
+import { fill, lakhOf, pricingVars } from "@/app/data/i18nHelpers";
+import { useLocale } from "./LocaleProvider";
 
 import { MODEL_BY_ID } from "@/lib/pricing";
 import { SHOW_TESTIMONIALS } from "@/lib/flags";
@@ -23,6 +22,8 @@ if (typeof window !== "undefined") {
 }
 
 export default function FranchiseInvestmentSection() {
+  const t = useLocale().t.pages;
+  const c = t.invest;
   const sectionRef = useRef<HTMLDivElement>(null);
   const leftContentRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -215,7 +216,7 @@ export default function FranchiseInvestmentSection() {
               <div className="relative w-full h-full drop-shadow-2xl">
                 <Image
                   src="/pizza-board.jpg"
-                  alt="Pizza Mood Gourmet Pizza"
+                  alt={c.pizzaAlt}
                   fill
                   sizes="(max-width: 1024px) 0px, 460px"
                   priority
@@ -228,18 +229,18 @@ export default function FranchiseInvestmentSection() {
             <div className="flex items-center">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-black tracking-wider uppercase bg-[#FFD21C] text-[#101A35] shadow-xs border border-amber-300">
                 <Sparkles className="w-3.5 h-3.5 shrink-0 fill-[#101A35]" />
-                <span>{franchiseInvestmentConfig.badgeText}</span>
+                <span>{c.badge}</span>
               </span>
             </div>
 
             {/* Main Heading */}
             <div className="space-y-1.5 relative z-10">
               <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-[#101A35] dark:text-white tracking-tight leading-[1.15] break-words">
-                {`Start With ${MODEL_BY_ID[activeModel].lakh}.`}
+                {fill(c.startWith, { lakh: lakhOf(t, MODEL_BY_ID[activeModel].total) })}
               </h1>
               <div className="relative inline-block max-w-full pb-1.5">
                 <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-[#079FE8] tracking-tight leading-[1.15] break-words">
-                  {activeModel === "kiosk" ? "Takeaway Kiosk Format." : "Full Cafe Format."}
+                  {activeModel === "kiosk" ? c.kioskFormat : c.cafeFormat}
                 </h2>
                 {/* Yellow accent underline curve */}
                 <svg className="w-full max-w-[260px] sm:max-w-full h-2.5 sm:h-3 text-[#FFD21C] absolute bottom-0 left-0 pointer-events-none" viewBox="0 0 200 20" fill="none">
@@ -251,14 +252,14 @@ export default function FranchiseInvestmentSection() {
             {/* Description */}
             <div className="relative z-10">
               <p className="text-xs sm:text-sm lg:text-base text-slate-700 dark:text-slate-200 font-semibold leading-relaxed max-w-xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm p-3.5 sm:p-4 rounded-2xl border border-sky-100/60 dark:border-slate-800/60 shadow-2xs">
-                {franchiseInvestmentConfig.description}
+                {fill(c.description, pricingVars(t))}
               </p>
             </div>
 
             {/* 3 Benefit Blocks */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-2 border-t border-sky-100 dark:border-slate-800">
-              {benefitItemsData.map((item) => (
-                <BenefitItem key={item.id} data={item} />
+              {benefitItemsData.map((item, i) => (
+                <BenefitItem key={item.id} data={{ ...item, ...c.benefits[i] }} />
               ))}
             </div>
 
@@ -275,7 +276,7 @@ export default function FranchiseInvestmentSection() {
                 }}
                 className="group relative inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3.5 rounded-full bg-[#FFD21C] hover:bg-[#facc15] text-[#101A35] font-extrabold text-xs sm:text-sm md:text-base shadow-md shadow-amber-300/40 hover:shadow-amber-300/60 transition-all duration-200 cursor-pointer w-full sm:w-auto text-center"
               >
-                <span className="whitespace-normal">{franchiseInvestmentConfig.primaryCtaText}</span>
+                <span className="whitespace-normal">{c.cta}</span>
                 <ArrowRight className="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1" />
               </motion.button>
 
@@ -297,10 +298,10 @@ export default function FranchiseInvestmentSection() {
                 </span>
                 <div className="flex flex-col items-start leading-tight text-left">
                   <span className="font-bold text-[#101A35] dark:text-white">
-                    {franchiseInvestmentConfig.secondaryCtaText}
+                    {c.testimonials}
                   </span>
                   <span className="text-[10px] sm:text-[11px] text-slate-500 font-normal">
-                    {franchiseInvestmentConfig.secondaryCtaSubtext}
+                    {c.testimonialsSub}
                   </span>
                 </div>
               </button>
@@ -311,10 +312,10 @@ export default function FranchiseInvestmentSection() {
             <div className="pt-2 flex items-center gap-3 select-none">
               <div className="flex flex-col">
                 <span className="font-serif italic text-lg sm:text-2xl font-bold text-[#101A35] dark:text-white tracking-wide rotate-[-3deg]">
-                  Good Food
+                  {c.goodFood[0]}
                 </span>
                 <span className="font-serif italic text-lg sm:text-2xl font-bold text-[#101A35] dark:text-white tracking-wide rotate-[-2deg] -mt-1">
-                  Good Mood
+                  {c.goodFood[1]}
                 </span>
               </div>
               {/* Smile arc doodle */}
@@ -346,10 +347,10 @@ export default function FranchiseInvestmentSection() {
                   </div>
                   <div>
                     <h3 className="text-xl sm:text-2xl font-black text-[#101A35] dark:text-white tracking-tight">
-                      {franchiseInvestmentConfig.cardTitle}
+                      {c.cardTitle}
                     </h3>
                     <p className="text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400 mt-0.5">
-                      {franchiseInvestmentConfig.cardSubtitle}
+                      {c.cardSubtitle}
                     </p>
                   </div>
                 </div>
@@ -376,16 +377,16 @@ export default function FranchiseInvestmentSection() {
               <div className="mt-5 p-3.5 rounded-xl bg-[#EBF7FF] dark:bg-slate-800/60 border border-sky-100 dark:border-slate-700/60 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5 text-xs font-semibold text-slate-700 dark:text-slate-300">
                   <Quote className="w-4 h-4 text-[#079FE8] flex-shrink-0 rotate-180" />
-                  <span>{franchiseInvestmentConfig.cardQuoteText}</span>
+                  <span>{c.quote}</span>
                 </div>
 
                 {/* Handwritten Doodle - More Pizza More Smiles */}
                 <div className="flex-shrink-0 hidden sm:flex flex-col items-end leading-none select-none">
                   <span className="font-serif italic text-xs font-bold text-[#101A35] dark:text-white rotate-[3deg]">
-                    More Pizza
+                    {c.moreSmiles[0]}
                   </span>
                   <span className="font-serif italic text-xs font-bold text-[#101A35] dark:text-white rotate-[1deg]">
-                    More Smiles
+                    {c.moreSmiles[1]}
                   </span>
                   <div className="w-12 h-0.5 bg-[#FFD21C] mt-0.5 rounded-full" />
                 </div>
@@ -409,9 +410,9 @@ export default function FranchiseInvestmentSection() {
             <div className="aspect-video w-full flex items-center justify-center text-white bg-slate-900 p-8 text-center">
               <div>
                 <Play className="w-14 h-14 text-[#079FE8] mx-auto mb-3 animate-pulse" />
-                <h3 className="text-xl font-bold">What Franchise Owners Say</h3>
+                <h3 className="text-xl font-bold">{c.videoTitle}</h3>
                 <p className="text-xs text-slate-400 mt-1">
-                  Real experiences and stories from Pizza Mood franchise partners across India.
+                  {c.videoText}
                 </p>
               </div>
             </div>

@@ -1,16 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/app/components/LocalizedLink";
 import { ChevronDown, HelpCircle, ArrowRight } from "lucide-react";
 import { FAQItem } from "@/types";
 import { generateFAQSchema } from "@/lib/seo";
+import { useLocale } from "./LocaleProvider";
 
 interface HomeFAQProps {
   faqs: FAQItem[];
 }
 
 export default function HomeFAQ({ faqs }: HomeFAQProps) {
+  const { t } = useLocale();
+  const f = t.home.faq;
   const [openId, setOpenId] = useState<string | null>(faqs[0]?.id || null);
 
   const toggle = (id: string) => {
@@ -32,13 +35,13 @@ export default function HomeFAQ({ faqs }: HomeFAQProps) {
         
         <div className="text-center max-w-3xl mx-auto">
           <span className="inline-block rounded-full bg-slate-900 px-3.5 py-1 text-xs font-black uppercase tracking-wider text-yellow-400">
-            Frequently Asked Questions
+            {f.badge}
           </span>
           <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
-            Everything You Need To Know
+            {f.title}
           </h2>
           <p className="mt-2 text-sm font-semibold text-slate-600">
-            Got questions about starting your Pizza Mood franchise? Here are straightforward answers.
+            {f.sub}
           </p>
         </div>
 
@@ -82,7 +85,7 @@ export default function HomeFAQ({ faqs }: HomeFAQProps) {
             href="/faq"
             className="inline-flex items-center gap-2 text-xs font-black text-sky-600 hover:text-sky-700 uppercase tracking-wider"
           >
-            View All Franchise FAQs <ArrowRight className="h-4 w-4" />
+            {f.viewAll} <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
 

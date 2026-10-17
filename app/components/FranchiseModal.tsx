@@ -16,8 +16,10 @@ import {
 } from "lucide-react";
 import { getUTMParams, trackLeadFormStep, trackLeadFormSubmission } from "@/lib/analytics";
 import { InvestmentBudget, StoreType } from "@/types";
-import { DEFAULT_BUDGET, budgetForStore, PRICING_COMPACT } from "@/lib/pricing";
-import { EXCLUSIVITY_LINE, whatsappLink } from "@/lib/usps";
+import { DEFAULT_BUDGET, budgetForStore, pricingCompact } from "@/lib/pricing";
+import { exclusivityLine, whatsappLink } from "@/lib/usps";
+import { fmt } from "@/lib/fmt";
+import { useLocale } from "./LocaleProvider";
 
 interface FranchiseModalProps {
   isOpen: boolean;
@@ -26,6 +28,9 @@ interface FranchiseModalProps {
 }
 
 export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: FranchiseModalProps) {
+  const { lang, t } = useLocale();
+  const m = t.shell.modal;
+  const f = t.shell.form;
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -108,11 +113,11 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
     setErrorMsg("");
     if (step === 1) {
       if (!formData.name.trim() || formData.name.length < 2) {
-        setErrorMsg("Please enter your full name.");
+        setErrorMsg(f.errName);
         return;
       }
       if (formData.whatsapp.replace(/\D/g, "").length < 10) {
-        setErrorMsg("Please enter a valid 10-digit WhatsApp number.");
+        setErrorMsg(f.errPhone);
         return;
       }
 
@@ -125,7 +130,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
 
     if (step === 2) {
       if (!formData.city.trim()) {
-        setErrorMsg("Please enter your preferred city.");
+        setErrorMsg(f.errCityPreferred);
         return;
       }
       saveOrUpdateLead();
@@ -161,7 +166,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
       setStep(5);
       trackLeadFormSubmission(finalLead?.id || leadId || "PM-NEW", formData.city || "Not Specified", budgetForStore(formData.preferredStoreType));
     } catch (err) {
-      setErrorMsg("Network error. Please check your internet connection.");
+      setErrorMsg(f.errNetwork);
     } finally {
       setIsSubmitting(false);
     }
@@ -175,8 +180,30 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
   };
 
   const whatsappDirectUrl = whatsappLink(
-    `Hi Pizza Mood Franchise Team, I have submitted an enquiry for ${formData.city || "my city"}. I'd like to get complete franchise details for the ${formData.preferredStoreType} format.`
+    fmt(f.waDirect, {
+      city: formData.city || f.myCity,
+      format: formData.preferredStoreType === "Kiosk" ? f.formatKiosk : f.formatCafe,
+    })
   );
+  const stepLabels = [m.step1, m.step2, m.step3, m.step4];
+  const timelines: [string, string][] = [
+    ["Immediate", m.tlImmediate],
+    ["Within 30 days", m.tl30],
+    ["1–3 months", m.tl13],
+    ["Just exploring", m.tlExploring],
+  ];
+  const nameParts = (tpl: string) =>
+    fmt(tpl, { name: "\u0001", city: "\u0002" })
+      .split(/([\u0001\u0002])/)
+      .map((part, i) =>
+        part === "\u0001" || part === "\u0002" ? (
+          <span key={i} className="font-bold text-slate-900">
+            {part === "\u0001" ? formData.name : formData.city}
+          </span>
+        ) : (
+          part
+        )
+      );
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-md animate-in fade-in duration-200">
@@ -187,22 +214,22 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
           <button
             onClick={resetForm}
             className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition hover:bg-white/30"
-            aria-label="Close modal"
+            aria-label={m.close}
           >
             <X className="h-5 w-5" />
           </button>
 
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-yellow-400 px-3 py-1 text-xs font-black uppercase tracking-wider text-slate-900 shadow-sm">
-              <Sparkles className="h-3.5 w-3.5" /> {PRICING_COMPACT}
+              <Sparkles className="h-3.5 w-3.5" /> {pricingCompact(lang)}
             </span>
           </div>
 
           <h2 className="mt-3 text-2xl font-black tracking-tight sm:text-3xl text-white">
-            Pizza Mood Franchise Application
+            {m.title}
           </h2>
           <p className="mt-1 text-sm font-medium text-sky-50">
-            Join India's fastest growing QSR brand. 360° support from store setup to launch.
+            {m.subtitle}
           </p>
 
           {/* Progress indicators */}
@@ -216,7 +243,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
                     }`}
                   />
                   <span className="mt-1 block text-[10px] font-bold text-sky-100">
-                    0{i} {getStepName(i)}
+                    0{i} {stepLabels[i - 1]}
                   </span>
                 </div>
               ))}
@@ -236,17 +263,17 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
           {step === 1 && (
             <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
               <h3 className="text-lg font-extrabold text-slate-900">
-                01. Tell us about yourself
+                {m.h1}
               </h3>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <label className="block text-xs font-bold uppercase text-slate-700">
-                    Full Name <span className="text-red-500">*</span>
+                    {f.fullName} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Rahul Sharma"
+                    placeholder={f.namePh}
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-900 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20"
@@ -255,12 +282,12 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
 
                 <div>
                   <label className="block text-xs font-bold uppercase text-slate-700">
-                    WhatsApp Number <span className="text-red-500">*</span>
+                    {f.whatsappNo} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="tel"
                     required
-                    placeholder="10-digit WhatsApp number"
+                    placeholder={f.phonePh}
                     value={formData.whatsapp}
                     onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
                     className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-900 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20"
@@ -274,17 +301,17 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
           {step === 2 && (
             <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
               <h3 className="text-lg font-extrabold text-slate-900">
-                02. Where do you want to open your outlet?
+                {m.h2}
               </h3>
               <div className="space-y-4">
                 <div>
                   <label className="block text-xs font-bold uppercase text-slate-700">
-                    Target City <span className="text-red-500">*</span>
+                    {f.targetCity} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Pune, Mumbai, Thane, Nashik, Nagpur, PCMC"
+                    placeholder={m.cityPh}
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                     className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-900 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20"
@@ -293,25 +320,25 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
 
                 <div>
                   <label className="block text-xs font-bold uppercase text-slate-700">
-                    Preferred Area / Location
+                    {f.areaLabel}
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Kharadi, Baner, Lokhandwala, Vashi, High Street"
+                    placeholder={m.areaPh}
                     value={formData.preferredLocation}
                     onChange={(e) => setFormData({ ...formData, preferredLocation: e.target.value })}
                     className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-900 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20"
                   />
-                  <p className="mt-1.5 text-[11px] font-bold text-red-600">{EXCLUSIVITY_LINE}</p>
+                  <p className="mt-1.5 text-[11px] font-bold text-red-600">{exclusivityLine(lang)}</p>
                 </div>
 
                 <div className="rounded-2xl border border-sky-200 bg-sky-50/60 p-4">
                   <div className="flex items-start gap-3">
                     <Building2 className="h-5 w-5 text-sky-600 shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-xs font-bold text-sky-900">Location Support Included</p>
+                      <p className="text-xs font-bold text-sky-900">{m.supportTitle}</p>
                       <p className="text-xs text-sky-700 mt-0.5">
-                        Don't have a location ready? Pizza Mood experts evaluate footfall, commercial catchment, and competitor density to help you pick the prime spot.
+                        {m.supportBody}
                       </p>
                     </div>
                   </div>
@@ -324,12 +351,12 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
           {step === 3 && (
             <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
               <h3 className="text-lg font-extrabold text-slate-900">
-                03. Store Format & Property Details
+                {m.h3}
               </h3>
 
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2.5">
-                  Select Preferred Store Format <span className="text-red-500">*</span>
+                  {m.selectFormat} <span className="text-red-500">*</span>
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Cafe Option */}
@@ -353,12 +380,12 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <h4 className="text-base font-black text-slate-900">Cafe</h4>
+                            <h4 className="text-base font-black text-slate-900">{f.formatCafe}</h4>
                             <span className="rounded-full bg-sky-100 px-2 py-0.5 text-[10px] font-extrabold text-sky-700">
-                              Popular
+                              {m.popular}
                             </span>
                           </div>
-                          <p className="text-xs font-medium text-slate-500 mt-0.5">Dine-in & Takeaway Experience</p>
+                          <p className="text-xs font-medium text-slate-500 mt-0.5">{m.cafeDesc}</p>
                         </div>
                       </div>
                       {formData.preferredStoreType === "Cafe" && (
@@ -367,8 +394,8 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
                     </div>
 
                     <div className="mt-4 flex items-center justify-between pt-3 border-t border-slate-200/70 text-xs">
-                      <span className="font-bold text-slate-700">300 – 600 sq.ft</span>
-                      <span className="font-semibold text-slate-500">Seating + Kitchen</span>
+                      <span className="font-bold text-slate-700">{m.cafeSize}</span>
+                      <span className="font-semibold text-slate-500">{m.cafeSeating}</span>
                     </div>
                   </button>
 
@@ -393,12 +420,12 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <h4 className="text-base font-black text-slate-900">Kiosk</h4>
+                            <h4 className="text-base font-black text-slate-900">{f.formatKiosk}</h4>
                             <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-extrabold text-amber-700">
-                              Compact
+                              {m.compact}
                             </span>
                           </div>
-                          <p className="text-xs font-medium text-slate-500 mt-0.5">Express Takeaway & Food Court</p>
+                          <p className="text-xs font-medium text-slate-500 mt-0.5">{m.kioskDesc}</p>
                         </div>
                       </div>
                       {formData.preferredStoreType === "Kiosk" && (
@@ -407,8 +434,8 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
                     </div>
 
                     <div className="mt-4 flex items-center justify-between pt-3 border-t border-slate-200/70 text-xs">
-                      <span className="font-bold text-slate-700">100 – 250 sq.ft</span>
-                      <span className="font-semibold text-slate-500">Express Counter</span>
+                      <span className="font-bold text-slate-700">{m.kioskSize}</span>
+                      <span className="font-semibold text-slate-500">{m.kioskCounter}</span>
                     </div>
                   </button>
                 </div>
@@ -416,7 +443,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
 
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
-                  Do you own or have commercial property ready?
+                  {m.propertyQ}
                 </label>
                 <div className="grid grid-cols-2 gap-3">
                   <button
@@ -428,7 +455,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
                         : "border-slate-200 text-slate-700 hover:border-slate-300"
                     }`}
                   >
-                    Yes, I have property
+                    {m.propYes}
                   </button>
                   <button
                     type="button"
@@ -439,7 +466,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
                         : "border-slate-200 text-slate-700 hover:border-slate-300"
                     }`}
                   >
-                    No, looking for rental site
+                    {m.propNo}
                   </button>
                 </div>
               </div>
@@ -450,15 +477,15 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
           {step === 4 && (
             <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
               <h3 className="text-lg font-extrabold text-slate-900">
-                04. When do you plan to launch your store?
+                {m.h4}
               </h3>
 
               <div>
                 <label className="block text-xs font-bold uppercase text-slate-700 mb-2">
-                  Target Launch Timeline
+                  {m.timelineTitle}
                 </label>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {["Immediate", "Within 30 days", "1–3 months", "Just exploring"].map((tl) => (
+                  {timelines.map(([tl, tlLabel]) => (
                     <button
                       key={tl}
                       type="button"
@@ -469,7 +496,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
                           : "border-slate-200 text-slate-700 hover:border-slate-300"
                       }`}
                     >
-                      {tl}
+                      {tlLabel}
                     </button>
                   ))}
                 </div>
@@ -477,11 +504,11 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
 
               <div>
                 <label className="block text-xs font-bold uppercase text-slate-700">
-                  Additional Message or Questions (Optional)
+                  {m.messageLabel}
                 </label>
                 <textarea
                   rows={3}
-                  placeholder="Tell us any specific requirements or questions you have..."
+                  placeholder={m.messagePh}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-900 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/20"
@@ -491,7 +518,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                 <div className="flex items-center gap-2 text-xs font-semibold text-slate-600">
                   <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0" />
-                  <span>Your details are safe with Pizza Mood. Our franchise team will contact you shortly.</span>
+                  <span>{m.safe}</span>
                 </div>
               </div>
             </div>
@@ -504,10 +531,10 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
                 <CheckCircle2 className="h-10 w-10" />
               </div>
               <h3 className="mt-4 text-2xl font-black text-slate-900">
-                Your Pizza Mood Journey Starts Here!
+                {m.successTitle}
               </h3>
               <p className="mt-2 text-sm font-medium text-slate-600 max-w-md mx-auto">
-                Thank you, <span className="font-bold text-slate-900">{formData.name}</span>! Our franchise business development manager for <span className="font-bold text-slate-900">{formData.city}</span> will call you within 24 hours.
+                {nameParts(m.successBody)}
               </p>
 
               <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -517,13 +544,13 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 transition hover:bg-emerald-700"
                 >
-                  <MessageSquare className="h-4 w-4" /> Prefer Instant Chat? Connect on WhatsApp
+                  <MessageSquare className="h-4 w-4" /> {m.connectWa}
                 </a>
                 <button
                   onClick={resetForm}
                   className="w-full sm:w-auto rounded-2xl border border-slate-300 px-6 py-3.5 text-sm font-bold text-slate-700 transition hover:bg-slate-50"
                 >
-                  Close Window
+                  {m.closeWindow}
                 </button>
               </div>
             </div>
@@ -538,7 +565,7 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
                   onClick={handleBack}
                   className="flex items-center gap-1.5 rounded-xl border border-slate-300 px-4 py-2.5 text-xs font-bold text-slate-700 transition hover:bg-slate-50"
                 >
-                  <ArrowLeft className="h-4 w-4" /> Back
+                  <ArrowLeft className="h-4 w-4" /> {m.back}
                 </button>
               ) : (
                 <div />
@@ -551,14 +578,14 @@ export default function FranchiseModal({ isOpen, onClose, defaultCity = "" }: Fr
                 className="flex items-center gap-2 rounded-2xl bg-sky-500 border-2 border-yellow-400 px-6 py-3 text-sm font-black text-white shadow-lg shadow-sky-500/30 transition hover:bg-sky-600 active:scale-95 disabled:opacity-50"
               >
                 {isSubmitting ? (
-                  "Submitting..."
+                  m.submitting
                 ) : step === 4 ? (
                   <>
-                    Request Franchise Call <PhoneCall className="h-4 w-4" />
+                    {m.requestCall} <PhoneCall className="h-4 w-4" />
                   </>
                 ) : (
                   <>
-                    Next Step <ArrowRight className="h-4 w-4" />
+                    {m.next} <ArrowRight className="h-4 w-4" />
                   </>
                 )}
               </button>

@@ -7,10 +7,11 @@ import {
   cafeInvestmentItemsData,
   calculatedKioskTotal,
   calculatedCafeTotal,
-  franchiseInvestmentConfig,
   InvestmentItemData,
 } from "@/app/data/franchiseInvestmentData";
 import { MODEL_BY_ID } from "@/lib/pricing";
+import { fill, lakhOf } from "@/app/data/i18nHelpers";
+import { useLocale } from "../LocaleProvider";
 import { InvestmentRow } from "./InvestmentRow";
 import { AnimatedCounter } from "./AnimatedCounter";
 
@@ -32,6 +33,9 @@ export const InvestmentTable: React.FC<InvestmentTableProps> = ({
   activeModel = "kiosk",
   onModelChange,
 }) => {
+  const t = useLocale().t.pages;
+  const c = t.invest;
+  const lk = (id: "kiosk" | "cafe") => lakhOf(t, MODEL_BY_ID[id].total);
   const isKiosk = activeModel === "kiosk";
   const itemsToDisplay = isKiosk ? kioskInvestmentItemsData : cafeInvestmentItemsData;
   const currentTotal = isKiosk ? calculatedKioskTotal : calculatedCafeTotal;
@@ -52,8 +56,8 @@ export const InvestmentTable: React.FC<InvestmentTableProps> = ({
           >
             <Store className="w-4 h-4 text-slate-900 shrink-0" />
             <div className="flex flex-col items-start leading-tight">
-              <span>Kiosk Model</span>
-              <span className="text-[10px] opacity-80 font-bold">{MODEL_BY_ID.kiosk.lakh} (No Interiors)</span>
+              <span>{c.kioskModel}</span>
+              <span className="text-[10px] opacity-80 font-bold">{fill(c.kioskTag, { lakh: lk("kiosk") })}</span>
             </div>
           </button>
 
@@ -68,8 +72,8 @@ export const InvestmentTable: React.FC<InvestmentTableProps> = ({
           >
             <Sparkles className="w-4 h-4 text-yellow-300 shrink-0" />
             <div className="flex flex-col items-start leading-tight text-left">
-              <span>Full Cafe Model</span>
-              <span className="text-[10px] opacity-90 font-bold">{MODEL_BY_ID.cafe.lakh} (All Inclusive)</span>
+              <span>{c.cafeModel}</span>
+              <span className="text-[10px] opacity-90 font-bold">{fill(c.cafeTag, { lakh: lk("cafe") })}</span>
             </div>
           </button>
         </div>
@@ -84,13 +88,13 @@ export const InvestmentTable: React.FC<InvestmentTableProps> = ({
             <thead>
               <tr className="bg-[#FFF8D6] dark:bg-amber-950/40 text-[#101A35] dark:text-amber-300 font-extrabold text-xs tracking-wider border-b border-amber-200/80">
                 <th scope="col" className="w-[35%] py-3.5 px-4 font-extrabold uppercase">
-                  List
+                  {c.colList}
                 </th>
                 <th scope="col" className="w-[25%] py-3.5 px-4 font-extrabold uppercase border-l border-amber-200/60">
-                  Amount
+                  {c.colAmount}
                 </th>
                 <th scope="col" className="w-[40%] py-3.5 px-4 font-extrabold uppercase border-l border-amber-200/60">
-                  Notes
+                  {c.colNotes}
                 </th>
               </tr>
             </thead>
@@ -111,7 +115,7 @@ export const InvestmentTable: React.FC<InvestmentTableProps> = ({
                       <Coins className="w-4 h-4 text-slate-950" />
                     </div>
                     <span className="font-black text-xs sm:text-sm uppercase tracking-wide">
-                      {isKiosk ? "Total Kiosk Expenses" : franchiseInvestmentConfig.totalLabel}
+                      {isKiosk ? c.totalKiosk : c.total}
                     </span>
                   </div>
                 </td>
@@ -127,7 +131,7 @@ export const InvestmentTable: React.FC<InvestmentTableProps> = ({
 
                 <td className="w-[40%] py-4 px-4 align-middle border-l border-black/10">
                   <span className="inline-block px-3 py-1 rounded-full bg-slate-950/10 text-slate-900 text-xs font-extrabold">
-                    {isKiosk ? "Interiors Not Included" : franchiseInvestmentConfig.termsText}
+                    {isKiosk ? c.interiorsNotIncluded : c.terms}
                   </span>
                 </td>
               </tr>
@@ -140,10 +144,10 @@ export const InvestmentTable: React.FC<InvestmentTableProps> = ({
           {/* Mobile Header Banner */}
           <div className="bg-[#FFF8D6] dark:bg-amber-950/40 p-3 flex items-center justify-between border-b border-amber-200">
             <span className="font-black text-xs uppercase tracking-wider text-[#101A35]">
-              {isKiosk ? `${MODEL_BY_ID.kiosk.lakh} Kiosk Breakdown` : `${MODEL_BY_ID.cafe.lakh} Cafe Breakdown`}
+              {fill(isKiosk ? c.mobileKioskHead : c.mobileCafeHead, { lakh: lk(activeModel) })}
             </span>
             <span className="text-[11px] font-bold text-amber-800 dark:text-amber-300">
-              {isKiosk ? "Takeaway Format" : "Full Dine-in Format"}
+              {isKiosk ? c.takeaway : c.dineIn}
             </span>
           </div>
 
@@ -158,7 +162,7 @@ export const InvestmentTable: React.FC<InvestmentTableProps> = ({
                       <IconComponent className="w-4 h-4" />
                     </div>
                     <span className="font-bold text-xs text-[#101A35] dark:text-white leading-tight">
-                      {item.name}
+                      {c.items[item.iconName].name}
                     </span>
                   </div>
                   <span className="font-extrabold text-xs text-[#079FE8] bg-sky-50 px-2.5 py-1 rounded-md border border-sky-100 flex-shrink-0">
@@ -166,7 +170,7 @@ export const InvestmentTable: React.FC<InvestmentTableProps> = ({
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-600 dark:text-slate-400 pl-10 leading-relaxed font-medium">
-                  {item.notes}
+                  {c.items[item.iconName].notes}
                 </p>
               </div>
             );
@@ -180,11 +184,11 @@ export const InvestmentTable: React.FC<InvestmentTableProps> = ({
                   <Coins className="w-4 h-4 text-slate-950" />
                 </div>
                 <span className="font-black text-xs uppercase tracking-wider">
-                  {isKiosk ? "Total Kiosk Setup" : franchiseInvestmentConfig.totalLabel}
+                  {isKiosk ? c.totalKioskMobile : c.total}
                 </span>
               </div>
               <span className="px-2.5 py-0.5 rounded-full bg-slate-950/10 text-[10px] font-extrabold text-slate-900">
-                {isKiosk ? "Interiors Excluded" : franchiseInvestmentConfig.termsText}
+                {isKiosk ? c.interiorsExcluded : c.terms}
               </span>
             </div>
 
@@ -210,11 +214,11 @@ export const InvestmentTable: React.FC<InvestmentTableProps> = ({
         <div>
           {isKiosk ? (
             <span>
-              <strong>Kiosk Model ({MODEL_BY_ID.kiosk.lakh}):</strong> Ideal for compact 120-250 sq. ft. takeaway counters. Does <strong>not include interior setup costs (₹{MODEL_BY_ID.cafe.items[2].amount / 100000}L)</strong> or opening ceremony. Perfect for low initial capital investment.
+              <strong>{fill(c.kioskNote[0], { lakh: lk("kiosk") })}</strong>{c.kioskNote[1]}<strong>{fill(c.kioskNote[2], { n: MODEL_BY_ID.cafe.items[2].amount / 100000 })}</strong>{c.kioskNote[3]}
             </span>
           ) : (
             <span>
-              <strong>Full Cafe Model ({MODEL_BY_ID.cafe.lakh}):</strong> Complete turnkey solution. Includes <strong>all kitchen equipment, complete seating interiors, CCTV, LED signage, POS & 1st day launch management</strong>.
+              <strong>{fill(c.cafeNote[0], { lakh: lk("cafe") })}</strong>{c.cafeNote[1]}<strong>{c.cafeNote[2]}</strong>{c.cafeNote[3]}
             </span>
           )}
         </div>

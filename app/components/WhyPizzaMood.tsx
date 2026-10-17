@@ -8,47 +8,39 @@ import {
   Rocket,
   LineChart,
 } from "lucide-react";
+import { useLocale } from "./LocaleProvider";
+import { fill } from "./homeI18n";
 
 const steps = [
   {
     num: "01",
-    title: "Find the Right Location",
-    desc: "Our location team conducts catchment analysis, footfall studies, and competitor mapping to pick high-potential commercial sites.",
     icon: MapPin,
   },
   {
     num: "02",
-    title: "Set Up Your Store",
-    desc: "Get standardized QSR store layout blueprints, equipment specifications, LED signages, and kitchen setup assistance.",
     icon: Store,
   },
   {
     num: "03",
-    title: "Train Your Team",
-    desc: "We provide comprehensive operational and kitchen training for your staff in product assembly, hygiene, POS, and customer service.",
     icon: GraduationCap,
   },
   {
     num: "04",
-    title: "Supply Fresh Ingredients",
-    desc: "Receive pre-portioned signature dough mixes, pizza sauces, 100% mozzarella cheese, and branded packaging direct from supply hubs.",
     icon: Truck,
   },
   {
     num: "05",
-    title: "Launch Your Store",
-    desc: "Execute targeted grand opening marketing campaigns, digital flyers, local influencer publicity, and online food aggregator setup.",
     icon: Rocket,
   },
   {
     num: "06",
-    title: "Grow Your Sales",
-    desc: "Continuous business guidance, seasonal combo promotions, store performance analytics, and local customer retention strategies.",
     icon: LineChart,
   },
 ];
 
 export default function WhyPizzaMood() {
+  const { t } = useLocale();
+  const w = t.home.why;
   return (
     <section className="py-20 bg-slate-900 text-white relative overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
@@ -56,13 +48,13 @@ export default function WhyPizzaMood() {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto">
           <span className="inline-block rounded-full bg-sky-500/20 px-3.5 py-1 text-xs font-black uppercase tracking-wider text-sky-400 border border-sky-500/30">
-            Operating System For Franchisees
+            {w.badge}
           </span>
           <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl text-white">
-            Why Choose Pizza Mood?
+            {w.title}
           </h2>
           <p className="mt-3 text-base text-slate-400 font-medium leading-relaxed">
-            We don't just sell you a brand name. Pizza Mood equips you with an end-to-end operational playbook to build, run and scale your pizza store profitably.
+            {w.sub}
           </p>
         </div>
 
@@ -70,6 +62,7 @@ export default function WhyPizzaMood() {
         <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {steps.map((s, idx) => {
             const Icon = s.icon;
+            const c = w.steps[idx];
             return (
               <div
                 key={s.num}
@@ -85,15 +78,15 @@ export default function WhyPizzaMood() {
                 </div>
 
                 <h3 className="mt-6 text-xl font-extrabold text-white group-hover:text-sky-400 transition">
-                  {s.title}
+                  {c.title}
                 </h3>
 
                 <p className="mt-3 text-xs font-semibold text-slate-400 leading-relaxed">
-                  {s.desc}
+                  {c.desc}
                 </p>
 
                 <div className="mt-6 flex items-center gap-2 text-xs font-bold text-sky-400">
-                  <span>Phase {idx + 1} Execution</span>
+                  <span>{fill(w.phase, { n: idx + 1 })}</span>
                   <span className="h-1 w-8 rounded-full bg-sky-500/40" />
                 </div>
               </div>

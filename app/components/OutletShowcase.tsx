@@ -1,14 +1,19 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/app/components/LocalizedLink";
 import { Phone, MessageSquare, Clock, ArrowRight } from "lucide-react";
 import { OutletLocation } from "@/types";
+import { useLocale } from "./LocaleProvider";
+import { fill, place } from "./homeI18n";
 
 interface OutletShowcaseProps {
   locations: OutletLocation[];
 }
 
 export default function OutletShowcase({ locations }: OutletShowcaseProps) {
+  const { lang, t } = useLocale();
+  const o = t.home.outlets;
+  const name = (loc: OutletLocation) => loc.name.replace(loc.area, place(t, loc.area));
   const featured = locations.slice(0, 3);
 
   return (
@@ -18,13 +23,13 @@ export default function OutletShowcase({ locations }: OutletShowcaseProps) {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <span className="inline-block rounded-full bg-sky-100 px-3.5 py-1 text-xs font-black uppercase tracking-wider text-sky-700">
-              Verified Outlets
+              {o.badge}
             </span>
             <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
-              Pizza Mood Is Already Growing.
+              {o.title}
             </h2>
             <p className="mt-2 text-sm font-semibold text-slate-600 max-w-xl">
-              Explore active Pizza Mood franchise locations serving thousands of happy pizza lovers every day.
+              {o.sub}
             </p>
           </div>
 
@@ -32,7 +37,7 @@ export default function OutletShowcase({ locations }: OutletShowcaseProps) {
             href="/locations"
             className="inline-flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3.5 text-xs font-black text-white hover:bg-sky-500 transition shrink-0"
           >
-            Explore All Locations Directory <ArrowRight className="h-4 w-4" />
+            {o.exploreAll} <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
 
@@ -47,22 +52,22 @@ export default function OutletShowcase({ locations }: OutletShowcaseProps) {
               <div className="relative h-56 w-full overflow-hidden bg-slate-900">
                 <img
                   src={loc.images[0]?.url || "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80"}
-                  alt={loc.name}
+                  alt={name(loc)}
                   className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                 />
                 <div className="absolute top-4 left-4 flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-xs font-black text-slate-900 backdrop-blur-sm">
-                  <span>🍕</span> {loc.area}, {loc.city}
+                  <span>🍕</span> {place(t, loc.area)}, {place(t, loc.city)}
                 </div>
                 <div className="absolute bottom-4 right-4 rounded-full bg-emerald-500 px-3 py-1 text-[10px] font-black uppercase text-white shadow-md">
-                  Active Outlet
+                  {o.active}
                 </div>
               </div>
 
               {/* Card Body */}
               <div className="p-6">
-                <h3 className="text-xl font-black text-slate-900">{loc.name}</h3>
+                <h3 className="text-xl font-black text-slate-900">{name(loc)}</h3>
                 <p className="mt-2 text-xs font-medium text-slate-600 line-clamp-2 leading-relaxed">
-                  {loc.shortDescription}
+                  {lang === "mr" ? fill(o.blurb, { area: place(t, loc.area), city: place(t, loc.city) }) : loc.shortDescription}
                 </p>
 
                 <div className="mt-4 space-y-2 border-t border-slate-100 pt-4 text-xs font-semibold text-slate-700">
@@ -82,7 +87,7 @@ export default function OutletShowcase({ locations }: OutletShowcaseProps) {
                     href={`/locations/${loc.slug}`}
                     className="flex-1 text-center rounded-xl bg-sky-500 border border-yellow-400 py-3 text-xs font-extrabold text-white shadow-md shadow-sky-500/20 hover:bg-sky-600 transition"
                   >
-                    View Store Page
+                    {o.viewStore}
                   </Link>
 
                   <a
@@ -90,7 +95,7 @@ export default function OutletShowcase({ locations }: OutletShowcaseProps) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 hover:bg-emerald-200 transition shrink-0"
-                    title="WhatsApp Outlet"
+                    title={o.whatsappTitle}
                   >
                     <MessageSquare className="h-4 w-4" />
                   </a>

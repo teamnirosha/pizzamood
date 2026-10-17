@@ -8,53 +8,12 @@ import {
   Megaphone,
   TrendingUp,
 } from "lucide-react";
+import { useLocale } from "./LocaleProvider";
 
-const supportPillars = [
-  {
-    icon: MapPin,
-    tag: "A. Location Support",
-    title: "Prime Site Intelligence",
-    desc: "We analyze high-footfall commercial hubs, residential catchments, college zones, and competitor density to help you lock in a prime profitable store location.",
-    points: ["Catchment footfall analysis", "Rent negotiation guidance", "Demographic density report"],
-  },
-  {
-    icon: Hammer,
-    tag: "B. Store Setup",
-    title: "Turnkey Kitchen & Branding",
-    desc: "Receive complete store layout blueprints, heavy-duty commercial equipment recommendations, illuminated LED signboards, and front counter setup.",
-    points: ["Standardized QSR layout", "Commercial pizza oven setup", "Front counter & LED signage"],
-  },
-  {
-    icon: Users,
-    tag: "C. Staff Training",
-    title: "Operational Excellence",
-    desc: "Complete 360° hands-on training for your store manager and kitchen team. Covers recipe assembly, hygiene standards, POS cashiering & customer delight.",
-    points: ["Hands-on kitchen SOPs", "Billing & POS training", "Food safety & hygiene certification"],
-  },
-  {
-    icon: UtensilsCrossed,
-    tag: "D. Fresh Raw Materials",
-    title: "Central Supply Ecosystem",
-    desc: "Never worry about sourcing quality ingredients. Enjoy centralized supply of pre-portioned dough mixes, signature pizza sauces, 100% mozzarella & boxes.",
-    points: ["Centralized supply chain", "Consistency across outlets", "Bulk ingredient cost savings"],
-  },
-  {
-    icon: Megaphone,
-    tag: "E. Marketing Support",
-    title: "Aggressive Local Marketing",
-    desc: "We drive footfall and online orders to your store through targeted hyper-local digital ads, launch flyers, social media campaigns & aggregator listings.",
-    points: ["Swiggy & Zomato onboarding", "Hyper-local social media ads", "Opening promotion flyers"],
-  },
-  {
-    icon: TrendingUp,
-    tag: "F. Business Growth Support",
-    title: "Ongoing Sales Strategy",
-    desc: "Get dedicated business guidance to maximize store revenues, launch seasonal combo offers, optimize food cost margins, and retain local repeat customers.",
-    points: ["Weekly sales analysis", "Margin optimization tips", "Ongoing franchise helpline"],
-  },
-];
-
+const ICONS = [MapPin, Hammer, Users, UtensilsCrossed, Megaphone, TrendingUp];
 export default function SupportSection() {
+  const { t } = useLocale();
+  const s = t.home.support;
   return (
     <section className="py-20 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -62,20 +21,20 @@ export default function SupportSection() {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto">
           <span className="inline-block rounded-full bg-sky-100 px-3.5 py-1 text-xs font-black uppercase tracking-wider text-sky-700">
-            Complete Franchise Ecosystem
+            {s.badge}
           </span>
           <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
-            You Don't Have to Figure It Out Alone.
+            {s.title}
           </h2>
           <p className="mt-3 text-sm font-semibold text-slate-600 leading-relaxed">
-            From your very first enquiry call to grand launch day and beyond, Pizza Mood provides hands-on 360° support every step of the way.
+            {s.sub}
           </p>
         </div>
 
         {/* 6 Support Cards */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {supportPillars.map((p, idx) => {
-            const Icon = p.icon;
+          {s.pillars.map((p, idx) => {
+            const Icon = ICONS[idx];
             return (
               <div
                 key={idx}

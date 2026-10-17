@@ -10,70 +10,43 @@ import {
 } from "lucide-react";
 import FranchiseModal from "./FranchiseModal";
 import PricingCards from "./PricingCards";
-import { PRICING_HEADLINE } from "@/lib/pricing";
+import { useLocale } from "./LocaleProvider";
+import { fill, pricingHeadline, splitGraphemes } from "./homeI18n";
 import UspChecklist from "./UspChecklist";
 import {
-  EXCLUSIVITY_LINE,
   FRANCHISE_PHONE_DISPLAY,
   FRANCHISE_PHONE_TEL,
   whatsappLink,
 } from "@/lib/usps";
 
-const MENU_ITEMS = [
-  {
-    word: "Pizza",
-    img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80",
-    tag: "Signature Recipe",
-    title: "100% Mozzarella Cheese Burst Pizza",
-  },
-  {
-    word: "Burgers",
-    img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=80",
-    tag: "Crowd Favourite",
-    title: "Double Patty Loaded Burgers",
-  },
-  {
-    word: "Momos",
-    img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?auto=format&fit=crop&w=1200&q=80",
-    tag: "Street Classic",
-    title: "Steamed & Tandoori Momos",
-  },
-  {
-    word: "Cold Coffee",
-    img: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=1200&q=80",
-    tag: "Cafe Bestseller",
-    title: "Creamy Iced Cold Coffee",
-  },
-  {
-    word: "Shakes",
-    img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=1200&q=80",
-    tag: "Thick & Indulgent",
-    title: "Oreo Chocolate Thick Shakes",
-  },
-  {
-    word: "Fries",
-    img: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=1200&q=80",
-    tag: "Snack Hit",
-    title: "Crispy Peri-Peri Fries",
-  },
+const MENU_IMGS = [
+  "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=1200&q=80",
 ];
 
 export default function HeroSection() {
+  const { lang, t } = useLocale();
+  const h = t.home.hero;
+  const MENU_ITEMS = h.items.map((it, i) => ({ ...it, img: MENU_IMGS[i] }));
   const [modalOpen, setModalOpen] = useState(false);
   const [wordIdx, setWordIdx] = useState(0);
   const [leaving, setLeaving] = useState(false);
 
   useEffect(() => {
     let swap: ReturnType<typeof setTimeout>;
-    const t = setInterval(() => {
+    const timer = setInterval(() => {
       setLeaving(true);
       swap = setTimeout(() => {
-        setWordIdx((i) => (i + 1) % MENU_ITEMS.length);
+        setWordIdx((i) => (i + 1) % MENU_IMGS.length);
         setLeaving(false);
       }, 450);
     }, 3200);
     return () => {
-      clearInterval(t);
+      clearInterval(timer);
       clearTimeout(swap);
     };
   }, []);
@@ -107,17 +80,17 @@ export default function HeroSection() {
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-4 py-1.5 text-xs font-black text-red-700 shadow-sm">
               <Sparkles className="h-4 w-4 text-amber-500" />
-              <span>{EXCLUSIVITY_LINE}</span>
+              <span>{t.home.exclusivity}</span>
             </div>
 
             <h1
-              aria-label="Open Your Pizza Mood in 30 Days. Guaranteed."
-              className="whitespace-nowrap text-[1.7rem] font-black tracking-tight text-slate-900 sm:text-[2.6rem] xl:text-[3.4rem] leading-[1.1]"
+              aria-label={h.ariaTitle}
+              className={`whitespace-nowrap ${lang === "mr" ? "text-[1.45rem]" : "text-[1.7rem]"} font-black tracking-tight text-slate-900 sm:text-[2.6rem] xl:text-[3.4rem] ${lang === "mr" ? "leading-[1.3]" : "leading-[1.1]"}`}
             >
-              <span className="block">Open Your</span>
+              <span className="block">{h.line1}</span>
               <span className="block">
                 <span key={wordIdx} aria-hidden="true" className="text-red-600">
-                  {[...item.word].map((ch, i) => (
+                  {splitGraphemes(item.word).map((ch, i) => (
                     <span
                       key={i}
                       className={leaving ? "letter-out" : "letter-flip"}
@@ -127,22 +100,22 @@ export default function HeroSection() {
                     </span>
                   ))}
                 </span>{" "}
-                <span aria-hidden="true">Cafe</span>
+                <span aria-hidden="true">{h.cafe}</span>
               </span>
               <span className="block">
-                in{" "}
+                {h.lineIn && <>{h.lineIn}{" "}</>}
                 <span className="bg-gradient-to-r from-sky-600 via-sky-500 to-yellow-500 bg-clip-text text-transparent">
-                  30 Days. Guaranteed.
+                  {h.days}
                 </span>
               </span>
             </h1>
 
             <p className="text-base font-semibold text-slate-600 sm:text-lg leading-relaxed max-w-2xl">
-              Own a Pizza Mood outlet for{" "}
+              {h.introPre && `${h.introPre} `}
               <strong className="text-slate-900 underline decoration-yellow-400 decoration-4">
-                {PRICING_HEADLINE}
+                {pricingHeadline(t)}
               </strong>
-              . We handle the setup, supplies and marketing. You just run it.
+              {h.introPost}
             </p>
 
             <PricingCards />
@@ -154,7 +127,7 @@ export default function HeroSection() {
                 onClick={() => setModalOpen(true)}
                 className="group flex items-center gap-2.5 rounded-full bg-sky-500 border-2 border-yellow-400 px-8 py-4 text-sm font-black uppercase tracking-wider text-white shadow-xl shadow-sky-500/30 transition hover:-translate-y-0.5 hover:bg-sky-600 active:translate-y-0"
               >
-                Get Free Franchise Details
+                {t.home.cta.getDetails}
                 <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
               </button>
 
@@ -164,19 +137,19 @@ export default function HeroSection() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 rounded-full bg-emerald-500 px-7 py-4 text-sm font-black text-white shadow-xl shadow-emerald-500/30 transition hover:bg-emerald-600"
               >
-                <MessageCircle className="h-4 w-4" /> Chat on WhatsApp
+                <MessageCircle className="h-4 w-4" /> {t.home.cta.whatsapp}
               </a>
             </div>
 
             <p className="text-xs font-bold text-slate-500">
-              Or call{" "}
+              {h.orCall}{" "}
               <a
                 href={`tel:${FRANCHISE_PHONE_TEL}`}
                 className="font-black text-slate-900 underline"
               >
                 {FRANCHISE_PHONE_DISPLAY}
               </a>
-              . Our team replies within 24 hours.
+              {h.reply}
             </p>
           </div>
 
@@ -189,7 +162,7 @@ export default function HeroSection() {
                   <img
                     key={m.word}
                     src={m.img}
-                    alt={`Pizza Mood ${m.word}`}
+                    alt={fill(h.imgAlt, { word: m.word })}
                     className={`hero-slide h-[460px] w-full object-cover ${i === wordIdx ? "active" : "absolute inset-0"}`}
                   />
                 ))}
@@ -212,7 +185,7 @@ export default function HeroSection() {
                       </h3>
                     </div>
                     <span className="rounded-xl bg-yellow-400 px-3 py-1 text-xs font-black text-slate-900">
-                      High Demand
+                      {h.highDemand}
                     </span>
                   </div>
                 </div>
@@ -226,10 +199,10 @@ export default function HeroSection() {
                   </div>
                   <div>
                     <div className="text-xs font-black text-slate-900">
-                      Rapid Store Expansion
+                      {h.expansion}
                     </div>
                     <div className="text-[10px] font-semibold text-slate-500">
-                      18+ Active Outlets
+                      {h.activeOutlets}
                     </div>
                   </div>
                 </div>
@@ -243,10 +216,10 @@ export default function HeroSection() {
                   </div>
                   <div>
                     <div className="text-xs font-black text-white">
-                      Guaranteed 30-Day Opening
+                      {h.guaranteedOpening}
                     </div>
                     <div className="text-[10px] font-semibold text-yellow-400">
-                      Location to Grand Launch
+                      {h.locationToLaunch}
                     </div>
                   </div>
                 </div>

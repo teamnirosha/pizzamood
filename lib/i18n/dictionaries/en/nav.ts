@@ -1,0 +1,16 @@
+export const nav = {
+  home: "Home",
+  franchise: "Franchise",
+  howItWorks: "How It Works",
+  investment: "Investment",
+  support: "Support",
+  locations: "Locations",
+  gallery: "Gallery",
+  faq: "FAQ",
+  contact: "Contact",
+  reserveArea: "Reserve Your Area →",
+  startFranchise: "Start Your Franchise",
+  startFranchiseLong: "Start Your Pizza Mood Franchise",
+  toggleMenu: "Toggle menu",
+  language: "Language",
+};

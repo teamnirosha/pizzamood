@@ -2,10 +2,12 @@
 
 import React, { useState } from "react";
 import { whatsappLink } from "@/lib/usps";
+import { useLocale } from "./LocaleProvider";
 
 export default function WhatsAppBubble() {
+  const { t } = useLocale();
   const [isHovered, setIsHovered] = useState(false);
-  const href = whatsappLink("Hi Pizza Mood Team, I am interested in opening a Pizza Mood Franchise. Please share the details.");
+  const href = whatsappLink(t.shell.whatsappBubble.waText);
 
   return (
     <div className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-50 flex items-center gap-3 pointer-events-auto select-none">
@@ -20,7 +22,7 @@ export default function WhatsAppBubble() {
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
           <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
         </span>
-        <span>Chat on WhatsApp</span>
+        <span>{t.shell.whatsappBubble.tooltip}</span>
       </div>
 
       {/* WhatsApp Floating Green Circle Button */}
@@ -31,7 +33,7 @@ export default function WhatsAppBubble() {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] hover:bg-[#20ba56] text-white shadow-[0_8px_24px_rgba(37,211,102,0.5)] hover:shadow-[0_12px_28px_rgba(37,211,102,0.65)] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
-        aria-label="Chat on WhatsApp with Pizza Mood"
+        aria-label={t.shell.whatsappBubble.aria}
       >
         {/* Subtle Ambient Pulse Ring */}
         <span className="absolute -inset-1 rounded-full bg-[#25D366] opacity-30 group-hover:opacity-60 animate-ping"></span>

@@ -1,6 +1,8 @@
 import { MODELS } from "@/lib/pricing";
 import { menuItems } from "@/lib/menu";
-import { USPS, SLOGAN, FRANCHISE_PHONE_TEL } from "@/lib/usps";
+import { USPS, getUsps, SLOGAN, FRANCHISE_PHONE_TEL } from "@/lib/usps";
+import { localePath, type Locale } from "@/lib/i18n";
+import { storeDescription, areaName, cityName } from "@/lib/storeText";
 import { OutletLocation, FAQItem, SiteSettings } from "@/types";
 
 export const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.pizzamood.in";
@@ -20,7 +22,7 @@ export function generateOrganizationSchema(settings: SiteSettings) {
       "@type": "ContactPoint",
       contactType: "sales",
       telephone: FRANCHISE_PHONE_TEL,
-      availableLanguage: ["English", "Hindi"],
+      availableLanguage: ["Marathi", "English", "Hindi"],
     },
     makesOffer: MODELS.map((m) => ({
       "@type": "Offer",
@@ -65,9 +67,9 @@ export function generateWebSiteSchema() {
   };
 }
 
-export function generateRestaurantSchema(location: OutletLocation) {
-  const pageUrl = `${baseUrl}/locations/${location.slug}`;
-  const items = menuItems(location);
+export function generateRestaurantSchema(location: OutletLocation, lang: Locale = "en") {
+  const pageUrl = `${baseUrl}${localePath(lang, `/locations/${location.slug}`)}`;
+  const items = menuItems(location, lang);
   const openingHoursSpecs = location.hours
     .filter((h) => !h.isClosed)
     .map((h) => ({
@@ -81,22 +83,23 @@ export function generateRestaurantSchema(location: OutletLocation) {
     "@context": "https://schema.org",
     "@type": location.model === "cafe" ? ["Restaurant", "CafeOrCoffeeShop"] : ["Restaurant", "FastFoodRestaurant"],
     "@id": `${pageUrl}/#restaurant`,
+    inLanguage: lang,
     name: location.name,
-    description: location.description,
+    description: storeDescription(location, lang),
     image: location.images.map((img) => img.url),
     url: pageUrl,
     telephone: location.phone || undefined,
-    servesCuisine: [...items.map((c) => c.label), "Fast Food"],
+    servesCuisine: [...items.map((c) => c.label), lang === "mr" ? "फास्ट फूड" : "Fast Food"],
     priceRange: "₹₹",
     address: {
       "@type": "PostalAddress",
       streetAddress: location.address,
-      addressLocality: location.city,
+      addressLocality: cityName(location.city, lang),
       addressRegion: location.state,
       postalCode: location.postalCode,
       addressCountry: "IN",
     },
-    areaServed: { "@type": "Place", name: `${location.area}, ${location.city}` },
+    areaServed: { "@type": "Place", name: `${areaName(location.area, lang)}, ${cityName(location.city, lang)}` },
     geo: {
       "@type": "GeoCoordinates",
       latitude: location.latitude,
@@ -110,7 +113,7 @@ export function generateRestaurantSchema(location: OutletLocation) {
       hasMenuSection: [
         {
           "@type": "MenuSection",
-          name: "Menu",
+          name: lang === "mr" ? "मेनू" : "Menu",
           hasMenuItem: items.map((c) => ({
             "@type": "MenuItem",
             name: c.name,
@@ -125,8 +128,9 @@ export function generateRestaurantSchema(location: OutletLocation) {
   };
 }
 
-export function generateBreadcrumbSchema(items: { name: string; url: string }[]) {
+export function generateBreadcrumbSchema(items: { name: string; url: string }[], lang: Locale = "en") {
   return {
+    inLanguage: lang,
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: items.map((item, index) => ({
@@ -138,8 +142,9 @@ export function generateBreadcrumbSchema(items: { name: string; url: string }[])
   };
 }
 
-export function generateFAQSchema(faqs: FAQItem[]) {
+export function generateFAQSchema(faqs: FAQItem[], lang: Locale = "en") {
   return {
+    inLanguage: lang,
     "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: faqs.map((faq) => ({
@@ -168,12 +173,13 @@ function convert12To24(time12: string): string {
   return `${hours.padStart(2, "0")}:${minutes || "00"}`;
 }
 
-export function generateUspListSchema() {
+export function generateUspListSchema(lang: Locale = "en") {
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Why choose a Pizza Mood franchise",
-    itemListElement: USPS.map((u, i) => ({
+    inLanguage: lang,
+    name: lang === "mr" ? "Pizza Mood फ्रँचायझी का निवडावी" : "Why choose a Pizza Mood franchise",
+    itemListElement: getUsps(lang).map((u, i) => ({
       "@type": "ListItem",
       position: i + 1,
       name: u.title,
@@ -182,7 +188,7 @@ export function generateUspListSchema() {
   };
 }
 
-export function generateLocationListSchema(name: string, locations: OutletLocation[]) {
+export function generateLocationListSchema(name: string, locations: OutletLocation[], lang: Locale = "en") {
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -190,7 +196,7 @@ export function generateLocationListSchema(name: string, locations: OutletLocati
     itemListElement: locations.map((l, i) => ({
       "@type": "ListItem",
       position: i + 1,
-      url: `${baseUrl}/locations/${l.slug}`,
+      url: `${baseUrl}${localePath(lang, `/locations/${l.slug}`)}`,
       name: l.name,
     })),
   };

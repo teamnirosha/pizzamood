@@ -16,7 +16,24 @@ const cspHeader = `
   .replace(/\s{2,}/g, " ")
   .trim();
 
+// Old URLs that used to be redirect pages (now outside app/[lang]). Both languages keep working.
+const legacy: [string, string][] = [
+  ["/location", "/locations"],
+  ["/menu", "/franchise"],
+  ["/story", "/franchise"],
+  ["/success-stories", "/franchise"],
+  ["/partnership-plans", "/investment"],
+  ["/what-we-provide", "/support"],
+  ["/why-pizzaloot", "/franchise"],
+];
+
 const nextConfig: NextConfig = {
+  async redirects() {
+    return legacy.flatMap(([from, to]) => [
+      { source: from, destination: to, permanent: true },
+      { source: `/en${from}`, destination: `/en${to}`, permanent: true },
+    ]);
+  },
   async headers() {
     return [
       {
