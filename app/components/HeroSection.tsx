@@ -19,24 +19,42 @@ import {
   whatsappLink,
 } from "@/lib/usps";
 
-const MENU_IMGS = [
-  "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=1200&q=80",
+// Fixed width AND height per use: identical intrinsic sizes keep later slides from registering as a new (larger) LCP candidate, and keep files small.
+const unsplash = (id: string, w: number, h: number, q: number) =>
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&h=${h}&q=${q}`;
+
+const IMG_IDS = [
+  "photo-1513104890138-7c749659a591",
+  "photo-1568901346375-23c9450c58cd",
+  "photo-1625220194771-7ebdea0b70b9",
+  "photo-1461023058943-07fcbe16d735",
+  "photo-1572490122747-3968b75cc699",
+  "photo-1573080496219-bb080dd4f877",
 ];
+// Soft 12%-opacity backdrop needs very little detail; the card image is what visitors look at.
+const BG_IMGS = IMG_IDS.map((id) => unsplash(id, 480, 640, 40));
+const MENU_IMGS = IMG_IDS.map((id) => unsplash(id, 800, 920, 70));
 
 export default function HeroSection() {
   const { lang, t } = useLocale();
   const h = t.home.hero;
-  const MENU_ITEMS = h.items.map((it, i) => ({ ...it, img: MENU_IMGS[i] }));
+  const MENU_ITEMS = h.items.map((it, i) => ({ ...it, img: MENU_IMGS[i], bg: BG_IMGS[i] }));
   const [modalOpen, setModalOpen] = useState(false);
   const [wordIdx, setWordIdx] = useState(0);
   const [leaving, setLeaving] = useState(false);
+  // Only the first slide loads up front; the rest (and the rotation) start after the page has finished loading.
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    let t: ReturnType<typeof setTimeout>;
+    const go = () => { t = setTimeout(() => setReady(true), 1000); };
+    if (document.readyState === "complete") go();
+    else window.addEventListener("load", go, { once: true });
+    return () => { window.removeEventListener("load", go); clearTimeout(t); };
+  }, []);
+
+  useEffect(() => {
+    if (!ready) return;
     let swap: ReturnType<typeof setTimeout>;
     const timer = setInterval(() => {
       setLeaving(true);
@@ -49,7 +67,7 @@ export default function HeroSection() {
       clearInterval(timer);
       clearTimeout(swap);
     };
-  }, []);
+  }, [ready]);
   const item = MENU_ITEMS[wordIdx];
 
   return (
@@ -59,12 +77,16 @@ export default function HeroSection() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 opacity-[0.12]"
       >
-        {MENU_ITEMS.map((m, i) => (
+        {MENU_ITEMS.map((m, i) => (i === 0 || ready) && (
           <img
             key={m.word}
-            src={m.img}
+            src={m.bg}
             alt=""
-            className={`hero-slide absolute inset-0 h-full w-full object-cover blur-[2px] ${i === wordIdx ? "active" : ""}`}
+            width={480}
+            height={640}
+            decoding="async"
+            fetchPriority={i === 0 ? "high" : "low"}
+            className={`hero-slide absolute inset-0 h-full w-full object-cover blur-[2px] ${i === wordIdx ? (ready ? "active" : "static") : ""}`}
           />
         ))}
       </div>
@@ -85,7 +107,7 @@ export default function HeroSection() {
 
             <h1
               aria-label={h.ariaTitle}
-              className={`whitespace-nowrap ${lang === "mr" ? "text-[1.45rem]" : "text-[1.7rem]"} font-black tracking-tight text-slate-900 sm:text-[2.6rem] xl:text-[3.4rem] ${lang === "mr" ? "leading-[1.3]" : "leading-[1.1]"}`}
+              className={`whitespace-nowrap ${lang === "mr" ? "text-[1.45rem]" : "text-[1.7rem]"} font-black ${lang === "mr" ? "tracking-normal leading-[1.45]" : "tracking-tight leading-[1.1]"} text-slate-900 sm:text-[2.6rem] xl:text-[3.4rem]`}
             >
               <span className="block">{h.line1}</span>
               <span className="block">
@@ -158,12 +180,16 @@ export default function HeroSection() {
             <div className="relative mx-auto max-w-md lg:max-w-none">
               {/* Main Banner Image Container */}
               <div className="relative overflow-hidden rounded-3xl bg-slate-900 shadow-2xl shadow-sky-900/20 border-4 border-yellow-400">
-                {MENU_ITEMS.map((m, i) => (
+                {MENU_ITEMS.map((m, i) => (i === 0 || ready) && (
                   <img
                     key={m.word}
                     src={m.img}
                     alt={fill(h.imgAlt, { word: m.word })}
-                    className={`hero-slide h-[460px] w-full object-cover ${i === wordIdx ? "active" : "absolute inset-0"}`}
+                    width={800}
+                    height={920}
+                    decoding="async"
+                    fetchPriority={i === 0 ? "high" : "low"}
+                    className={`hero-slide h-[460px] w-full object-cover ${i === wordIdx ? (ready ? "active" : "static") : "absolute inset-0"}`}
                   />
                 ))}
 

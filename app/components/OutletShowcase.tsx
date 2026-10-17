@@ -50,7 +50,7 @@ export default function OutletShowcase({ locations }: OutletShowcaseProps) {
             >
               {/* Image Header */}
               <div className="relative h-56 w-full overflow-hidden bg-slate-900">
-                <img
+                <img loading="lazy" decoding="async"
                   src={loc.images[0]?.url || "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80"}
                   alt={name(loc)}
                   className="h-full w-full object-cover transition duration-500 group-hover:scale-105"

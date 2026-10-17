@@ -1,6 +1,6 @@
 import { PRICING_HEADLINE } from "@/lib/pricing";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Noto_Sans_Devanagari } from "next/font/google";
+import { Poppins } from "next/font/google";
 import { notFound } from "next/navigation";
 import { LOCALES, hasLocale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/i18n/getDictionary";
@@ -9,22 +9,15 @@ import "@/app/globals.css";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 import Script from "next/script";
+import { preconnect } from "react-dom";
 import { baseUrl } from "@/lib/seo";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-// Geist has no Devanagari glyphs; this covers Marathi text.
-const devanagari = Noto_Sans_Devanagari({
-  variable: "--font-devanagari",
+// Poppins covers both Latin and Devanagari (Marathi), so one font serves both languages.
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["devanagari", "latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -52,11 +45,12 @@ export default async function RootLayout({ children, params }: { children: React
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   const t = await getDictionary(lang);
+  preconnect("https://images.unsplash.com");
 
   return (
     <html
       lang={lang}
-      className={`${geistSans.variable} ${geistMono.variable} ${devanagari.variable} h-full antialiased`}
+      className={`${poppins.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <LocaleProvider lang={lang} t={t}>
@@ -69,8 +63,8 @@ export default async function RootLayout({ children, params }: { children: React
         </LocaleProvider>
         {GA_ID && (
           <>
-            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
-            <Script id="ga4" strategy="afterInteractive">
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="lazyOnload" />
+            <Script id="ga4" strategy="lazyOnload">
               {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','${GA_ID}');`}
             </Script>
           </>

@@ -232,7 +232,7 @@ export default async function LocationDetailPage({ params }: PageProps) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {items.map((prod, idx) => (
                     <div key={idx} className="flex gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-4 transition hover:border-sky-200">
-                      <img src={prod.image} alt={fill(ts.menuAlt, { name: prod.name, area: a })} className="h-20 w-20 rounded-xl object-cover shrink-0" />
+                      <img loading="lazy" decoding="async" src={prod.image} alt={fill(ts.menuAlt, { name: prod.name, area: a })} className="h-20 w-20 rounded-xl object-cover shrink-0" />
                       <div>
                         <div className="flex items-center justify-between gap-2">
                           <h4 className="text-sm font-black text-slate-900">{prod.name}</h4>
@@ -255,7 +255,7 @@ export default async function LocationDetailPage({ params }: PageProps) {
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   {location.images.map((img, idx) => (
                     <div key={idx} className="overflow-hidden rounded-2xl bg-slate-100 h-36">
-                      <img src={img.url} alt={img.alt} className="h-full w-full object-cover transition duration-300 hover:scale-105" />
+                      <img loading="lazy" decoding="async" src={img.url} alt={img.alt} className="h-full w-full object-cover transition duration-300 hover:scale-105" />
                     </div>
                   ))}
                 </div>

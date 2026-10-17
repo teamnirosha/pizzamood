@@ -84,7 +84,7 @@ export default async function GalleryPage({ params }: { params: Promise<{ lang: 
                     className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-md transition hover:-translate-y-1 hover:shadow-xl"
                   >
                     <div className="h-56 w-full overflow-hidden">
-                      <img
+                      <img loading="lazy" decoding="async"
                         src={img.url}
                         alt={c.images[i]}
                         className="h-full w-full object-cover transition duration-500 group-hover:scale-110"

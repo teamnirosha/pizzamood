@@ -48,7 +48,7 @@ export default function TestimonialSection({ testimonials }: TestimonialSectionP
               </div>
 
               <div className="mt-6 flex items-center gap-3 border-t border-slate-200 pt-4">
-                <img
+                <img loading="lazy" decoding="async"
                   src={t.avatarUrl || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80"}
                   alt={t.name}
                   className="h-11 w-11 rounded-full object-cover border-2 border-red-500"

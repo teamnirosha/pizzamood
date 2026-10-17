@@ -97,7 +97,7 @@ export default function Navbar() {
             className="group flex items-center"
           >
             <div className="relative h-16 w-16 transition group-hover:scale-105 lg:h-[72px] lg:w-[72px]">
-              <img src="/logo.png" alt="Pizza Mood Logo" width={72} height={72} className="h-full w-full object-contain" />
+              <img src="/logo-144.webp" alt="Pizza Mood Logo" width={72} height={72} className="h-full w-full object-contain" />
             </div>
           </Link>
 

@@ -70,7 +70,7 @@ export default function SupplyChain() {
 
           <div className="relative overflow-hidden rounded-[2rem] bg-orange-100">
 
-            <img
+            <img loading="lazy" decoding="async"
               src="/images/pizzaloot-story.jpg"
               alt={c.imgAlt}
               className="h-[380px] w-full object-cover sm:h-[480px]"
